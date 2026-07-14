@@ -11,8 +11,6 @@ public class Vector<T> {
   private void expand() { reserve((int)(capacity * RESIZE_FACTOR)); }
 
   public void reserve(int new_capacity) {
-    assert(new_capacity > size);
-
     if(new_capacity <= capacity)
       return;
 
@@ -32,13 +30,14 @@ public class Vector<T> {
   }
 
   public void pop() {
-    assert(size > 0);
+    assert size > 0 : "Tentou-se remover um elemento de um vetor vazio";
     size--;
   }
 
   @SuppressWarnings("unchecked")
   public T at(int i) {
-    assert(i >= 0 && i < size);
+    assert i >= 0 && i < size : "Tentou-se acessar um elemento fora dos"
+                                + " limites do vetor";
     return (T)data[i];
   }
 
