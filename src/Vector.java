@@ -31,11 +31,20 @@ public class Vector<T> {
     data[size++] = value;
   }
 
+  public void pop() {
+    assert(size > 0);
+    size--;
+  }
+
   @SuppressWarnings("unchecked")
   public T at(int i) {
     assert(i >= 0 && i < size);
     return (T)data[i];
   }
+
+  public T first() { return at(0); }
+
+  public T last() { return at(size - 1); }
 
   @SuppressWarnings("unchecked")
   public void forEach(Consumer<T> callback) {
@@ -50,6 +59,28 @@ public class Vector<T> {
 
   public int size() { return size; }
   public boolean empty() { return size == 0; }
+
+  public static <U> Vector<U> from(Vector<U> values) {
+    Vector<U> new_vector = new Vector<U>();
+    new_vector.reserve(values.size());
+
+    values.forEach((U value) -> {
+      new_vector.push(value);
+    });
+
+    return new_vector;
+  }
+
+  @SafeVarargs
+  public static <U> Vector<U> from(U... values) {
+    Vector<U> new_vector = new Vector<U>();
+    new_vector.reserve(values.length);
+
+    for(U value : values)
+      new_vector.push(value);
+
+    return new_vector;
+  }
   
   public Vector() {
     capacity = STARTING_CAPACITY;
