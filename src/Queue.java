@@ -3,6 +3,15 @@ public class Queue<T> {
   private Vector<T> data;
   private int begin;
 
+  // Garante que a fila tem uma certa quantidade ('n') de elementos
+  // alocados na memória
+  //
+  // Se a fila já tiver com 'n' elementos alocados, nada acontece
+  public void reserve(int n) {
+    // É necessário reservar 'n' elementos A PARTIR do início
+    data.reserve(begin + n);
+  }
+
   // Retorna o primeiro elemento da fila
   //
   // NÃO deve ser utilizado se a fila estiver vazia
