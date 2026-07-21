@@ -1,3 +1,5 @@
+package Estruturas;
+
 import java.util.function.Consumer;
 
 // Um array dinâmico implementado para todos os tipos

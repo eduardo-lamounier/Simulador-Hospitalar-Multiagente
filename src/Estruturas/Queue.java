@@ -1,3 +1,5 @@
+package Estruturas;
+
 // Uma fila dinâmica implementada para todos os tipos
 public class Queue<T> {
   private Vector<T> data;
