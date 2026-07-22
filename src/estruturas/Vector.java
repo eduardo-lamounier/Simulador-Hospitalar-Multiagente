@@ -1,6 +1,7 @@
 package estruturas;
 
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 // Um array dinâmico implementado para todos os tipos
 public class Vector<T> {
@@ -78,10 +79,15 @@ public class Vector<T> {
       callback.accept((T)data[i]);
   }
   
-  // Preenche todo o vetor com o valor especificado
-  public void fill(T value) {
+  // Preenche todo o vetor com o valor retornado pela
+  // função de callback 'valueSupplier'.
+  // 
+  // Se toda chamada da função de callback retornar o
+  // mesmo objeto, o vetor inteiro será preenchido com
+  // referências para esse mesmo objeto; tome cuidado.
+  public void fill(Supplier<T> valueSupplier) {
     for(int i = 0; i < size; i++)
-      data[i] = (Object)value;
+      data[i] = (Object)valueSupplier.get();
   }
 
   // Retorna a quantidade atual de elementos no vetor
@@ -129,10 +135,12 @@ public class Vector<T> {
     size = 0;
   }
 
-  public Vector(int n, T value) {
+  // Cria o vetor com a quantidade especificada de elementos e
+  // preenche o vetor com os valores fornecidos (por 'valueSupplier')
+  public Vector(int n, Supplier<T> valueSupplier) {
     reserve(n);
     size = n;
-    fill(value);
+    fill(valueSupplier);
   } 
 }
 
