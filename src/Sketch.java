@@ -8,6 +8,8 @@ public class Sketch extends PApplet {
   private enum Estado {MENU, SIMULACAO, PAUSE};
   private Estado estado_atual; 
 
+  private Menu m;
+
   @Override
   public void settings() {
     size(800, 600);
@@ -16,15 +18,17 @@ public class Sketch extends PApplet {
   @Override
   public void setup() {
     estado_atual = Estado.MENU;
+    m = new Menu(this);
   }
 
   @Override
   public void draw() {
-    background(255, 255, 255);
+    
 
     switch (estado_atual) {
       case MENU:
-        
+        background(0xFF8DBCC7);
+        m.desenha();
         break;
     
       case PAUSE:
