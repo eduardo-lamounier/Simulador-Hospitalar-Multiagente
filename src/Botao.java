@@ -3,40 +3,45 @@ import processing.core.PApplet;
 public class Botao {
     // Atributos do Processing
     private PApplet p;
-    private int mouseX;
-    private int mouseY;
 
     // Atributos do botão
-    private float x, y; // Posição x e y do canto superior esquerdo do botão 
-    private float l, h; // Largura e altura respectivamente
+    private int x, y; // Posição x e y do canto superior esquerdo do botão 
+    private int l, h; // Largura e altura respectivamente
+    private int cor; // Em hexadecimal. Ex.: 0xFFFF0000 vermelho 
 
-    Botao(PApplet skecth, float x, float y, float l, float h) {
+    private Runnable acao;
+
+    Botao(PApplet skecth, int x, int y, int l, int h, int cor, Runnable acao) {
         this.p = skecth;
-        this.x = x;
-        this.y = y;
-        this.l = l;
-        this.h = h;
-
-        mouseX = p.mouseX;
-        mouseY = p.mouseY;
+        this.x = x;     this.y = y;
+        this.l = l;     this.h = h; 
+        this.acao = acao;
+        this.cor = cor; 
     }
 
     public void desenha() {
+        if(mouseEmCima()) 
+            p.fill(cor - 0x33000000); // Diminuindo a saturação
+
+        else 
+            p.fill(cor);
+
+        p.noStroke();
         p.rect(x, y, l, h);
+
+        clicado();
     }
 
     public boolean mouseEmCima() {
-        if(mouseX >= x && mouseX <= x + l && mouseY >= y && mouseY <= y + h)
+        if(p.mouseX >= x && p.mouseX <= x + l && p.mouseY >= y && p.mouseY <= y + h)
             return true;
 
         return false;
     }
 
-    public boolean clicado() {
+    public void clicado() {
         if(mouseEmCima() && p.mousePressed) 
-            return true;
-
-        return false;
+            acao.run();
     }
 
     // Métodos controladores
@@ -54,5 +59,9 @@ public class Botao {
 
     public float getL() {
         return l;
+    }
+
+    public void  getCor(int cor) {
+        this.cor = cor;
     }
 }
