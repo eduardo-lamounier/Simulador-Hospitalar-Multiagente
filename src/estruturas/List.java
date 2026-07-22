@@ -1,4 +1,4 @@
-package Estruturas;
+package estruturas;
 
 // Uma lista (implementada como uma lista encadeada) para todos os tipos
 public class List<T> {

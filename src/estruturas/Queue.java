@@ -1,4 +1,4 @@
-package Estruturas;
+package estruturas;
 
 // Uma fila dinâmica implementada para todos os tipos
 public class Queue<T> {

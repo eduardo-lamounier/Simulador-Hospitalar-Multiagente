@@ -1,4 +1,4 @@
-package Estruturas;
+package estruturas;
 
 import java.util.function.Consumer;
 
