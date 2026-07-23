@@ -1,6 +1,6 @@
 import processing.core.PApplet;
 
-import ui;
+import ui.*;
 
 public class Sketch extends PApplet {
   public static void main(String[] args) {
