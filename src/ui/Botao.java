@@ -1,3 +1,5 @@
+package ui;
+
 import processing.core.PApplet;
 
 public class Botao {
