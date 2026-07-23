@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Paciente {
   private int[] caracteristicasClinicas;
 
@@ -17,6 +19,20 @@ public class Paciente {
     return caracteristicasClinicas[3] == 1;
   }
 
-  public Paciente() { }
+  public Paciente() {
+    caracteristicasClinicas = new int[4];
+
+    Random rand = new Random();
+
+    int saturacaoOxigenio = rand.nextInt(70, 100+1);
+    int temperaturaCorporal = rand.nextInt(34, 42+1);
+    int nivelDor = rand.nextInt(0, 10+1);
+    boolean conscienciaAlterada = rand.nextBoolean();
+
+    caracteristicasClinicas[0] = saturacaoOxigenio;
+    caracteristicasClinicas[1] = temperaturaCorporal;
+    caracteristicasClinicas[2] = nivelDor;
+    caracteristicasClinicas[3] = conscienciaAlterada ? 1 : 0;
+  }
 }
 
