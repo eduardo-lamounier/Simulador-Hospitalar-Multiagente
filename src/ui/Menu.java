@@ -12,9 +12,9 @@ public class Menu{
     */
 
     // Atributos comuns do PApplet
-    private PApplet p; // Instância da skecth principal
-    private int width; // Largura do skecth 
-    private int height; // Altura do skecth
+    private PApplet p; // Instância da sketch principal
+    private int width; // Largura do sketch 
+    private int height; // Altura do sketch
 
     // Botão de jogar:
     private Botao sair;
@@ -22,20 +22,20 @@ public class Menu{
     private float jogar_l, jogar_h; // largura e altura
     private float jogar_x, jogar_y; // Posição x e y 
 
-    public Menu(PApplet skecth) {
-        this.p = skecth; // Mesma skecth da classe Skecth
-        width = skecth.width;
-        height = skecth.height;
+    public Menu(PApplet sketch) {
+        this.p = sketch; // Mesma skecth da classe Skecth
+        width = sketch.width;
+        height = sketch.height;
 
-        escolher_mapa = new Botao(skecth, width/5, height/3, 3 * width/5, height/4, 0xFFC4E1E6,
+        escolher_mapa = new Botao(sketch, width/5, height/3, 3 * width/5, height/4, 0xFFC4E1E6,
             () -> {
                 
             });
 
-        sair = new Botao(skecth, width/5, 2* height/3, 3 * width/5, height/6, 0xFFC4E1E6,
+        sair = new Botao(sketch, width/5, 2* height/3, 3 * width/5, height/6, 0xFFC4E1E6,
             () -> {
                 System.out.println("Finalizando o programa...");
-                skecth.exit();
+                sketch.exit();
             });
 
         

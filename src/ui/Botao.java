@@ -13,8 +13,8 @@ public class Botao {
 
     private Runnable acao;
 
-    Botao(PApplet skecth, int x, int y, int l, int h, int cor, Runnable acao) {
-        this.p = skecth;
+    Botao(PApplet sketch, int x, int y, int l, int h, int cor, Runnable acao) {
+        this.p = sketch;
         this.x = x;     this.y = y;
         this.l = l;     this.h = h; 
         this.acao = acao;
