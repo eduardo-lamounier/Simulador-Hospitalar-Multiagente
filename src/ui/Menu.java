@@ -4,7 +4,7 @@ import processing.core.PApplet;
 
 public class Menu{
     /* 
-    ToDo- 
+    TODO: 
     
     Desenhar o menu:
         Tela inicial
@@ -29,7 +29,7 @@ public class Menu{
 
         escolher_mapa = new Botao(sketch, width/5, height/3, 3 * width/5, height/4, 0xFFC4E1E6,
             () -> {
-                
+                System.out.println("Oi");
             });
 
         sair = new Botao(sketch, width/5, 2* height/3, 3 * width/5, height/6, 0xFFC4E1E6,
@@ -38,12 +38,15 @@ public class Menu{
                 sketch.exit();
             });
 
-        
+        escolher_mapa.setTexto("Iniciar");
+        escolher_mapa.setTamanhoTexto(100);
+
+        sair.setTexto("Sair");
+        sair.setTamanhoTexto(100);
     }
 
-    public void desenha() {
-        // Botão de jogar        
-        escolher_mapa.desenha();
-        sair.desenha();
+    public void desenha() {       
+        escolher_mapa.loop();
+        sair.loop();
     }
 }
