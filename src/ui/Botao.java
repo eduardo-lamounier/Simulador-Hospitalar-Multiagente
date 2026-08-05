@@ -15,16 +15,20 @@ public class Botao {
     private int cor; // Em hexadecimal. Ex.: 0xFFFF0000 vermelho 
     private String texto; // Texto dentro do botão (opcional)
     private float tamanhoTexto; // Tamanho do texto
+    private int corTexto; // Cor do texto
     private PImage imagem; // Imagem dentro do botão (opcional)
 
     private Runnable acao;
 
-    Botao(PApplet sketch, int x, int y, int l, int h, int cor, Runnable acao) {
-        this.p = sketch;
-        this.x = x;     this.y = y;
-        this.l = l;     this.h = h; 
-        this.acao = acao;
-        this.cor = cor; 
+    private Botao(Builder builder) {
+        this.p = builder.p;
+        this.x = builder.x;     this.y = builder.y;
+        this.l = builder.l;     this.h = builder.h; 
+        this.acao = builder.acao;
+        this.cor = builder.cor;
+        this.texto = builder.texto;
+        this.tamanhoTexto = builder.tamanhoTexto;
+        this.corTexto = builder.corTexto;
 
         this.width = p.width;
         this.height =  p.height;
@@ -68,7 +72,7 @@ public class Botao {
         p.noStroke();
         p.rect(x, y, l, h);
 
-        p.fill(0x00000000);
+        p.fill(corTexto);
         p.textAlign(PApplet.CENTER, PApplet.CENTER);
         p.textSize(tamanhoTexto);
         p.text(texto, x + l/2, y + h/2);
@@ -160,5 +164,92 @@ public class Botao {
 
     public void setImagem(PImage imagem) {
         this.imagem = imagem;
+    }
+
+    // Classe Builder
+    public static class Builder {
+        // Atributos obrigatórios
+        private PApplet p;
+        private int x, y; // Posição x e y do canto superior esquerdo do botão 
+        private int l, h; // Largura e altura respectivamente
+
+        //Atributos opcionais
+        private int cor = 0xFFFEFEFE; // Padrão branco
+        private String texto = null; // Texto dentro do botão (opcional)
+        private float tamanhoTexto = 0; // Tamanho do texto
+        private int corTexto = 0x00000000; // Texto preto por padrão 
+        private PImage imagem = null; // Imagem dentro do botão (opcional)
+
+        private Runnable acao = () -> {};
+
+        Builder(PApplet sketch, int x, int y, int l, int h) {
+            this.p = sketch;
+            this.x = x; this.y = y;
+            this.l = l; this.h = h;
+        }
+
+        public Builder setX(int x) {
+            this.x = x;
+
+            return this;
+        }
+
+        public Builder setY(int y) {
+            this.y = y;
+
+            return this;
+        }
+
+        public Builder setL(int l) {
+            this.l = l;
+
+            return this;
+        }
+
+        public Builder setH(int h) {
+            this.h = h;
+
+            return this;
+        }
+
+        public Builder setCor(int cor) {
+            this.cor = cor;
+
+            return this;
+        }
+
+        public Builder setTexto(String texto) {
+            this.texto = texto;
+
+            return this;
+        }
+
+        public Builder setTamanhoTexto(float tamanhoTexto) {
+            this.tamanhoTexto = tamanhoTexto;
+
+            return this;
+        }
+
+        public Builder setCorTexto(int corTexto) {
+            this.corTexto = corTexto;
+
+            return this;
+        }
+
+        public Builder setImagem(PImage imagem) {
+            this.imagem = imagem;
+
+            return this;
+        }
+
+        public Builder setAcao(Runnable acao) {
+            this.acao = acao;
+
+            return this;
+        }
+
+        public Botao build() {
+            return new Botao(this);
+        }
     }
 }
