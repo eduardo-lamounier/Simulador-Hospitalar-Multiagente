@@ -1,7 +1,12 @@
 import java.util.Random;
 
 public class Paciente {
+  private static final int CHANCE_ATENDIMENTO_PREFERENCIAL = 75;
+
   private int[] caracteristicasClinicas;
+
+  private Triagem.CorManchester corManchester;
+  private boolean atendimentoPreferencial;
 
   public int saturacaoOxigenio() {
     return caracteristicasClinicas[0];
@@ -19,10 +24,25 @@ public class Paciente {
     return caracteristicasClinicas[3] == 1;
   }
 
+  // Retorna `null` se nenhuma cor tiver sido atribuída ao paciente
+  public Triagem.CorManchester corManchester() { return corManchester; }
+
+  public void setCorManchester(Triagem.CorManchester corManchester) {
+    this.corManchester = corManchester;
+  }
+
+  // Retorna verdadeiro (`true`) caso o paciente precise de atendimento preferencial,
+  // retorna falso (`false`) caso contrário.
+  public boolean atendimentoPreferencial() { return atendimentoPreferencial; }
+
   public Paciente() {
     caracteristicasClinicas = new int[4];
 
     Random rand = new Random();
+
+    atendimentoPreferencial =
+      rand.nextInt(1, 100+1) > CHANCE_ATENDIMENTO_PREFERENCIAL;
+    corManchester = null;
 
     int saturacaoOxigenio = rand.nextInt(70, 100+1);
     int temperaturaCorporal = rand.nextInt(34, 42+1);
