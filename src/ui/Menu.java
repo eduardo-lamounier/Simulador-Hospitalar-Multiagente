@@ -16,11 +16,12 @@ public class Menu{
     private int width; // Largura do sketch 
     private int height; // Altura do sketch
 
-    // Botão de jogar:
+    // Botões:
     private Botao sair;
     private Botao escolher_mapa;
-    private float jogar_l, jogar_h; // largura e altura
-    private float jogar_x, jogar_y; // Posição x e y 
+
+    // Menu:
+    private int etapa = 1;
 
     public Menu(PApplet sketch) {
         this.p = sketch; // Mesma skecth da classe Skecth
@@ -33,7 +34,7 @@ public class Menu{
                         .setTexto("Iniciar")
                         .setTamanhoTexto(100)
                         .setCorTexto(0x00000000)
-                        .setAcao(() -> {})
+                        .setAcao(() -> {etapa = 2;})
                         .build();
 
         sair = new Botao.Builder(sketch, width/5, 2 * height/3, 3 * width/5, height/6)
@@ -50,15 +51,37 @@ public class Menu{
 
     public void desenha() {   
         fazerTitulo();
-
-        escolher_mapa.loop();
-        sair.loop();
+        
+        if(etapa == 1) {
+            escolher_mapa.loop();
+            sair.loop(); 
+        }
     }
 
-    public void fazerTitulo() {
-        p.textSize(100);
+    private void fazerTitulo() {
         p.textAlign(PApplet.CENTER, PApplet.CENTER);
         p.fill(0x00000000);
-        p.text("Bem-vindo!", width/2, height/6);
+
+        switch (etapa) {
+            case 1:
+                p.textSize(100);
+                p.text("Bem-vindo!", width/2, height/6);
+
+                break;
+        
+            case 2:
+                p.textSize(75);
+                p.text("Selecione um mapa", width/2, height/7);
+
+                break;
+
+            default: 
+                break;
+        }
+        
+    }
+
+    public int getEtapa() {
+        return etapa;
     }
 }
