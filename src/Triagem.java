@@ -1,5 +1,7 @@
+import processing.core.PApplet;
 import java.util.function.Predicate;
 
+import estruturas.Vector;
 import estruturas.Queue;
 
 public class Triagem {
@@ -26,11 +28,75 @@ public class Triagem {
     }
   }
 
+  public static final double TEMPO_ATENDIMENTO_MEDIO = 6 * 1000;
+  public static final double TEMPO_ATENDIMENTO_MINIMO = 2 * 1000;
+  public static final double DESVIO_TEMPO_ATENDIMENTO = 2 * 1000;
+
+  // Uma enfermeira é a responsável pelo o atendimento de um paciente durante a
+  // triagem. Cada enfermeira só pode atender um paciente por vez, e o paciente
+  // deve deslocar-se até ela (que fica em uma posição fixa) para ser atendido.
+  public class Enfermeira {
+    private PositionDTO posicao;
+
+    private boolean esperandoChegadaPaciente;
+    private int ultimoAtendimento;
+    private double ultimoTempoAtendimento;
+
+    private static double gerarTempoAtendimento(PApplet sketch) {
+      return PApplet.max(
+        (int)(TEMPO_ATENDIMENTO_MEDIO +
+          DESVIO_TEMPO_ATENDIMENTO * sketch.randomGaussian()),
+        (int)TEMPO_ATENDIMENTO_MINIMO);
+    }
+
+    public boolean estaOcupada(PApplet sketch) {
+      return esperandoChegadaPaciente || sketch.millis() < ultimoAtendimento + ultimoTempoAtendimento;
+    }
+
+    // Muda o estado do paciente para fazé-lo vir até a enfermeira.
+    //
+    // A enfermeira deve estar livre para realizar essa ação. Já que ela
+    // já ocupa a enfermeira.
+    public void chamarPaciente(PApplet sketch, Paciente paciente) {
+      assert(!estaOcupada(sketch));
+
+      esperandoChegadaPaciente = true;
+      paciente.atualizarEstado(Paciente.Estado.INDO_A_ENFERMEIRA);
+      // TODO: Atualizar deslocamento do paciente - fazé-lo vir até a enfermeira
+    }
+
+    // Muda o estado do paciente para fazé-lo esperar pelo final do atendimento.
+    //
+    // A enfermeira deve estar livre para realizar essa ação. Já que ela
+    // já ocupa a enfermeira.
+    public void atenderPaciente(Paciente paciente, PApplet sketch) {
+      assert(!estaOcupada(sketch));
+
+      esperandoChegadaPaciente = false;
+      ultimoAtendimento = sketch.millis();
+      ultimoTempoAtendimento = gerarTempoAtendimento(sketch);
+
+      paciente.atualizarEstado(Paciente.Estado.EM_ATENDIMENTO_TRIAGEM);
+
+      var cor = corPaciente(paciente);
+      paciente.setCorManchester(cor); 
+    }
+
+    public Enfermeira(int x, int y) {
+      posicao = new PositionDTO(x, y);
+      ultimoAtendimento = 0;
+      ultimoTempoAtendimento = 0;
+      esperandoChegadaPaciente = false;
+    }
+  }
+
   private Queue<Paciente> filaNormal;
   private Queue<Paciente> filaPreferencial;
 
   private int preferenciaisAtendidos = 0; // Contador da quantidade de últimos pacientes na fila
                                           // preferencial que foram atendidos
+
+  private Vector<Enfermeira> enfermeiras;
  
 
   // Armazena os nós da árvore de decisão, representando a hierarquia
@@ -82,18 +148,33 @@ public class Triagem {
     return corPaciente(0, paciente);
   }
 
+  // Busca uma enfermeira não ocupada.
+  //
+  // Retorna -1 se não existir nenhuma enfermeira livre,
+  // ou o seu índice da primeira enfermeira livre caso essa exista.
+  private int buscarEnfermeiraLivre(PApplet sketch) {
+    return enfermeiras.find(
+      (var enfermeira) -> !enfermeira.estaOcupada(sketch)
+    );
+  }
+
+  public boolean haEnfermeiraLivre(PApplet sketch) {
+    return buscarEnfermeiraLivre(sketch) != -1;
+  }
+
   public boolean pacientesParaAtender() {
     return !filaNormal.empty() || !filaPreferencial.empty();
   }
 
-  private void atenderPaciente(Paciente paciente) {
-    var cor = corPaciente(paciente);
-    paciente.setCorManchester(cor);
-  }
+  // Chama o próximo paciente na fila para ser atendido.
+  //
+  // As filas não podem estar vazias e alguma enfermeira deve estar livre.
+  public void chamarProximoPaciente(PApplet sketch) {
+    int enfermeiraLivreIdx = buscarEnfermeiraLivre(sketch);
 
-  public Paciente atenderProximoPaciente() {
-    assert(pacientesParaAtender());
+    assert(pacientesParaAtender() && enfermeiraLivreIdx != -1);
 
+    Enfermeira enfermeira = enfermeiras.at(enfermeiraLivreIdx);
     Paciente paciente;
  
     if((preferenciaisAtendidos < 2 && !filaPreferencial.empty())
@@ -102,26 +183,29 @@ public class Triagem {
       paciente = filaPreferencial.front();
       filaPreferencial.dequeue();
 
-      atenderPaciente(paciente);
-      return paciente;
+      enfermeira.chamarPaciente(sketch, paciente);
+      return;
     }
     
     preferenciaisAtendidos = 0;
     paciente = filaNormal.front();
-    filaPreferencial.dequeue();
+    filaNormal.dequeue();
     
-    atenderPaciente(paciente); 
-    return paciente;
+    enfermeira.chamarPaciente(sketch, paciente);
   }
 
+  // Adiciona o paciente à fila correspondente (dependendo de seu atendimento
+  // ser preferencial ou não)
   public void adicionarPacienteAFila(Paciente paciente) {
+    paciente.atualizarEstado(Paciente.Estado.AGUARDANDO_ATENDIMENTO);
     if(paciente.atendimentoPreferencial())
       filaPreferencial.enqueue(paciente);
     else
       filaNormal.enqueue(paciente);
   }
 
-  public Triagem() {
+  public Triagem(Vector<Enfermeira> enfermeiras) {
+    this.enfermeiras = Vector.from(enfermeiras);
     filaNormal = new Queue<>();
     filaPreferencial = new Queue<>();
 

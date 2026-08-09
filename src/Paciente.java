@@ -1,12 +1,36 @@
 import java.util.Random;
 
 public class Paciente {
+  public enum Estado {
+    INDO_AO_TOTEM, // Estado inicial
+    NO_TOTEM,
+
+    INDO_A_TRIAGEM,
+    AGUARDANDO_ATENDIMENTO, // Representa tanto a espera pela chamada da
+                            // enfermeira quanto a espera pela chamada do
+                            // médico (em ambos o paciente ficará esperando
+                            // em um assento)
+    INDO_A_ENFERMEIRA,
+    EM_ATENDIMENTO_TRIAGEM,
+
+    INDO_AO_MEDICO,
+    EM_CONSULTA_MEDICA,
+
+    SAINDO_DO_HOSPITAL, // Estado final
+  };
+
+  private Estado estado;
+
   private static final int CHANCE_ATENDIMENTO_PREFERENCIAL = 75;
 
   private int[] caracteristicasClinicas;
 
   private Triagem.CorManchester corManchester;
   private boolean atendimentoPreferencial;
+
+  public Estado estado() { return estado; }
+
+  public void atualizarEstado(Estado estado) { this.estado = estado; }
 
   public int saturacaoOxigenio() {
     return caracteristicasClinicas[0];
@@ -37,6 +61,8 @@ public class Paciente {
 
   public Paciente() {
     caracteristicasClinicas = new int[4];
+
+    estado = Estado.INDO_AO_TOTEM;
 
     Random rand = new Random();
 
