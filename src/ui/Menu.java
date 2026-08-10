@@ -29,24 +29,20 @@ public class Menu{
         height = sketch.height;
 
         // 
-        escolher_mapa = new Botao.Builder(sketch, width/5, height/3, 3 * width/5, height/4)
-                        .setCor(0xFFC4E1E6)
-                        .setTexto("Iniciar")
-                        .setTamanhoTexto(100)
-                        .setCorTexto(0x00000000)
-                        .setAcao(() -> {etapa = 2;})
-                        .build();
+        escolher_mapa = new Botao(sketch, width/5, height/3, 3 * width/5, height/4)
+                        .comArredondamento(10f)
+                        .comCor(0xFFFFFFFF)
+                        .comTexto("Iniciar", 100, 0x00000000)
+                        .comAcao(() -> {etapa = 2;});
 
-        sair = new Botao.Builder(sketch, width/5, 2 * height/3, 3 * width/5, height/6)
-                        .setCor(0xFFC4E1E6)
-                        .setTexto("Sair")
-                        .setTamanhoTexto(80)
-                        .setCorTexto(0x000000000)
-                        .setAcao(() -> {
+        sair = new Botao(sketch, width/5, 2 * height/3, 3 * width/5, height/6)
+                        .comArredondamento(5f)
+                        .comCor(0xFFC4E1E6)
+                        .comTexto("Sair", 80, 0x00000000)
+                        .comAcao(() -> {
                                 System.out.println("Finalizando o programa...");
                                 sketch.exit();
-                                })
-                        .build();
+                                });
     }
 
     public void desenha() {   
@@ -77,8 +73,7 @@ public class Menu{
 
             default: 
                 break;
-        }
-        
+        }      
     }
 
     public int getEtapa() {

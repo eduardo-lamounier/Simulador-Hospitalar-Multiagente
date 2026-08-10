@@ -12,23 +12,21 @@ public class Botao {
     // Atributos do botão
     private int x, y; // Posição x e y do canto superior esquerdo do botão 
     private int l, h; // Largura e altura respectivamente
-    private int cor; // Em hexadecimal. Ex.: 0xFFFF0000 vermelho 
+    private float raio = 10; // Raio para arredondamento
+    private int cor; // Em hexadecimal. Ex.: 0xFFFF0000 vermelho
+
     private String texto; // Texto dentro do botão (opcional)
     private float tamanhoTexto; // Tamanho do texto
     private int corTexto; // Cor do texto
+
     private PImage imagem; // Imagem dentro do botão (opcional)
 
     private Runnable acao;
 
-    private Botao(Builder builder) {
-        this.p = builder.p;
-        this.x = builder.x;     this.y = builder.y;
-        this.l = builder.l;     this.h = builder.h; 
-        this.acao = builder.acao;
-        this.cor = builder.cor;
-        this.texto = builder.texto;
-        this.tamanhoTexto = builder.tamanhoTexto;
-        this.corTexto = builder.corTexto;
+    public Botao(PApplet p, int x, int y, int l, int h) {
+        this.p = p;
+        this.x = x;     this.y = y;
+        this.l = l;     this.h = h; 
 
         this.width = p.width;
         this.height =  p.height;
@@ -59,7 +57,7 @@ public class Botao {
             p.fill(cor);
 
         p.noStroke();
-        p.rect(x, y, l, h);
+        p.rect(x, y, l, h, raio);
     }
 
     public void desenha(String texto) {
@@ -70,7 +68,7 @@ public class Botao {
             p.fill(cor);
 
         p.noStroke();
-        p.rect(x, y, l, h);
+        p.rect(x, y, l, h, raio);
 
         p.fill(corTexto);
         p.textAlign(PApplet.CENTER, PApplet.CENTER);
@@ -112,7 +110,11 @@ public class Botao {
         return l;
     }
 
-    public void  getCor(int cor) {
+    public float getRaio() {
+        return raio;
+    }
+
+    public void getCor(int cor) {
         this.cor = cor;
     }
 
@@ -126,6 +128,10 @@ public class Botao {
 
     public PImage getImagem() {
         return imagem;
+    }
+
+    public Runnable getAcao() {
+        return acao;
     }
 
     public void setX(int x) throws IllegalArgumentException {
@@ -150,106 +156,35 @@ public class Botao {
         this.h = h;
     }
 
-    public void setCor(int cor) {
+    public Botao comArredondamento(float raio) {
+        this.raio = raio;
+
+        return this;
+    }
+
+    public Botao comCor(int cor) {
         this.cor = cor;
+
+        return this;
     }
 
-    public void setTexto(String texto) {
+    public Botao comTexto(String texto, float tamanho, int cor) {
         this.texto = texto;
+        this.tamanhoTexto = tamanho;
+        this.corTexto = cor;
+
+        return this;
     }
 
-    public void setTamanhoTexto(float tamanhoTexto) {
-        this.tamanhoTexto = tamanhoTexto;
+    public Botao comImagem(PImage imagem) {
+        this.imagem = imagem; 
+
+        return this;
     }
 
-    public void setImagem(PImage imagem) {
-        this.imagem = imagem;
-    }
+    public Botao comAcao(Runnable acao) {
+        this.acao = acao; 
 
-    // Classe Builder
-    public static class Builder {
-        // Atributos obrigatórios
-        private PApplet p;
-        private int x, y; // Posição x e y do canto superior esquerdo do botão 
-        private int l, h; // Largura e altura respectivamente
-
-        //Atributos opcionais
-        private int cor = 0xFFFEFEFE; // Padrão branco
-        private String texto = null; // Texto dentro do botão (opcional)
-        private float tamanhoTexto = 0; // Tamanho do texto
-        private int corTexto = 0x00000000; // Texto preto por padrão 
-        private PImage imagem = null; // Imagem dentro do botão (opcional)
-
-        private Runnable acao = () -> {};
-
-        Builder(PApplet sketch, int x, int y, int l, int h) {
-            this.p = sketch;
-            this.x = x; this.y = y;
-            this.l = l; this.h = h;
-        }
-
-        public Builder setX(int x) {
-            this.x = x;
-
-            return this;
-        }
-
-        public Builder setY(int y) {
-            this.y = y;
-
-            return this;
-        }
-
-        public Builder setL(int l) {
-            this.l = l;
-
-            return this;
-        }
-
-        public Builder setH(int h) {
-            this.h = h;
-
-            return this;
-        }
-
-        public Builder setCor(int cor) {
-            this.cor = cor;
-
-            return this;
-        }
-
-        public Builder setTexto(String texto) {
-            this.texto = texto;
-
-            return this;
-        }
-
-        public Builder setTamanhoTexto(float tamanhoTexto) {
-            this.tamanhoTexto = tamanhoTexto;
-
-            return this;
-        }
-
-        public Builder setCorTexto(int corTexto) {
-            this.corTexto = corTexto;
-
-            return this;
-        }
-
-        public Builder setImagem(PImage imagem) {
-            this.imagem = imagem;
-
-            return this;
-        }
-
-        public Builder setAcao(Runnable acao) {
-            this.acao = acao;
-
-            return this;
-        }
-
-        public Botao build() {
-            return new Botao(this);
-        }
+        return this;
     }
 }
