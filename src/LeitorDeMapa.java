@@ -4,7 +4,7 @@ public class LeitorDeMapa{
 
 public char[][] imprimirLinha(int seletMapa){
         try {
-        String  NomeAqv = String.format("Mapas/mapa%d.txt", seletMapa);
+        String  NomeAqv = String.format("assets/Mapas/mapa%d.txt", seletMapa);
         //"Mapas/mapa" + seletMapa + ".txt"
         /* 
             LeitorDeMapa teste= new LeitorDeMapa();
