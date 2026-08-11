@@ -2,6 +2,7 @@ package estruturas;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import java.util.function.Predicate;
 
 // Um array dinâmico implementado para todos os tipos
 public class Vector<T> {
@@ -37,6 +38,23 @@ public class Vector<T> {
       expand();
 
     data[size++] = value;
+  }
+
+  // Insere um novo elemento no índice especificado e desvia todos os elementos
+  // à direita para frente. Se o índice passado for o tamanho atual do vetor,
+  // tem comportamento equivalente a 'push(...)' - adiciona elemento ao fim.
+  public void insert(int idx, T value) {
+    assert idx >= 0 && idx <= size : "Tentou-se inserir um elemento em uma"
+                                     + "posição inválida do vetor";
+
+    if(size + 1 > capacity)
+      expand();
+
+    for(int i = size; i > idx; i--)
+      data[i] = data[i-1];
+    
+    data[idx] = value;
+    size++;
   }
 
   // Remove o último elemento do vetor
@@ -77,6 +95,32 @@ public class Vector<T> {
   public void forEach(Consumer<T> callback) {
     for(int i = 0; i < size; i++)
       callback.accept((T)data[i]);
+  }
+
+  // Procura pelo PRIMEIRO elemento no vetor que satifaz uma condição específica
+  // (definida pelo predicado passado como argumento). Se um elemento
+  // satisfazer a condição, o seu índice é retornado; caso contrário, `-1` é
+  // retornado.
+  @SuppressWarnings("unchecked")
+  public int find(Predicate<T> predicate) {
+    for(int i = 0; i < size; i++)
+      if(predicate.test((T)data[i]))
+        return i;
+
+    return -1;
+  }
+
+  // Procura pelo ÚLTIMO elemento no vetor que satisfaz uma condição especifica
+  // (definida pelo predicado passado como argumento). Se um elemento
+  // satisfazer a condição, o seu índice é retornado; caso contrário, '-1' é
+  // retornado.
+  @SuppressWarnings("unchecked")
+  public int findLast(Predicate<T> predicate) {
+    for(int i = size - 1; i >= 0; i--)
+      if(predicate.test((T)data[i]))
+        return i;
+
+    return -1;
   }
   
   // Preenche todo o vetor com o valor retornado pela
