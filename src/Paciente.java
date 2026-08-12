@@ -1,6 +1,24 @@
 import java.util.Random;
 
+import estruturas.Vector;
+
 public class Paciente {
+  private Vector<ObservadorPaciente> observadores;
+
+  public void adicionarObservador(ObservadorPaciente observador) {
+    observadores.push(observador);
+  }
+
+  // Se o observador não existir, não tem efeito
+  public void removerObservador(ObservadorPaciente observador) {
+    int i = observadores.find((var ob) -> ob == observador);
+
+    if(i == -1)
+      return;
+
+    observadores.remove(i);
+  }
+
   public enum Estado {
     INDO_AO_TOTEM, // Estado inicial
     NO_TOTEM,
@@ -53,6 +71,9 @@ public class Paciente {
     // TODO: Atualizar posição do paciente
     
     if(posicao == posicaoObjetivo) {
+      observadores.forEach(
+        (var observador) -> observador.objetivoPacienteAtingido(this)
+      ); 
       removerObjetivo();
     }
     
@@ -87,6 +108,8 @@ public class Paciente {
   public boolean atendimentoPreferencial() { return atendimentoPreferencial; }
 
   public Paciente(int x, int y) {
+    observadores = new Vector<>();
+
     posicao = new PositionDTO(x, y);
     caracteristicasClinicas = new int[4];
 
