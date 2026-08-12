@@ -19,6 +19,7 @@ public class Paciente {
     SAINDO_DO_HOSPITAL, // Estado final
   };
 
+  private PositionDTO posicao, posicaoObjetivo;
   private Estado estado;
 
   private static final int CHANCE_ATENDIMENTO_PREFERENCIAL = 75;
@@ -28,9 +29,35 @@ public class Paciente {
   private Triagem.CorManchester corManchester;
   private boolean atendimentoPreferencial;
 
+  public PositionDTO posicao() { return posicao; }
+
+  public PositionDTO posicaoObjetivo() { return posicaoObjetivo; }
+
   public Estado estado() { return estado; }
 
   public void atualizarEstado(Estado estado) { this.estado = estado; }
+
+  public void novoObjetivo(PositionDTO posicaoObjetivo) {
+    assert posicaoObjetivo != null : "A posição do novo objetivo não pode ser null!";
+    this.posicaoObjetivo = posicaoObjetivo;
+  }
+
+  public void removerObjetivo() { posicaoObjetivo = null; }
+
+  public PositionDTO atualizarPosicao() {
+    if(posicaoObjetivo == null)
+      return posicao;
+
+    // TODO: Caminhada em direção ao objetivo
+
+    // TODO: Atualizar posição do paciente
+    
+    if(posicao == posicaoObjetivo) {
+      removerObjetivo();
+    }
+    
+    return posicao;
+  }
 
   public int saturacaoOxigenio() {
     return caracteristicasClinicas[0];
@@ -59,7 +86,8 @@ public class Paciente {
   // retorna falso (`false`) caso contrário.
   public boolean atendimentoPreferencial() { return atendimentoPreferencial; }
 
-  public Paciente() {
+  public Paciente(int x, int y) {
+    posicao = new PositionDTO(x, y);
     caracteristicasClinicas = new int[4];
 
     estado = Estado.INDO_AO_TOTEM;
