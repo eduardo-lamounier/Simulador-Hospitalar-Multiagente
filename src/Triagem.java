@@ -35,21 +35,30 @@ public class Triagem {
   // Uma enfermeira é a responsável pelo o atendimento de um paciente durante a
   // triagem. Cada enfermeira só pode atender um paciente por vez, e o paciente
   // deve deslocar-se até ela (que fica em uma posição fixa) para ser atendido.
-  public class Enfermeira {
+  public class Enfermeira implements ObservadorPaciente {
+    private PApplet sketch;
     private PositionDTO posicao;
 
     private boolean esperandoChegadaPaciente;
     private int ultimoAtendimento;
     private double ultimoTempoAtendimento;
 
-    private static double gerarTempoAtendimento(PApplet sketch) {
+    private double gerarTempoAtendimento() {
       return PApplet.max(
         (int)(TEMPO_ATENDIMENTO_MEDIO +
           DESVIO_TEMPO_ATENDIMENTO * sketch.randomGaussian()),
         (int)TEMPO_ATENDIMENTO_MINIMO);
     }
 
-    public boolean estaOcupada(PApplet sketch) {
+    // Assim que o paciente se encontra com a enfermeira, atende-o
+    @Override
+    public void objetivoPacienteAtingido(Paciente paciente) {
+      esperandoChegadaPaciente = false;
+      paciente.removerObservador(this);
+      atenderPaciente(paciente);
+    }
+    
+    public boolean estaOcupada() {
       return esperandoChegadaPaciente || sketch.millis() < ultimoAtendimento + ultimoTempoAtendimento;
     }
 
@@ -57,24 +66,26 @@ public class Triagem {
     //
     // A enfermeira deve estar livre para realizar essa ação. Já que ela
     // já ocupa a enfermeira.
-    public void chamarPaciente(PApplet sketch, Paciente paciente) {
-      assert(!estaOcupada(sketch));
+    public void chamarPaciente(Paciente paciente) {
+      assert(!estaOcupada());
 
       esperandoChegadaPaciente = true;
+      paciente.adicionarObservador(this);
+       
       paciente.atualizarEstado(Paciente.Estado.INDO_A_ENFERMEIRA);
-      // TODO: Atualizar deslocamento do paciente - fazé-lo vir até a enfermeira
+      // Atualiza deslocamento do paciente, fazendo ele vir até a enfermeira:
+      paciente.novoObjetivo(posicao);
     }
 
     // Muda o estado do paciente para fazé-lo esperar pelo final do atendimento.
     //
     // A enfermeira deve estar livre para realizar essa ação. Já que ela
     // já ocupa a enfermeira.
-    public void atenderPaciente(Paciente paciente, PApplet sketch) {
-      assert(!estaOcupada(sketch));
+    public void atenderPaciente(Paciente paciente) {
+      assert(!estaOcupada());
 
-      esperandoChegadaPaciente = false;
       ultimoAtendimento = sketch.millis();
-      ultimoTempoAtendimento = gerarTempoAtendimento(sketch);
+      ultimoTempoAtendimento = gerarTempoAtendimento();
 
       paciente.atualizarEstado(Paciente.Estado.EM_ATENDIMENTO_TRIAGEM);
 
@@ -82,7 +93,8 @@ public class Triagem {
       paciente.setCorManchester(cor); 
     }
 
-    public Enfermeira(int x, int y) {
+    public Enfermeira(int x, int y, PApplet sketch) {
+      this.sketch = sketch;
       posicao = new PositionDTO(x, y);
       ultimoAtendimento = 0;
       ultimoTempoAtendimento = 0;
@@ -154,7 +166,7 @@ public class Triagem {
   // ou o seu índice da primeira enfermeira livre caso essa exista.
   private int buscarEnfermeiraLivre(PApplet sketch) {
     return enfermeiras.find(
-      (var enfermeira) -> !enfermeira.estaOcupada(sketch)
+      (var enfermeira) -> !enfermeira.estaOcupada()
     );
   }
 
@@ -183,7 +195,7 @@ public class Triagem {
       paciente = filaPreferencial.front();
       filaPreferencial.dequeue();
 
-      enfermeira.chamarPaciente(sketch, paciente);
+      enfermeira.chamarPaciente(paciente);
       return;
     }
     
@@ -191,7 +203,7 @@ public class Triagem {
     paciente = filaNormal.front();
     filaNormal.dequeue();
     
-    enfermeira.chamarPaciente(sketch, paciente);
+    enfermeira.chamarPaciente(paciente);
   }
 
   // Adiciona o paciente à fila correspondente (dependendo de seu atendimento
