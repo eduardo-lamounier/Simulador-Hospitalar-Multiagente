@@ -39,6 +39,7 @@ public class Triagem {
     private PApplet sketch;
     private PositionDTO posicao;
 
+    private Paciente pacienteEmAtendimento;
     private boolean esperandoChegadaPaciente;
     private int ultimoAtendimento;
     private double ultimoTempoAtendimento;
@@ -84,6 +85,7 @@ public class Triagem {
     public void atenderPaciente(Paciente paciente) {
       assert(!estaOcupada());
 
+      pacienteEmAtendimento = paciente;
       ultimoAtendimento = sketch.millis();
       ultimoTempoAtendimento = gerarTempoAtendimento();
 
@@ -93,12 +95,23 @@ public class Triagem {
       paciente.setCorManchester(cor); 
     }
 
+    public void atualizar() {
+      if(pacienteEmAtendimento == null)
+        return;
+
+      if(sketch.millis() >= ultimoAtendimento + ultimoTempoAtendimento) {
+        pacienteEmAtendimento.atualizarEstado(Paciente.Estado.AGUARDANDO_ATENDIMENTO);
+        pacienteEmAtendimento = null;
+      }
+    }
+
     public Enfermeira(int x, int y, PApplet sketch) {
       this.sketch = sketch;
       posicao = new PositionDTO(x, y);
       ultimoAtendimento = 0;
       ultimoTempoAtendimento = 0;
       esperandoChegadaPaciente = false;
+      pacienteEmAtendimento = null;
     }
   }
 
@@ -154,12 +167,6 @@ public class Triagem {
     return corPaciente(noAtual * 2 + 2, paciente);
   }
 
-  // Avalia o estado do paciente de acordo com o Protocolo de Manchester,
-  // retornando a cor desse paciente
-  public CorManchester corPaciente(Paciente paciente) {
-    return corPaciente(0, paciente);
-  }
-
   // Busca uma enfermeira não ocupada.
   //
   // Retorna -1 se não existir nenhuma enfermeira livre,
@@ -168,6 +175,18 @@ public class Triagem {
     return enfermeiras.find(
       (var enfermeira) -> !enfermeira.estaOcupada()
     );
+  }
+
+  // Atualiza o estado da triagem. Deve ser utilizado antes de chamar métodos
+  // como 'haEnfermeiraLivre' ou 'chamarProximoPaciente'.
+  public void atualizar() {
+    enfermeiras.forEach((var enfermeira) -> enfermeira.atualizar());
+  }
+
+  // Avalia o estado do paciente de acordo com o Protocolo de Manchester,
+  // retornando a cor desse paciente
+  public CorManchester corPaciente(Paciente paciente) {
+    return corPaciente(0, paciente);
   }
 
   public boolean haEnfermeiraLivre(PApplet sketch) {
