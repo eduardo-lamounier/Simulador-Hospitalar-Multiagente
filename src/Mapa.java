@@ -1,24 +1,48 @@
 import java.io.*;
 
+import java.util.Scanner;
+
 public class Mapa {
     private static char[][] s_grid;
 
     // Lê o arquivo do mapa especificado e retorna o grid desse mapa
     // TODO: Implementar
     public static char[][] carregarMapa(int seletMapa) {
-        throw new IllegalStateException("Essa função não foi ainda implementada");
+        Scanner scanner;
+
+        try {
+            scanner = new Scanner(new File(String.format("assets/Mapas/mapa%d.txt",seletMapa)));
+        } catch (FileNotFoundException e) {
+            throw new IllegalArgumentException("Não foi possível encontrar o arquivo do mapa");
+        }
+
+        int linhas = scanner.nextInt();
+        int colunas = scanner.nextInt();
+
+        scanner.nextLine(); // pula o \n depois do 24 24
+
+        char[][] matriz = new char[linhas][colunas];
+
+        for (int i = 0; i < linhas; i++) {
+            String linha = scanner.nextLine();
+
+            for (int j = 0; j < colunas; j++) {
+                matriz[i][j] = linha.charAt(j);
+            }
+            
+        }
+
+        scanner.close();
+
+        return matriz;
+
     }
 
     // Isso só serve para teste
     public void imprimirArquivoMapa(int seletMapa){
         try {
             String  NomeAqv = String.format("assets/Mapas/mapa%d.txt", seletMapa);
-            //"Mapas/mapa" + seletMapa + ".txt"
-            
-            // LeitorDeMapa teste= new LeitorDeMapa();
-            // int x = 3;
-            // teste.imprimirLinha(x);
-            
+
             FileReader fileReader = new FileReader(NomeAqv);
             BufferedReader br = new BufferedReader(fileReader);
             String linha;
