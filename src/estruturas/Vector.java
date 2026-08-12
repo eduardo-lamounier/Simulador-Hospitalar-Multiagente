@@ -57,6 +57,16 @@ public class Vector<T> {
     size++;
   }
 
+  public void remove(int idx) {
+    assert idx >= 0 && idx < size : "Tentou-se remover um elemento fora dos"
+                                    + " limites do vetor";
+
+    for(int i = idx + 1; i < size; i++)
+      data[i-1] = data[i];
+
+    size--;
+  }
+
   // Remove o último elemento do vetor
   //
   // NÃO deve ser utilizado se o vetor estiver vazio
