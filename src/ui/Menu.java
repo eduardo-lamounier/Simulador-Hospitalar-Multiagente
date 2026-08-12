@@ -17,8 +17,8 @@ public class Menu{
     private int height; // Altura do sketch
 
     // Botões:
-    private Botao sair;
-    private Botao escolher_mapa;
+    private Botao sair; // Botão para sair da simulação
+    private Botao proxima_etapa; // Botão para ir a próxima etapa
 
     // Menu:
     private int etapa = 1;
@@ -28,17 +28,17 @@ public class Menu{
         width = sketch.width;
         height = sketch.height;
 
-        // 
-        escolher_mapa = new Botao(sketch, width/5, height/3, 3 * width/5, height/4)
-                        .comArredondamento(10f)
-                        .comCor(0xFFFFFFFF)
-                        .comTexto("Iniciar", 100, 0x00000000)
+        //
+        proxima_etapa = new Botao(sketch, width/2, 5 * height/12, 3 * width/5, height/  4)
+                        .comArredondamento(20f)
+                        .comCor(0xFFC4E1E6)
+                        .comTexto("Iniciar", 100, 0xFF020202)
                         .comAcao(() -> {etapa = 2;});
 
-        sair = new Botao(sketch, width/5, 2 * height/3, 3 * width/5, height/6)
-                        .comArredondamento(5f)
+        sair = new Botao(sketch, width/2, 9 * height/12, 3 * width/5, height/6)
+                        .comArredondamento(20f)
                         .comCor(0xFFC4E1E6)
-                        .comTexto("Sair", 80, 0x00000000)
+                        .comTexto("Sair", 80, 0xFF000000)
                         .comAcao(() -> {
                                 System.out.println("Finalizando o programa...");
                                 sketch.exit();
@@ -49,7 +49,7 @@ public class Menu{
         fazerTitulo();
         
         if(etapa == 1) {
-            escolher_mapa.loop();
+            proxima_etapa.loop();
             sair.loop(); 
         }
     }

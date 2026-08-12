@@ -30,21 +30,13 @@ public class Botao {
 
         this.width = p.width;
         this.height =  p.height;
+        p.rectMode(PApplet.CENTER);
     }
 
     public void loop() { 
         // Método responsável por chamar todas as outros métodos do draw()
         // TODO: Mudar nome do método
-        if(imagem != null) 
-            desenha(imagem);
-
-        else { 
-            if(texto != null) 
-                desenha(texto);
-
-            else 
-                desenha();
-        }
+        desenha();
 
         clicado();
     }
@@ -57,28 +49,20 @@ public class Botao {
             p.fill(cor);
 
         p.noStroke();
-        p.rect(x, y, l, h, raio);
-    }
+        
+        if(imagem != null) {
+            p.image(imagem, x, y, l, h); 
+            return;
+        }
 
-    public void desenha(String texto) {
-        if(mouseEmCima()) 
-            p.fill(cor - 0x33000000); // Diminuindo a saturação
-
-        else 
-            p.fill(cor);
-
-        p.noStroke();
         p.rect(x, y, l, h, raio);
 
-        p.fill(corTexto);
-        p.textAlign(PApplet.CENTER, PApplet.CENTER);
-        p.textSize(tamanhoTexto);
-        p.text(texto, x + l/2, y + h/2);
-    }
-
-    public void desenha(PImage imagem) {
-       p.noStroke();
-       p.image(imagem, x, y, l, h); 
+        if(texto != null && texto != "") {
+            p.fill(corTexto);
+            p.textAlign(PApplet.CENTER, PApplet.CENTER);
+            p.textSize(tamanhoTexto);
+            p.text(texto, x, y);
+        }
     }
 
     public boolean mouseEmCima() {
