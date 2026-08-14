@@ -1,6 +1,7 @@
 import java.io.*;
-
 import java.util.Scanner;
+import processing.core.PApplet;
+
 
 public class Mapa {
     private static char[][] s_grid;
@@ -70,8 +71,61 @@ public class Mapa {
 
     public Mapa(int seletMapa) {
         assert mapaCarregado() : "O mapa já foi inicializado!";
-
         s_grid = carregarMapa(seletMapa);
     }
+
+
+    
+    
+    public void desenhaGrid(int seletMapa){
+
+        char matriz[][];
+
+        matriz = carregarMapa(seletMapa);
+
+        float largura = p.width / (float) matriz[0].length;
+        float altura = p.height / (float) matriz.length;
+
+
+        for(int i = 0;i < matriz.length;i++){
+            for(int j = 0;j < matriz[0].length;j++){
+
+                switch (matriz[i][j]) {
+                    case'T':
+                        p.rect(j* largura, i * altura, largura, altura);
+                        break;
+                    case '.':
+                        p.fill(255, 255, 255); // branco
+                        p.rect(j* largura, i * altura, largura, altura);
+                        break;
+                    case'#':
+                        p.rect(j* largura, i * altura, largura, altura);
+                        break;
+                    case 'R':
+                        p.rect(j* largura, i * altura, largura, altura);
+                        break;
+                    case 'E':
+                        p.rect(j* largura, i * altura, largura, altura);
+                        break;
+                    case 'A':
+                        p.fill(0, 255, 0);     // verde
+                        p.rect(j* largura, i * altura, largura, altura);
+                        break;                        
+                    case 'G':
+                        p.rect(j* largura, i * altura, largura, altura);
+                        break;
+                    case'M':
+                        p.fill(255, 0, 0);     // vermelho
+                        p.rect(j* largura, i * altura, largura, altura);
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+        }
+
+    };
+    
 }
 
