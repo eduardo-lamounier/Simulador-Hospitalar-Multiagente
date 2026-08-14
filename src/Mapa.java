@@ -69,7 +69,7 @@ public class Mapa {
 
     public static boolean mapaCarregado() { return s_grid != null; }
 
-    public Mapa(int seletMapa) {
+    public Mapa(int seletMapa){
         assert mapaCarregado() : "O mapa já foi inicializado!";
         s_grid = carregarMapa(seletMapa);
     }
@@ -77,7 +77,7 @@ public class Mapa {
 
     
     
-    public void desenhaGrid(int seletMapa){
+    public static void desenhaGrid(int seletMapa,Sketch p){
 
         char matriz[][];
 
@@ -99,9 +99,11 @@ public class Mapa {
                         p.rect(j* largura, i * altura, largura, altura);
                         break;
                     case'#':
+                        p.fill(0);
                         p.rect(j* largura, i * altura, largura, altura);
                         break;
                     case 'R':
+                        p.fill(124,65,54);
                         p.rect(j* largura, i * altura, largura, altura);
                         break;
                     case 'E':
@@ -112,6 +114,7 @@ public class Mapa {
                         p.rect(j* largura, i * altura, largura, altura);
                         break;                        
                     case 'G':
+                        p.fill(234,45,54);
                         p.rect(j* largura, i * altura, largura, altura);
                         break;
                     case'M':
