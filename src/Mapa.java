@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.Scanner;
-import processing.core.PApplet;
 
 
 public class Mapa {
@@ -77,11 +76,7 @@ public class Mapa {
 
     
     
-    public static void desenhaGrid(int seletMapa,Sketch p){
-
-        char matriz[][];
-
-        matriz = carregarMapa(seletMapa);
+    public static void desenharMapa(char matriz[][],Sketch p){
 
         float largura = p.width / (float) matriz[0].length;
         float altura = p.height / (float) matriz.length;
@@ -129,6 +124,12 @@ public class Mapa {
         }
 
     };
+
+    public static void desenharMapaAtual(Sketch sketch) {
+        assert mapaCarregado() : "Mapa ainda não foi carregado! Não é possível"
+                                 + " desenhar";
+        desenharMapa(s_grid, sketch);
+    }
     
 }
 
