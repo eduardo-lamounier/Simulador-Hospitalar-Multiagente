@@ -37,6 +37,9 @@ public class Sketch extends PApplet {
         break;
 
       case SIMULACAO:
+        assert Mapa.mapaCarregado() : "Mapa deve estar carregado na fase de"
+                                      + " simulação!";
+        Mapa.desenharMapaAtual(this);
         break;
 
       default:
