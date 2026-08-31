@@ -87,33 +87,38 @@ public class Mapa {
 
                 switch (matriz[i][j]) {
                     case'T':
-                        p.rect(j* largura, i * altura, largura, altura);
+                        //Totem (T):
+                        // PImage meuSprite2 = p.loadImage("../assets/Sprites/a1.png");
+                        //p.image(meuSprite2, (width/2) - tamanho_sprite/2, (height/2)- tamanho_sprite/2,tamanho_sprite,tamanho_sprite);
+                        //p.rect(j* largura, i * altura, largura, altura);
                         break;
                     case '.':
-                        p.fill(255, 255, 255); // branco
+                        //Chão (.)
+                        p.text(i, largura, altura);
                         p.rect(j* largura, i * altura, largura, altura);
                         break;
                     case'#':
-                        p.fill(0);
+                        //Parede (#):
                         p.rect(j* largura, i * altura, largura, altura);
                         break;
                     case 'R':
-                        p.fill(124,65,54);
+                        //Removedor (R):
                         p.rect(j* largura, i * altura, largura, altura);
                         break;
                     case 'E':
+                        //Enfermeira de Triagem (E):
                         p.rect(j* largura, i * altura, largura, altura);
                         break;
                     case 'A':
-                        p.fill(0, 255, 0);     // verde
+                        //Assento (A):
                         p.rect(j* largura, i * altura, largura, altura);
                         break;                        
                     case 'G':
-                        p.fill(234,45,54);
+                        //Gerador (G):
                         p.rect(j* largura, i * altura, largura, altura);
                         break;
                     case'M':
-                        p.fill(255, 0, 0);     // vermelho
+                        //Médico (M):
                         p.rect(j* largura, i * altura, largura, altura);
                         break;
                     default:

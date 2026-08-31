@@ -1,6 +1,7 @@
 package ui;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class Menu{
     /* 
@@ -19,15 +20,19 @@ public class Menu{
     // Botões:
     private Botao sair; // Botão para sair da simulação
     private Botao proxima_etapa; // Botão para ir a próxima etapa
+    private Botao selecao_mapa;
+    private Botao esquerdo_mapa;
+    private Botao direita_mapa;
 
     // Menu:
     private int etapa = 1;
 
+    
     public Menu(PApplet sketch) {
         this.p = sketch; // Mesma skecth da classe Skecth
         width = sketch.width;
         height = sketch.height;
-
+        
         //
         proxima_etapa = new Botao(sketch, width/2, 5 * height/12, 3 * width/5, height/  4)
                         .comArredondamento(20f)
@@ -43,6 +48,30 @@ public class Menu{
                                 System.out.println("Finalizando o programa...");
                                 sketch.exit();
                                 });
+        selecao_mapa = new Botao(sketch, 100, 100, 50, 50)
+                        .comArredondamento(20f)
+                        .comCor(0xFFC4E1E6)
+                        .comTexto("voltar", 20, 0xFF020202)
+                        .comAcao(() -> {
+                            etapa = 1;
+                        });
+            
+        direita_mapa = new Botao(sketch, 700, 300, 50, 50)
+                        .comArredondamento(20f)
+                        .comCor(0xFFC4E1E6)
+                        .comTexto("direita", 20, 0xFF020202)
+                        .comAcao(() -> {
+                            etapa += 1;
+                        });
+            
+        esquerdo_mapa = new Botao(sketch, 100, 300, 50, 50)
+                        .comArredondamento(20f)
+                        .comCor(0xFFC4E1E6)
+                        .comTexto("esquerda", 20, 0xFF020202)
+                        .comAcao(() -> {
+                            etapa -= 1;
+                        });                              
+
     }
 
     public void desenha() {   
@@ -52,12 +81,27 @@ public class Menu{
             proxima_etapa.loop();
             sair.loop(); 
         }
+
+        else if(etapa == 2){
+            selecao_mapa.loop();
+            direita_mapa.loop();
+        }
+        else if (etapa == 3){
+            selecao_mapa.loop();
+            direita_mapa.loop();
+            esquerdo_mapa.loop();
+        }
+        else if(etapa == 4){
+            selecao_mapa.loop();
+            esquerdo_mapa.loop();
+        }
+        
     }
 
     private void fazerTitulo() {
         p.textAlign(PApplet.CENTER, PApplet.CENTER);
         p.fill(0x00000000);
-
+        final float tamanho_sprite = 450;
         switch (etapa) {
             case 1:
                 p.textSize(100);
@@ -67,10 +111,22 @@ public class Menu{
         
             case 2:
                 p.textSize(75);
-                p.text("Selecione um mapa", width/2, height/7);
-
+                p.text(" mapa 1", width/2,30);
+                PImage meuSprite2 = p.loadImage("../assets/Sprites/a1.png");
+                p.image(meuSprite2, (width/2) - tamanho_sprite/2, (height/2)- tamanho_sprite/2,tamanho_sprite,tamanho_sprite);
                 break;
-
+            case 3:
+                p.textSize(75);
+                p.text(" mapa 2", width/2,30);
+                PImage meuSprite = p.loadImage("../assets/Sprites/b3.png");
+                p.image(meuSprite, (width/2) - tamanho_sprite/2, (height/2)- tamanho_sprite/2,tamanho_sprite,tamanho_sprite);
+                break;
+            case 4:
+                p.textSize(75);
+                p.text(" mapa 3", width/2,30);
+                PImage meuSprite3 = p.loadImage("../assets/Sprites/Chao.png");
+                p.image(meuSprite3, (width/2) - tamanho_sprite/2, (height/2)- tamanho_sprite/2,tamanho_sprite,tamanho_sprite);
+                break;
             default: 
                 break;
         }      

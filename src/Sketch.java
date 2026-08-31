@@ -25,8 +25,6 @@ public class Sketch extends PApplet {
 
   @Override
   public void draw() {
-    
-
     switch (estado_atual) {
       case MENU:
         background(0xFF8DBCC7);
