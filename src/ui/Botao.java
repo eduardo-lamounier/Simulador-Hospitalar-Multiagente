@@ -34,32 +34,21 @@ public class Botao {
         p.rectMode(PApplet.CENTER);
     }
 
-    public void loop() { 
-        // Método responsável por chamar todas as outros métodos do draw()
-        // TODO: Mudar nome do método
+    public void atualiza() { 
+        // Método responsável pelas mecanicas de repetição do draw() como desenhar o botão 
+
         desenha();
     }
 
     public void desenha() {
-        if(mouseEmCima()) {
-            p.fill(cor - 0x44000000); // Diminuindo a saturação
-
-            escala = PApplet.lerp(escala, 1.20f, 0.15f); // Aumentando escala até 1.04
-        }
-
-        else {
-            p.fill(cor);
-
-            escala = PApplet.lerp(escala, 1f, 0.15f); // Diminuindo escala até 1
-        }
-
+        p.fill(cor);
         p.noStroke();
+
+        efeitoHover();
 
         float l_atual = l * escala;
         float h_atual = h * escala;
         
-        
-
         if(imagem != null) {
             p.image(imagem, x, y, l_atual, h_atual); 
             return;
@@ -73,6 +62,18 @@ public class Botao {
             p.textSize(tamanhoTexto);
             p.text(texto, x, y);
         }
+    }
+
+    private void efeitoHover() {
+        if(mouseEmCima()) {
+            p.fill(cor - 0x44000000); // Diminuindo a saturação
+
+            escala = PApplet.lerp(escala, 1.10f, 0.08f); // Aumentando escala até 1.10
+
+            return;
+        }
+
+        escala = PApplet.lerp(escala, 1f, 0.08f); // Diminuindo escala até 1
     }
 
     public boolean mouseEmCima() {
