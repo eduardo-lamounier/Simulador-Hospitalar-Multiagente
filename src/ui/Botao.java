@@ -14,6 +14,7 @@ public class Botao {
     private int l, h; // Largura e altura respectivamente
     private float raio = 10; // Raio para arredondamento
     private int cor; // Em hexadecimal. Ex.: 0xFFFF0000 vermelho
+    private float escala = 1; // Para o botão aumentar com o efeito hover 
 
     private String texto; // Texto dentro do botão (opcional)
     private float tamanhoTexto; // Tamanho do texto
@@ -37,25 +38,34 @@ public class Botao {
         // Método responsável por chamar todas as outros métodos do draw()
         // TODO: Mudar nome do método
         desenha();
-
-        clicado();
     }
 
     public void desenha() {
-        if(mouseEmCima()) 
-            p.fill(cor - 0x33000000); // Diminuindo a saturação
+        if(mouseEmCima()) {
+            p.fill(cor - 0x44000000); // Diminuindo a saturação
 
-        else 
+            escala = PApplet.lerp(escala, 1.20f, 0.15f); // Aumentando escala até 1.04
+        }
+
+        else {
             p.fill(cor);
 
+            escala = PApplet.lerp(escala, 1f, 0.15f); // Diminuindo escala até 1
+        }
+
         p.noStroke();
+
+        float l_atual = l * escala;
+        float h_atual = h * escala;
         
+        
+
         if(imagem != null) {
-            p.image(imagem, x, y, l, h); 
+            p.image(imagem, x, y, l_atual, h_atual); 
             return;
         }
 
-        p.rect(x, y, l, h, raio);
+        p.rect(x, y, l_atual, h_atual, raio);
 
         if(texto != null && texto != "") {
             p.fill(corTexto);
@@ -66,7 +76,7 @@ public class Botao {
     }
 
     public boolean mouseEmCima() {
-        if(p.mouseX >= x && p.mouseX <= x + l && p.mouseY >= y && p.mouseY <= y + h)
+        if(p.mouseX >= x - l/2 && p.mouseX <= x + l/2 && p.mouseY >= y - h/2 && p.mouseY <= y + h/2)
             return true;
 
         return false;
