@@ -1,8 +1,8 @@
 import processing.core.PApplet;
 import java.util.function.Predicate;
 
-import estruturas.Vector;
-import estruturas.Queue;
+import Estruturas.Vector;
+import Estruturas.Queue;
 
 public class Triagem {
   public enum CorManchester {
