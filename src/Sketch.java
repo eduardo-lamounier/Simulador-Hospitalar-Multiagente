@@ -11,11 +11,9 @@ public class Sketch extends PApplet {
   private Estado estado_atual; 
 
   private Menu menu;
-<<<<<<< HEAD
   private SelecaoDeMapa selecao;
-=======
   private Pause pause;
->>>>>>> 8d367e6 (feat: Implementa detecção de pressionar uma tecla)
+
 
   @Override
   public void settings() {
@@ -26,13 +24,9 @@ public class Sketch extends PApplet {
   public void setup() {
     estado_atual = Estado.MENU;
 
-<<<<<<< HEAD
     menu = new Menu(this);
     selecao = new SelecaoDeMapa(this);
-=======
-    menu = new Menu(this); 
     pause = new Pause(this);
->>>>>>> 8d367e6 (feat: Implementa detecção de pressionar uma tecla)
   }
 
   @Override
