@@ -35,10 +35,15 @@ public class Sketch extends PApplet {
       case MENU:
         background(0xFF8DBCC7);
         menu.atualiza();
+
+        if(menu.getIrSelecao())
+          estado_atual = Estado.SELECAO;
+        
         break;
     
       case SELECAO:
         background(0xFF8DBCC7);
+        selecao.atualiza();
         break;
 
       case PAUSE:
@@ -59,8 +64,6 @@ public class Sketch extends PApplet {
 
   @Override
   public void keyPressed() {
-      // TODO Auto-generated method stub
-
       switch (this.key) {
         case 'p':
           if(estado_atual == Estado.PAUSE) {
