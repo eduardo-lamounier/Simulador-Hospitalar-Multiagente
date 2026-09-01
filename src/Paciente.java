@@ -1,6 +1,6 @@
 import java.util.Random;
 
-import Estruturas.Vector;
+import estruturas.Vector;
 
 public class Paciente {
   private Vector<ObservadorPaciente> observadores;
