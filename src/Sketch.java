@@ -7,10 +7,11 @@ public class Sketch extends PApplet {
     PApplet.main("Sketch");
   }
 
-  private enum Estado {MENU, SIMULACAO, PAUSE};
+  private enum Estado {MENU, SELECAO, SIMULACAO, PAUSE};
   private Estado estado_atual; 
 
-  private Menu m;
+  private Menu menu;
+  private SelecaoDeMapa selecao;
 
   @Override
   public void settings() {
@@ -20,7 +21,9 @@ public class Sketch extends PApplet {
   @Override
   public void setup() {
     estado_atual = Estado.MENU;
-    m = new Menu(this);
+
+    menu = new Menu(this);
+    selecao = new SelecaoDeMapa(this);
   }
 
   @Override
@@ -28,9 +31,13 @@ public class Sketch extends PApplet {
     switch (estado_atual) {
       case MENU:
         background(0xFF8DBCC7);
-        m.desenha();
+        menu.atualiza();
         break;
     
+      case SELECAO:
+        background(0xFF8DBCC7);
+        break;
+
       case PAUSE:
         break;
 
