@@ -3,6 +3,7 @@ package estruturas;
 import java.util.function.Consumer;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
+import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 // Um array dinâmico implementado para todos os tipos
@@ -123,11 +124,38 @@ public class Vector<T> {
   // uma função de callback (passada por parâmetro)
   //
   // 'callback' é uma função que recebe o elemento atual
-  // da iteração
+  // da iteração. Ela deve retornar `true` caso a iteração
+  // deva continuar, ou `false` para interrompé-la.
   @SuppressWarnings("unchecked")
-  public void forEach(Consumer<T> callback) {
+  public void forEach(Predicate<T> predicate) {
     for(int i = 0; i < size; i++)
-      callback.accept((T)data[i]);
+      if(!predicate.test((T)data[i]))
+        break;
+  }
+
+  // Passa por todos os elementos atuais no vetor e aplica
+  // uma função de callback (passada por parâmetro)
+  //
+  // 'callback' é uma função que recebe o índice atual da iteração e o
+  // elemento nesse índice. Ela deve retornar `true` caso a iteração
+  // deva continuar, ou `false` para interrompé-la.
+  @SuppressWarnings("unchecked")
+  public void forEach(BiPredicate<Integer, T> predicate) {
+    for(int i = 0; i < size; i++)
+      if(!predicate.test(i, (T)data[i]))
+        break;
+  }
+
+  // Passa por todos os elementos atuais no vetor e aplica
+  // uma função de callback (passada por parâmetro)
+  //
+  // 'callback' é uma função que recebe o elemento atual
+  // da iteração
+  public void forEach(Consumer<T> callback) {
+    forEach((var x) -> {
+      callback.accept(x);
+      return true;
+    });
   }
 
   // Passa por todos os elementos atuais no vetor e aplica
