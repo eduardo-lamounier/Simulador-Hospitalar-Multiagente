@@ -213,6 +213,31 @@ public class Vector<T> {
   // falso caso contrário
   public boolean empty() { return size == 0; }
 
+  // Retorna um novo vetor com os elementos no intervalo [left, right[.
+  //
+  // Pode ser utilizado seguido de 'forEach(...)' para iterar apenas pelos
+  // elementos nesse intervalo especifico.
+  @SuppressWarnings("unchecked")
+  public Vector<T> sliced(int left, int right) {
+    assert left >= 0 && right < size && left <= right : "Intervalo inválido!";
+
+    Vector<T> vec = new Vector<>();
+    vec.reserve(size);
+
+    for(int i = left; i < right; i++)
+      vec.push((T)data[i]);
+
+    return vec;
+  }
+
+  // Retorna um novo vetor com os elementos no intervalo [0, right[
+  //
+  // Pode ser utilizado seguido de 'forEach(...)' para iterar apenas pelos
+  // elementos nesse intervalo especifico.
+  public Vector<T> sliced(int right) {
+    return sliced(0, right);
+  }
+
   // Inicializa e retorna um vetor de acordo com os valores
   // especificados
   //
