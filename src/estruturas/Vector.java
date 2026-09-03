@@ -1,10 +1,6 @@
 package estruturas;
 
-import java.util.function.Consumer;
-import java.util.function.BiConsumer;
-import java.util.function.Supplier;
-import java.util.function.BiPredicate;
-import java.util.function.Predicate;
+import java.util.function.*;
 
 // Um array dinâmico implementado para todos os tipos
 public class Vector<T> {
