@@ -1,6 +1,7 @@
 package estruturas;
 
 import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 import java.util.function.Predicate;
 
@@ -30,6 +31,18 @@ public class Vector<T> {
 
     for(int i = 0; i < size; i++)
       data[i] = old_data[i];
+  }
+
+  // Muda o tamanho do vetor para o valor especificado.
+  //
+  // Se o novo tamanho for menor que o anterior, os elementos em posições após a
+  // anterior última posição do vetor são removidos.
+  //
+  // Se o novo tamanho for maior que o anterior, as posições após a anterior
+  // última posição do vetor são todas preenchidas `null`.
+  public void resize(int n) {
+    reserve(n);
+    size = n;
   }
 
   // Adiciona um novo elemento ao fim do vetor e expande-o se necessário
@@ -86,6 +99,16 @@ public class Vector<T> {
     return (T)data[i];
   }
 
+  // Atribui um valor a uma posição do vetor pelo índice
+  //
+  // NÃO deve ser utilizado se esse índice passar dos atuais
+  // limites do vetor
+  public void setAt(int i, T value) {
+    assert i >= 0 && i < size : "Tentou-se acessar um elemento fora dos"
+                                + " limites do vetor";
+    data[i] = value;
+  }
+
   // Retorna o primeiro elemento do vetor
   //
   // NÃO deve ser utilizado se o vetor estiver vazio
@@ -105,6 +128,17 @@ public class Vector<T> {
   public void forEach(Consumer<T> callback) {
     for(int i = 0; i < size; i++)
       callback.accept((T)data[i]);
+  }
+
+  // Passa por todos os elementos atuais no vetor e aplica
+  // uma função de callback (passada por parâmetro)
+  //
+  // 'callback' é uma função que recebe o índice atual da iteração e o
+  // elemento nesse índice
+  @SuppressWarnings("unchecked")
+  public void forEach(BiConsumer<Integer, T> callback) {
+    for(int i = 0; i < size; i++)
+      callback.accept(i, (T)data[i]);
   }
 
   // Procura pelo PRIMEIRO elemento no vetor que satifaz uma condição específica
@@ -192,9 +226,15 @@ public class Vector<T> {
   // Cria o vetor com a quantidade especificada de elementos e
   // preenche o vetor com os valores fornecidos (por 'valueSupplier')
   public Vector(int n, Supplier<T> valueSupplier) {
-    reserve(n);
-    size = n;
+    this();
+    resize(n);
     fill(valueSupplier);
   } 
+
+  // Cria o vetor com a quantidade especificada de elementos e preenche o vetor
+  // com `null`
+  public Vector(int n) {
+    this(n, () -> null);
+  }
 }
 
