@@ -3,7 +3,7 @@ import processing.core.PApplet;
 import estruturas.*;
 
 public class Consultas {
-  private Vector<Assento> assentos;
+  private Removedor removedor;
 
   private Map<Triagem.CorManchester, Queue<Paciente>> filas;
 
@@ -34,7 +34,8 @@ public class Consultas {
 
     @Override
     protected void finalizarAtendimento(Paciente paciente) {
-      // TODO: Fazer o paciente sair do hospital
+      paciente.novoObjetivo(removedor.posicao());
+      paciente.adicionarObservador(removedor);
     }
     
     public Medico(int x, int y, PApplet sketch) {
@@ -42,20 +43,12 @@ public class Consultas {
     }
   }
 
-  private int buscarAssentoLivre() {
-    return assentos.find((var assento) -> !assento.ocupado());
-  }
-
-  public boolean haAssentoLivre() {
-    return buscarAssentoLivre() != -1;
-  }
-
   private int buscarMedicoLivre() {
     return medicos.find((var medico) -> medico.estaLivre());
   }
 
   public void atualizar() {
-    // TODO
+    medicos.forEach((var medico) -> { medico.atualizar(); });
   }
 
   public boolean haMedicoLivre() {
@@ -63,20 +56,47 @@ public class Consultas {
   }
 
   public boolean haPacientesParaAtender() {
-    // TODO
+    for(var cor : Triagem.CorManchester.values()) {
+      var fila = filas.get(cor);
+      
+      if(!fila.empty())
+        return true;
+    }
+
     return false;
   }
 
+  // Chama o paciente com a maior prioridade na fila.
   public void chamarProximoPaciente(PApplet sketch) {
-    // TODO
+    if(!haMedicoLivre())
+      return;
+
+    var medicoLivre = medicos.at(buscarMedicoLivre());
+
+    for(var cor : Triagem.CorManchester.values()) {
+      var fila = filas.get(cor);
+
+      if(!fila.empty()) {
+        var paciente = fila.front();
+        fila.dequeue();
+
+        medicoLivre.chamarPaciente(paciente);
+        return;
+      }
+    }
   }
 
   public void adicionarPacienteAFila(Paciente paciente) {
-    // TODO
+    var cor = paciente.corManchester();
+
+    assert cor != null;
+
+    filas.get(cor).enqueue(paciente);
   }
 
-  public Consultas(Vector<Medico> medicos) {
+  public Consultas(Vector<Medico> medicos, Removedor removedor) {
     this.medicos = Vector.from(medicos);
+    this.removedor = removedor;
 
     for(var cor : Triagem.CorManchester.values())
       filas.put(cor, new Queue<>());

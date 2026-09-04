@@ -122,11 +122,18 @@ public class Triagem {
   }
 
   private int buscarAssentoLivre() {
-    return assentos.find((var assento) -> !assento.ocupado());
+    return assentos.find((var assento) -> assento.estado() == Assento.Estado.LIVRE);
   }
 
   public boolean haAssentoLivre() {
     return buscarAssentoLivre() != -1;
+  }
+
+  public Assento assentoLivre() {
+    int idx = buscarAssentoLivre();
+
+    assert idx != -1;
+    return assentos.at(idx);
   }
 
   // Busca uma enfermeira não ocupada.
@@ -159,15 +166,15 @@ public class Triagem {
     return !filaNormal.empty() || !filaPreferencial.empty();
   }
 
-  // Chama o próximo paciente na fila para ser atendido.
-  //
-  // As filas não podem estar vazias e alguma enfermeira deve estar livre.
+  // Chama o próximo paciente na fila para ser atendido, se esse existir e
+  // existir também um médico livre; caso contrário, não tem efeito.
   public void chamarProximoPaciente(PApplet sketch) {
     int enfermeiraLivreIdx = buscarEnfermeiraLivre();
 
-    assert(pacientesParaAtender() && enfermeiraLivreIdx != -1);
+    if(!pacientesParaAtender() || !haEnfermeiraLivre(sketch))
+      return;
 
-    Enfermeira enfermeira = enfermeiras.at(enfermeiraLivreIdx);
+    Enfermeira enfermeira = enfermeiras.at(buscarEnfermeiraLivre());
     Paciente paciente;
  
     if((preferenciaisAtendidos < 2 && !filaPreferencial.empty())

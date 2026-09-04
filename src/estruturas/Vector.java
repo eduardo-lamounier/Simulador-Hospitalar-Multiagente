@@ -234,6 +234,19 @@ public class Vector<T> {
     return sliced(0, right);
   }
 
+  // Retorna um novo vetor com a ordem dos elementos invertida (i.e. de trás
+  // para frente).
+  @SuppressWarnings("unchecked")
+  public Vector<T> reversed() {
+    Vector<T> reversed = new Vector<>();
+    reversed.reserve(size);
+
+    for(int i = size - 1; i >= 0; i--)
+      reversed.push((T)data[i]);
+
+    return reversed;
+  }
+
   // Inicializa e retorna um vetor de acordo com os valores
   // especificados
   //

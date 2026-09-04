@@ -47,6 +47,10 @@ public class Paciente {
   private Triagem.CorManchester corManchester;
   private boolean atendimentoPreferencial;
 
+  private Assento assentoAtual; // `null` se o paciente não estiver sentado
+  
+  private String senha;
+
   public PositionDTO posicao() { return posicao; }
 
   public PositionDTO posicaoObjetivo() { return posicaoObjetivo; }
@@ -65,6 +69,9 @@ public class Paciente {
   public PositionDTO atualizarPosicao() {
     if(posicaoObjetivo == null)
       return posicao;
+
+    if(assentoAtual != null && assentoAtual.estado() == Assento.Estado.OCUPADO)
+      levantar();
 
     // TODO: Caminhada em direção ao objetivo
 
@@ -107,6 +114,42 @@ public class Paciente {
   // retorna falso (`false`) caso contrário.
   public boolean atendimentoPreferencial() { return atendimentoPreferencial; }
 
+  public boolean estaSentado() {
+    return assentoAtual != null;
+  }
+
+  public Assento assentoAtual() {
+    return assentoAtual;
+  }
+
+  public void irAoAssento(Assento assento) {
+    assentoAtual = assento;
+    assentoAtual.reservar();
+    novoObjetivo(assento.posicao());
+  }
+
+  public void sentar(Assento assento) {
+    assert assento != null;
+    posicao = assentoAtual.posicao();
+    assentoAtual = assento;
+    assento.ocupar();
+  }
+
+  public void levantar() {
+    assentoAtual.deixarLivre();
+    // TODO: Paciente deve ir para a primeira posição livre que encontrar que
+    //       também seja adjacente ao assento
+    assentoAtual = null;
+  }
+
+  public String senha() { return senha; }
+
+  public void atribuirSenha(String senha) {
+    assert senha.length() == 5;
+
+    this.senha = senha;
+  }
+
   public Paciente(int x, int y) {
     observadores = new Vector<>();
 
@@ -130,6 +173,13 @@ public class Paciente {
     caracteristicasClinicas[1] = temperaturaCorporal;
     caracteristicasClinicas[2] = nivelDor;
     caracteristicasClinicas[3] = conscienciaAlterada ? 1 : 0;
+
+    assentoAtual = null;
+    senha = null;
+  }
+
+  public Paciente(PositionDTO posicao) {
+    this(posicao.x, posicao.y);
   }
 }
 
