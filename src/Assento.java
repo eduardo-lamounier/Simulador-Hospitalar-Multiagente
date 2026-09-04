@@ -1,25 +1,35 @@
 public class Assento {
+  public enum Estado {
+    LIVRE,
+    RESERVADO,
+    OCUPADO,
+  }
+
   private PositionDTO posicao;
-  private boolean ocupado;
+  private Estado estado;
 
   public PositionDTO posicao() {
     return posicao;
   }
 
-  public boolean ocupado() {
-    return ocupado;
+  public Estado estado() {
+    return estado;
+  }
+
+  public void deixarLivre() {
+    estado = Estado.LIVRE;
+  }
+
+  public void reservar() {
+    estado = Estado.RESERVADO;
   }
 
   public void ocupar() {
-    ocupado = true;
-  }
-
-  public void desocupar() {
-    ocupado = false;
+    estado = Estado.OCUPADO;
   }
 
   private Assento() {
-    ocupado = false;
+    estado = Estado.LIVRE;
   }
 
   public Assento(PositionDTO posicao) {
