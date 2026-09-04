@@ -48,6 +48,8 @@ public class Paciente {
   private boolean atendimentoPreferencial;
 
   private Assento assentoAtual; // `null` se o paciente não estiver sentado
+  
+  private String senha;
 
   public PositionDTO posicao() { return posicao; }
 
@@ -140,6 +142,14 @@ public class Paciente {
     assentoAtual = null;
   }
 
+  public String senha() { return senha; }
+
+  public void atribuirSenha(String senha) {
+    assert senha.length() == 5;
+
+    this.senha = senha;
+  }
+
   public Paciente(int x, int y) {
     observadores = new Vector<>();
 
@@ -165,6 +175,7 @@ public class Paciente {
     caracteristicasClinicas[3] = conscienciaAlterada ? 1 : 0;
 
     assentoAtual = null;
+    senha = null;
   }
 
   public Paciente(PositionDTO posicao) {
