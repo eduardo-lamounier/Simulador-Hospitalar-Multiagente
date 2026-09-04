@@ -159,15 +159,15 @@ public class Triagem {
     return !filaNormal.empty() || !filaPreferencial.empty();
   }
 
-  // Chama o próximo paciente na fila para ser atendido.
-  //
-  // As filas não podem estar vazias e alguma enfermeira deve estar livre.
+  // Chama o próximo paciente na fila para ser atendido, se esse existir e
+  // existir também um médico livre; caso contrário, não tem efeito.
   public void chamarProximoPaciente(PApplet sketch) {
     int enfermeiraLivreIdx = buscarEnfermeiraLivre();
 
-    assert(pacientesParaAtender() && enfermeiraLivreIdx != -1);
+    if(!pacientesParaAtender() || !haEnfermeiraLivre(sketch))
+      return;
 
-    Enfermeira enfermeira = enfermeiras.at(enfermeiraLivreIdx);
+    Enfermeira enfermeira = enfermeiras.at(buscarEnfermeiraLivre());
     Paciente paciente;
  
     if((preferenciaisAtendidos < 2 && !filaPreferencial.empty())
