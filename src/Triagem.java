@@ -58,12 +58,16 @@ public class Triagem {
     protected void finalizarAtendimento(Paciente paciente) {
       var cor = corPaciente(paciente);
       paciente.setCorManchester(cor); 
+
+      // TODO: Fazer o paciente voltar ao seu assento
     } 
 
     public Enfermeira(int x, int y, PApplet sketch) {
       super(x, y, sketch);
     }
   }
+
+  private Vector<Assento> assentos;
 
   private Queue<Paciente> filaNormal;
   private Queue<Paciente> filaPreferencial;
@@ -117,11 +121,19 @@ public class Triagem {
     return corPaciente(noAtual * 2 + 2, paciente);
   }
 
+  private int buscarAssentoLivre() {
+    return assentos.find((var assento) -> !assento.ocupado());
+  }
+
+  public boolean haAssentoLivre() {
+    return buscarAssentoLivre() != -1;
+  }
+
   // Busca uma enfermeira não ocupada.
   //
   // Retorna -1 se não existir nenhuma enfermeira livre,
   // ou o seu índice da primeira enfermeira livre caso essa exista.
-  private int buscarEnfermeiraLivre(PApplet sketch) {
+  private int buscarEnfermeiraLivre() {
     return enfermeiras.find(
       (var enfermeira) -> enfermeira.estaLivre()
     );
@@ -130,7 +142,7 @@ public class Triagem {
   // Atualiza o estado da triagem. Deve ser utilizado antes de chamar métodos
   // como 'haEnfermeiraLivre' ou 'chamarProximoPaciente'.
   public void atualizar() {
-    enfermeiras.forEach((var enfermeira) -> enfermeira.atualizar());
+    enfermeiras.forEach((var enfermeira) -> { enfermeira.atualizar(); });
   }
 
   // Avalia o estado do paciente de acordo com o Protocolo de Manchester,
@@ -140,7 +152,7 @@ public class Triagem {
   }
 
   public boolean haEnfermeiraLivre(PApplet sketch) {
-    return buscarEnfermeiraLivre(sketch) != -1;
+    return buscarEnfermeiraLivre() != -1;
   }
 
   public boolean pacientesParaAtender() {
@@ -151,7 +163,7 @@ public class Triagem {
   //
   // As filas não podem estar vazias e alguma enfermeira deve estar livre.
   public void chamarProximoPaciente(PApplet sketch) {
-    int enfermeiraLivreIdx = buscarEnfermeiraLivre(sketch);
+    int enfermeiraLivreIdx = buscarEnfermeiraLivre();
 
     assert(pacientesParaAtender() && enfermeiraLivreIdx != -1);
 
@@ -185,8 +197,9 @@ public class Triagem {
       filaNormal.enqueue(paciente);
   }
 
-  public Triagem(Vector<Enfermeira> enfermeiras) {
+  public Triagem(Vector<Enfermeira> enfermeiras, Vector<Assento> assentos) {
     this.enfermeiras = Vector.from(enfermeiras);
+    this.assentos = Vector.from(assentos);
     filaNormal = new Queue<>();
     filaPreferencial = new Queue<>();
 
