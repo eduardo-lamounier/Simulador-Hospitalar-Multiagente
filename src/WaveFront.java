@@ -11,5 +11,63 @@
  * vizinhas e andar sempre para a de meno:r número — isso garante o caminho
  * mais curto, sem precisar refazer a busca a cada passo (o mapa de
  * distâncias já foi calculado uma única vez).
-**/ 
+*/
+import java.util.Arrays;
+import java.util.function.BiPredicate;
+ 
+import estruturas.Queue;
+
+public class WaveFront{
+
+  private static final int[][]DIRECOES = {
+    {1,0},
+    {0,1},
+    {-1,0},
+    {0,-1}
+  };
+  private WaveFront(){};
+  public static boolean Passavel(char, [][] grid, int i, int j){
+    char celula = grid[i][j];
+    return  celula != '#' && celula != 'E' && celula != 'M';
+  };
+  // Verificação da transponibilidade do quadrado do grid. Não permite a análise
+  // dinâmica do grid.
+  public static int[][] calcularOnda(char[][] grid, int destI, int destJ){
+    int linhas = grid.length;
+    int colunas = grid[0].length;
+    int[][] onda = new int[linhas][colunas];
+    for (int[] linha : onda) Arrays.fill(linha, -1);
+ 
+    Queue<int[]> fila = new Queue<>();
+    onda[destI][destJ] = 0;
+    fila.enqueue(new int[]{destI, destJ});
+
+    while (!fila.empty()) {
+    int[] atual = fila.front();
+    fila.dequeue();
+ 
+    int i = atual[0];
+    int j = atual[1];
+ 
+    for (int d = 0; d < 4; d++) { 
+        int ni = i + DI[d];
+        int nj = j + DJ[d];
+ 
+        if (ni < 0 || ni >= linhas || nj < 0 || nj >= colunas)
+            continue;
+        if (onda[ni][nj] != -1) // já visitada
+            continue;
+        if (!transponivel.test(ni, nj))
+            continue;
+        onda[ni][nj] = onda[i][j] + 1;
+        fila.enqueue(new int[]{ni, nj});
+            }
+        }
+ 
+        return onda;
+    }
+
+
+  }
+}
 
