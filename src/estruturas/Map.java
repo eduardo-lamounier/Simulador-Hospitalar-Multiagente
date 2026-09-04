@@ -37,7 +37,7 @@ public class Map<K, V> {
 
   private int findPositionForKey(K key) {
     assert key != null;
-    int begin = hash(key) % data.size();
+    int begin = hash(key);
 
     for(int i = 0; i < data.size(); i++) {
       int idx = (begin + i) % data.size();
