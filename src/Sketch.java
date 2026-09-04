@@ -1,5 +1,6 @@
 import processing.core.PApplet;
 
+import estruturas.Vector;
 import ui.*;
 
 public class Sketch extends PApplet {
@@ -14,6 +15,22 @@ public class Sketch extends PApplet {
   private SelecaoDeMapa selecao;
   private Pause pause;
 
+  private Vector<Paciente> pacientes = new Vector<>();
+  
+  public void adicionarPaciente(Paciente paciente) {
+    assert paciente != null;
+
+    pacientes.push(paciente);
+  }
+
+  public void removerPaciente(Paciente paciente) {
+    assert paciente != null;
+
+    int idx = pacientes.find((var p) -> p == paciente);
+
+    assert idx != -1;
+    pacientes.remove(idx);
+  }
 
   @Override
   public void settings() {
