@@ -122,7 +122,7 @@ public class Triagem {
   }
 
   private int buscarAssentoLivre() {
-    return assentos.find((var assento) -> !assento.ocupado());
+    return assentos.find((var assento) -> assento.estado() == Assento.Estado.LIVRE);
   }
 
   public boolean haAssentoLivre() {
