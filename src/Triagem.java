@@ -129,6 +129,13 @@ public class Triagem {
     return buscarAssentoLivre() != -1;
   }
 
+  public Assento assentoLivre() {
+    int idx = buscarAssentoLivre();
+
+    assert idx != -1;
+    return assentos.at(idx);
+  }
+
   // Busca uma enfermeira não ocupada.
   //
   // Retorna -1 se não existir nenhuma enfermeira livre,
