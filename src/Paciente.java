@@ -72,7 +72,7 @@ public class Paciente {
     
     if(posicao == posicaoObjetivo) {
       observadores.forEach(
-        (var observador) -> observador.objetivoPacienteAtingido(this)
+        (var observador) -> { observador.objetivoPacienteAtingido(this); }
       ); 
       removerObjetivo();
     }
