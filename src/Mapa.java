@@ -1,9 +1,29 @@
+import processing.core.PImage;
+
 import java.io.*;
 import java.util.Scanner;
 
 
 public class Mapa {
     private static char[][] s_grid;
+
+    private static boolean assetsCarregados = false;
+    private static PImage spriteChao;
+    private static PImage spriteParede;
+    private static PImage spriteGerador;
+    private static PImage spriteTotem;
+    private static PImage spriteRemovedor;
+    private static PImage spriteEnfermeira;
+    private static PImage spriteMedico;
+    private static PImage spritePaciente;
+    private static PImage spriteAssento;
+    private static PImage spritePacienteSentado;
+    private static PImage spritePacienteNoGerador;
+
+    private static void carregarAssets(Sketch p) {
+        assetsCarregados = true;
+        // TODO: Carregar cada sprite
+    }
 
     // Lê o arquivo do mapa especificado e retorna o grid desse mapa
     // TODO: Implementar
@@ -77,6 +97,8 @@ public class Mapa {
     
     
     public static void desenharMapa(char matriz[][],Sketch p){
+        if(!assetsCarregados)
+            carregarAssets(p);
 
         float largura = p.width / (float) matriz[0].length;
         float altura = p.height / (float) matriz.length;
