@@ -7,7 +7,7 @@ package estruturas;
 // Mantém o load factor entre 50% e 70%.
 //
 // NOTE: NÃO permite `null` como chave.
-public class Map<K, V> {
+public class HashMap<K, V> {
   private class Entry {
     public K key;
     public V value;
@@ -146,7 +146,7 @@ public class Map<K, V> {
     return count == 0;
   }
 
-  public Map() {
+  public HashMap() {
     data = new Vector<>(STARTING_CAPACITY);
   }
 }

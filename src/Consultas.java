@@ -5,7 +5,7 @@ import estruturas.*;
 public class Consultas {
   private Removedor removedor;
 
-  private Map<Triagem.CorManchester, Queue<Paciente>> filas;
+  private HashMap<Triagem.CorManchester, Queue<Paciente>> filas;
 
   private Vector<Medico> medicos;
 
