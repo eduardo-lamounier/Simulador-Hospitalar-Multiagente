@@ -38,8 +38,13 @@ public class Vector<T> {
   // Se o novo tamanho for maior que o anterior, as posições após a anterior
   // última posição do vetor são todas preenchidas `null`.
   public void resize(int n) {
-    reserve(n);
-    size = n;
+    if(size >= n) {
+      size = n;
+      return;
+    }
+
+    while(size < n)
+      push(null);
   }
 
   // Adiciona um novo elemento ao fim do vetor e expande-o se necessário
@@ -147,11 +152,10 @@ public class Vector<T> {
   //
   // 'callback' é uma função que recebe o elemento atual
   // da iteração
+  @SuppressWarnings("unchecked")
   public void forEach(Consumer<T> callback) {
-    forEach((var x) -> {
-      callback.accept(x);
-      return true;
-    });
+    for(int i = 0; i < size; i++)
+      callback.accept((T)data[i]);
   }
 
   // Passa por todos os elementos atuais no vetor e aplica
@@ -218,7 +222,7 @@ public class Vector<T> {
     assert left >= 0 && right < size && left <= right : "Intervalo inválido!";
 
     Vector<T> vec = new Vector<>();
-    vec.reserve(size);
+    vec.reserve(right - left);
 
     for(int i = left; i < right; i++)
       vec.push((T)data[i]);
