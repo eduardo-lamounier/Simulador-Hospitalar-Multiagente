@@ -53,7 +53,7 @@ public class Sketch extends PApplet {
         background(0xFF8DBCC7);
         menu.atualiza();
 
-        if(menu.getIrSelecao())
+        if(menu.getProximaEtapa())
           estado_atual = Estado.SELECAO;
         
         break;
