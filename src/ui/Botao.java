@@ -22,7 +22,7 @@ public class Botao {
 
     private PImage imagem; // Imagem dentro do botão (opcional)
 
-    private Runnable acao;
+    private Runnable acao; // Ação que o botão exectua ao ser clicado
 
     public Botao(PApplet p, int x, int y, int l, int h) {
         this.p = p;
@@ -31,7 +31,10 @@ public class Botao {
 
         this.width = p.width;
         this.height =  p.height;
+
+        // Configurações padrão do botão
         p.rectMode(PApplet.CENTER);
+        p.imageMode(PApplet.CENTER);
     }
 
     public void atualiza() { 
@@ -50,7 +53,7 @@ public class Botao {
         float h_atual = h * escala;
         
         if(imagem != null) {
-            p.image(imagem, x, y, l_atual, h_atual); 
+            p.image(imagem, x, y, l_atual, h_atual);
             return;
         }
 
@@ -64,6 +67,7 @@ public class Botao {
         }
     }
 
+    // Método responsável por aplicar o efeito hover no botão
     private void efeitoHover() {
         if(mouseEmCima()) {
             p.fill(cor - 0x44000000); // Diminuindo a saturação
@@ -76,6 +80,7 @@ public class Botao {
         escala = PApplet.lerp(escala, 1f, 0.08f); // Diminuindo escala até 1
     }
 
+    // Método responsável por verificar se o mouse está em cima do botão
     public boolean mouseEmCima() {
         if(p.mouseX >= x - l/2 && p.mouseX <= x + l/2 && p.mouseY >= y - h/2 && p.mouseY <= y + h/2)
             return true;
@@ -83,6 +88,7 @@ public class Botao {
         return false;
     }
 
+    // Método responsável por verificar se o botão foi clicado
     public void clicado() {
         if(mouseEmCima() && p.mousePressed) 
             acao.run();
@@ -131,14 +137,14 @@ public class Botao {
 
     public void setX(int x) throws IllegalArgumentException {
         if(x < 0 || x > width) 
-            throw new IllegalArgumentException("Valor x do botão errado!");
+            throw new IllegalArgumentException("Valor x do botão fora do limite!");
         
         this.x = x;
     }
 
     public void setY(int y) throws IllegalArgumentException {
         if(y < 0 || y > height) 
-            throw new IllegalArgumentException("Valor y do botão errado!");
+            throw new IllegalArgumentException("Valor y do botão fora do limite!");
             
         this.y = y;
     }
