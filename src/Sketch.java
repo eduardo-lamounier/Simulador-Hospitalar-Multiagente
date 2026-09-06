@@ -66,6 +66,21 @@ public class Sketch extends PApplet {
       case PAUSE:
         background(0xFF8DBCC7);
         pause.atualiza();
+
+        if(pause.getContinuar()) {
+          estado_atual = Estado.SIMULACAO;
+          pause.setContinuar(false);
+
+          break;
+        }
+        
+        if(pause.getIrSelecao()) {
+          estado_atual = Estado.SELECAO;
+          pause.setIrSelecao(false);
+
+          break;
+        }
+
         break;
 
       case SIMULACAO:
@@ -84,7 +99,7 @@ public class Sketch extends PApplet {
       switch (this.key) {
         case 'p':
           if(estado_atual == Estado.PAUSE) {
-            estado_atual = Estado.MENU;
+            estado_atual = Estado.SELECAO;
             return;
           }
 
