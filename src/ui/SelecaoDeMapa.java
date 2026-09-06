@@ -14,8 +14,9 @@ public class SelecaoDeMapa {
     private Botao ir_esquerda; // Botão para ir a esquerda na seleção de mapas
     private Botao ir_direita; // Botoao para ir a direita na seleção de mapas
 
-    // Menu:
-    private int selecaoMapa = 1; // Responsável por definir qual o mapa sera mostrado
+    // Elementos da tela:
+    private int selecaoMapa = 1; // Responsável por definir qual mapa sera mostrado
+    private PImage SpriteMapa; // Responsável por armazenar a imagem do mapa mostrado
 
     // Temporização:
     private int cooldown = 200; // 200 milissegundos
@@ -32,7 +33,7 @@ public class SelecaoDeMapa {
         // Botões sendo montados:
         sair = new Botao(sketch, 100, 100, 50, 50)
                         .comArredondamento(20f)
-                        .comCor(0xFFC4E1E6)
+                        .comCor(0xFFC4E1E6) // #c4e1e6
                         .comTexto("X", 20, 0xFFb30c15) // #b30c15
                         .comAcao(() -> {
                                 System.out.println("Finalizando o programa...");
@@ -41,16 +42,16 @@ public class SelecaoDeMapa {
             
         ir_direita = new Botao(sketch, 700, 300, 50, 50)
                         .comArredondamento(20f)
-                        .comCor(0xFFC4E1E6)
-                        .comTexto("direita", 20, 0xFF020202)
+                        .comCor(0xFFC4E1E6) // # C4E1E6
+                        .comTexto("direita", 20, 0xFF020202) // #020202
                         .comAcao(() -> {
                             selecaoMapa += 1;
                         });
             
         ir_esquerda = new Botao(sketch, 100, 300, 50, 50)
                         .comArredondamento(20f)
-                        .comCor(0xFFC4E1E6)
-                        .comTexto("esquerda", 20, 0xFF020202)
+                        .comCor(0xFFC4E1E6) // #C4E1E6
+                        .comTexto("esquerda", 20, 0xFF020202) // #020202
                         .comAcao(() -> {
                             selecaoMapa -= 1;
                         });                              
@@ -65,20 +66,19 @@ public class SelecaoDeMapa {
     public void desenha() {   
         fazerTitulo();
 
+        sair.atualiza();
+
         switch (selecaoMapa) {
             case 1:
-                sair.atualiza();
                 ir_direita.atualiza();
                 break;
 
             case 2:
-                sair.atualiza();
                 ir_direita.atualiza();
                 ir_esquerda.atualiza();
                 break;
 
             case 3:
-                sair.atualiza();
                 ir_esquerda.atualiza();
                 break;
 
@@ -89,28 +89,39 @@ public class SelecaoDeMapa {
 
     private void fazerTitulo() {
         p.textAlign(PApplet.CENTER, PApplet.CENTER);
-        p.fill(0x00000000);
+        p.fill(0x00000000); // #000000
+
         final float tamanho_sprite = 450;
+
+        p.textSize(75);
+        p.text(" mapa " + selecaoMapa, width/2, 30);
+
         switch (selecaoMapa) {
             case 1:
-                p.textSize(75);
-                p.text(" mapa 1", width/2, 30);
-                PImage meuSprite2 = p.loadImage("./assets/Sprites/a1.png");
-                p.image(meuSprite2, (width/2) - tamanho_sprite/2, (height/2)- tamanho_sprite/2,tamanho_sprite,tamanho_sprite);
+                SpriteMapa = p.loadImage("./assets/Sprites/Exemplo_Mapa" + selecaoMapa + ".png");
+
+                assert SpriteMapa != null : "Sprite do mapa não foi carregado corretamente!";
+
+                p.image(SpriteMapa, (width/2) - tamanho_sprite/2, (height/2) - tamanho_sprite/2, 
+                        tamanho_sprite, tamanho_sprite);
                 break;
 
             case 2:
-                p.textSize(75);
-                p.text(" mapa 2", width/2, 30);
-                PImage meuSprite = p.loadImage("./assets/Sprites/b3.png");
-                p.image(meuSprite, (width/2) - tamanho_sprite/2, (height/2)- tamanho_sprite/2,tamanho_sprite,tamanho_sprite);
+                SpriteMapa = p.loadImage("./assets/Sprites/Exemplo_Mapa" + selecaoMapa + ".png");
+
+                assert SpriteMapa != null : "Sprite do mapa não foi carregado corretamente!";
+
+                p.image(SpriteMapa, (width/2) - tamanho_sprite/2, (height/2) - tamanho_sprite/2, 
+                        tamanho_sprite, tamanho_sprite);
                 break;
 
             case 3:
-                p.textSize(75);
-                p.text(" mapa 3", width/2,30);
-                PImage meuSprite3 = p.loadImage("./assets/Sprites/Chao.png");
-                p.image(meuSprite3, (width/2) - tamanho_sprite/2, (height/2)- tamanho_sprite/2,tamanho_sprite,tamanho_sprite);
+                SpriteMapa = p.loadImage("./assets/Sprites/Chao.png");
+
+                assert SpriteMapa != null : "Sprite do mapa não foi carregado corretamente!";
+
+                p.image(SpriteMapa, (width/2) - tamanho_sprite/2, (height/2) - tamanho_sprite/2, 
+                        tamanho_sprite, tamanho_sprite);
                 break;
 
             default: 
