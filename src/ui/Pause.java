@@ -62,6 +62,7 @@ public class Pause {
 
     public void atualiza() {
         desenha();
+        checaClique();
     }
 
     public void desenha() {
