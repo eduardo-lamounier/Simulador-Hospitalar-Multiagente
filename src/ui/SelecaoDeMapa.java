@@ -2,8 +2,12 @@ package ui;
 
 import processing.core.PApplet;
 import processing.core.PImage;
+import estruturas.Vector;
 
 public class SelecaoDeMapa {
+    // Final:
+    private static final int NUM_MAPAS = 3; // Número total de mapas disponíveis
+
     // Atributos comuns do PApplet
     private PApplet p; // Instância da sketch principal
     private int width; // Largura do sketch 
@@ -16,7 +20,8 @@ public class SelecaoDeMapa {
 
     // Elementos da tela:
     private int selecaoMapa = 1; // Responsável por definir qual mapa sera mostrado
-    private PImage SpriteMapa; // Responsável por armazenar a imagem do mapa mostrado
+    private PImage spriteMapa; // Responsável por armazenar a imagem do mapa mostrado
+    private Vector<Botao> mapas = new Vector<>(); // Vetor de botões para seleção de mapas
 
     // Temporização:
     private int cooldown = 200; // 200 milissegundos
@@ -54,11 +59,27 @@ public class SelecaoDeMapa {
                         .comTexto("esquerda", 20, 0xFF020202) // #020202
                         .comAcao(() -> {
                             selecaoMapa -= 1;
-                        });                              
+                        }); 
+                        
+        renderizaMapa();
     }
 
+    // Método responsável por renderizar as imagens dos mapas
+    private void renderizaMapa() {
+        final int tamanho_sprite = 450;
+
+        for(int i = 0; i < NUM_MAPAS; i++) {
+            spriteMapa = p.loadImage("./assets/Sprites/Exemplo_Mapa" + (i + 1) + ".png");
+
+            assert spriteMapa != null : "Sprite do mapa não foi carregado corretamente!";
+
+            mapas.insert(i, new Botao(p, width/2, height/2, tamanho_sprite, tamanho_sprite)
+                            .comImagem(spriteMapa));
+        }
+    }
+
+    // Método responsável pelas mecanicas de repetição do draw() como desenhar a seleção de mapa
     public void atualiza() {
-        // Método responsável pelas mecanicas de repetição do draw() como desenhar a seleção de mapa
         checaClique();
         desenha();
     }
@@ -66,67 +87,23 @@ public class SelecaoDeMapa {
     public void desenha() {   
         fazerTitulo();
 
+        mapas.at(selecaoMapa - 1).atualiza();
+
         sair.atualiza();
 
-        switch (selecaoMapa) {
-            case 1:
-                ir_direita.atualiza();
-                break;
+        if(selecaoMapa > 1)
+            ir_esquerda.atualiza();
 
-            case 2:
-                ir_direita.atualiza();
-                ir_esquerda.atualiza();
-                break;
-
-            case 3:
-                ir_esquerda.atualiza();
-                break;
-
-            default:
-                break;
-        }
+        if(selecaoMapa < NUM_MAPAS)
+            ir_direita.atualiza();
     }
 
+    // Método responsável por desenhar o título do mapa
     private void fazerTitulo() {
         p.textAlign(PApplet.CENTER, PApplet.CENTER);
         p.fill(0x00000000); // #000000
-
-        final float tamanho_sprite = 450;
-
         p.textSize(75);
-        p.text(" mapa " + selecaoMapa, width/2, 30);
-
-        switch (selecaoMapa) {
-            case 1:
-                SpriteMapa = p.loadImage("./assets/Sprites/Exemplo_Mapa" + selecaoMapa + ".png");
-
-                assert SpriteMapa != null : "Sprite do mapa não foi carregado corretamente!";
-
-                p.image(SpriteMapa, (width/2) - tamanho_sprite/2, (height/2) - tamanho_sprite/2, 
-                        tamanho_sprite, tamanho_sprite);
-                break;
-
-            case 2:
-                SpriteMapa = p.loadImage("./assets/Sprites/Exemplo_Mapa" + selecaoMapa + ".png");
-
-                assert SpriteMapa != null : "Sprite do mapa não foi carregado corretamente!";
-
-                p.image(SpriteMapa, (width/2) - tamanho_sprite/2, (height/2) - tamanho_sprite/2, 
-                        tamanho_sprite, tamanho_sprite);
-                break;
-
-            case 3:
-                SpriteMapa = p.loadImage("./assets/Sprites/Chao.png");
-
-                assert SpriteMapa != null : "Sprite do mapa não foi carregado corretamente!";
-
-                p.image(SpriteMapa, (width/2) - tamanho_sprite/2, (height/2) - tamanho_sprite/2, 
-                        tamanho_sprite, tamanho_sprite);
-                break;
-
-            default: 
-                break;
-        }      
+        p.text(" mapa " + selecaoMapa, width/2, 30);   
     }
     
     public void checaClique() {
