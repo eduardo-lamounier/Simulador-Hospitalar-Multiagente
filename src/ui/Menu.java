@@ -1,7 +1,6 @@
 package ui;
 
 import processing.core.PApplet;
-import processing.core.PImage;
 
 public class Menu{
     // Atributos comuns do PApplet
@@ -11,10 +10,10 @@ public class Menu{
 
     // Botões:
     private Botao sair; // Botão para sair da simulação
-    private Botao proxima_etapa; // Botão para ir a próxima etapa
+    private Botao comecar; // Botão para ir a próxima etapa
 
     // Menu:
-    private boolean irSelecao = false; // TODO: mudar nome
+    private boolean proxima_etapa = false;
 
     // Temporização:
     private int cooldown = 200; // 200 milissegundos
@@ -29,11 +28,11 @@ public class Menu{
         clique_atual = p.millis();
 
         // Botões sendo montados:
-        proxima_etapa = new Botao(sketch, width/2, 5 * height/12, 3 * width/5, height/  4)
+        comecar = new Botao(sketch, width/2, 5 * height/12, 3 * width/5, height/  4)
                         .comArredondamento(20f)
                         .comCor(0xFFC4E1E6)
                         .comTexto("Iniciar", 100, 0xFF020202)
-                        .comAcao(() -> { irSelecao = true; });
+                        .comAcao(() -> { proxima_etapa = true; });
 
         sair = new Botao(sketch, width/2, 3 * height/4, 3 * width/5, height/6)
                         .comArredondamento(20f)
@@ -54,7 +53,7 @@ public class Menu{
     public void desenha() {   
         fazerTitulo();
         
-        proxima_etapa.atualiza();
+        comecar.atualiza();
         sair.atualiza(); 
     }
 
@@ -71,11 +70,11 @@ public class Menu{
 
         clique_atual = p.millis();
 
-        proxima_etapa.clicado();
+        comecar.clicado();
         sair.clicado();
     }
 
-    public boolean getIrSelecao() {
-        return irSelecao;
+    public boolean getProximaEtapa() {
+        return proxima_etapa;
     }
 }
