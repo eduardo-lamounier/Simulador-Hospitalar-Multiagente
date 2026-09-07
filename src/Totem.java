@@ -21,6 +21,10 @@ public class Totem implements ObservadorPaciente {
 
   public void objetivoPacienteAtingido(Paciente paciente) {
     gerarSenhaPaciente(paciente);
+
+    Assento assento = triagem.assentoLivre();
+    paciente.irAoAssento(assento);
+    triagem.adicionarPacienteAFila(paciente);
   }
 
   public Totem(Triagem triagem, int x, int y) {
