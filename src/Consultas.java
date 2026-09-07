@@ -13,6 +13,8 @@ public class Consultas {
   public static final double TEMPO_ATENDIMENTO_MINIMO = 4 * 1000;
   public static final double DESVIO_TEMPO_ATENDIMENTO = 4 * 1000;
 
+  private Vector<Assento> assentos;
+
   public class Medico extends Atendente {
     @Override
     protected double gerarTempoAtendimento() {
@@ -41,6 +43,21 @@ public class Consultas {
     public Medico(int x, int y, PApplet sketch) {
       super(x, y, sketch);
     }
+  }
+
+  private int buscarAssentoLivre() {
+    return assentos.find((var assento) -> assento.estado() == Assento.Estado.LIVRE);
+  }
+
+  public boolean haAssentoLivre() {
+    return buscarAssentoLivre() != -1;
+  }
+
+  public Assento assentoLivre() {
+    int idx = buscarAssentoLivre();
+
+    assert idx != -1;
+    return assentos.at(idx);
   }
 
   private int buscarMedicoLivre() {
@@ -94,8 +111,9 @@ public class Consultas {
     filas.get(cor).enqueue(paciente);
   }
 
-  public Consultas(Vector<Medico> medicos, Removedor removedor) {
+  public Consultas(Vector<Medico> medicos, Vector<Assento> assentos, Removedor removedor) {
     this.medicos = Vector.from(medicos);
+    this.assentos = Vector.from(assentos);
     this.removedor = removedor;
 
     for(var cor : Triagem.CorManchester.values())

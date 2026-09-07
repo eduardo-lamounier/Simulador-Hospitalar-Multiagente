@@ -59,13 +59,17 @@ public class Triagem {
       var cor = corPaciente(paciente);
       paciente.setCorManchester(cor); 
 
-      // TODO: Fazer o paciente voltar ao seu assento
+      Assento assento = consultas.assentoLivre();
+      paciente.irAoAssento(assento);
+      consultas.adicionarPacienteAFila(paciente);
     } 
 
     public Enfermeira(int x, int y, PApplet sketch) {
       super(x, y, sketch);
     }
   }
+
+  private Consultas consultas;
 
   private Vector<Assento> assentos;
 
@@ -204,9 +208,10 @@ public class Triagem {
       filaNormal.enqueue(paciente);
   }
 
-  public Triagem(Vector<Enfermeira> enfermeiras, Vector<Assento> assentos) {
+  public Triagem(Vector<Enfermeira> enfermeiras, Vector<Assento> assentos, Consultas consultas) {
     this.enfermeiras = Vector.from(enfermeiras);
     this.assentos = Vector.from(assentos);
+    this.consultas = consultas;
     filaNormal = new Queue<>();
     filaPreferencial = new Queue<>();
 
