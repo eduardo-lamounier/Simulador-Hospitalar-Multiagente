@@ -3,6 +3,8 @@ import processing.core.PImage;
 import java.io.*;
 import java.util.Scanner;
 
+import processing.core.PImage;
+
 
 public class Mapa {
     private static char[][] s_grid;
@@ -116,32 +118,40 @@ public class Mapa {
                         break;
                     case '.':
                         //Chão (.)
-                        p.text(i, largura, altura);
-                        p.rect(j* largura, i * altura, largura, altura);
+                        PImage chao =p.loadImage("./assets/Sprites/Chao.png");
+                        p.image(chao,j* largura, i * altura, largura, altura);
+                        p.rect(largura, altura, i, j);
                         break;
                     case'#':
                         //Parede (#):
-                        p.rect(j* largura, i * altura, largura, altura);
+                        PImage parede = p.loadImage("./assets/Sprites/Parede.png");
+                        p.image(parede,j* largura, i * altura, largura, altura);
                         break;
                     case 'R':
                         //Removedor (R):
-                        p.rect(j* largura, i * altura, largura, altura);
+                        PImage removedor = p.loadImage("./assets/Sprites/Removedor.png");
+                        p.image(removedor,j* largura, i * altura, largura, altura);
                         break;
                     case 'E':
                         //Enfermeira de Triagem (E):
-                        p.rect(j* largura, i * altura, largura, altura);
+                        PImage enfermeira = p.loadImage("./assets/Sprites/Enfermeira.png");
+                        p.image(enfermeira,j* largura, i * altura, largura, altura);
                         break;
                     case 'A':
                         //Assento (A):
-                        p.rect(j* largura, i * altura, largura, altura);
+                        PImage assento = p.loadImage("./assets/Sprites/Assento.png");
+                        p.image(assento,j* largura, i * altura, largura, altura);                        
                         break;                        
                     case 'G':
                         //Gerador (G):
-                        p.rect(j* largura, i * altura, largura, altura);
+                        PImage gerador = p.loadImage("./assets/Sprites/Gerador.png");
+                        p.image(gerador,j* largura, i * altura, largura, altura);
                         break;
                     case'M':
                         //Médico (M):
-                        p.rect(j* largura, i * altura, largura, altura);
+                        // PImage medico = p.loadImage("./assets/Sprites/Parede.png");
+                        // p.image(parede,j* largura, i * altura, largura, altura);
+
                         break;
                     default:
                         break;
