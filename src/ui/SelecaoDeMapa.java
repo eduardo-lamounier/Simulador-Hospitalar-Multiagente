@@ -12,11 +12,13 @@ public class SelecaoDeMapa {
     private PApplet p; // Instância da sketch principal
     private int width; // Largura do sketch 
     private int height; // Altura do sketch
+    private boolean proxima_etapa = false;
 
     // Botões:
     private Botao sair; // Botão para sair da simulação
     private Botao ir_esquerda; // Botão para ir a esquerda na seleção de mapas
     private Botao ir_direita; // Botoao para ir a direita na seleção de mapas
+    private Botao selecionar_mapa;//botoalto para selecionar  de mapa
 
     // Elementos da tela:
     private int selecaoMapa = 1; // Responsável por definir qual mapa sera mostrado
@@ -59,7 +61,17 @@ public class SelecaoDeMapa {
                         .comTexto("esquerda", 20, 0xFF020202) // #020202
                         .comAcao(() -> {
                             selecaoMapa -= 1;
-                        }); 
+                        });
+        selecionar_mapa = new Botao(sketch, sketch.width/2, sketch.height/2, 450, 450)
+                    .comArredondamento(20f)
+                    .comCor(0x00C4E1E6) // #C4E1E6
+                    .comTexto("", 20, 0xFF020202) // #020202
+                    .comAcao(() -> {
+                        proxima_etapa =true;
+                        // aqui você chama o que precisa pra avançar de tela,
+                        // ex: mudarEstado(Estado.JOGANDO);
+                    });                
+        
                         
         renderizaMapa();
     }
@@ -96,6 +108,8 @@ public class SelecaoDeMapa {
 
         if(selecaoMapa < NUM_MAPAS)
             ir_direita.atualiza();
+            
+        selecionar_mapa.atualiza();
     }
 
     // Método responsável por desenhar o título do mapa
@@ -115,9 +129,16 @@ public class SelecaoDeMapa {
         sair.clicado();
         ir_esquerda.clicado();
         ir_direita.clicado();
+        selecionar_mapa.clicado();
     }
     
     public int getSelecaoMapa() {
         return selecaoMapa;
     }
+
+    public boolean getProximaEtapa() {
+        return proxima_etapa;
+    }
+
+
 }

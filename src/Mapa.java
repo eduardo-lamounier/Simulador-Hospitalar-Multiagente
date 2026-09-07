@@ -3,11 +3,9 @@ import processing.core.PImage;
 import java.io.*;
 import java.util.Scanner;
 
-import processing.core.PImage;
-
-
 public class Mapa {
     private static char[][] s_grid;
+    private static int atul_mapa;
 
     private static boolean assetsCarregados = false;
     private static PImage spriteChao;
@@ -38,6 +36,7 @@ public class Mapa {
             throw new IllegalArgumentException("Não foi possível encontrar o arquivo do mapa");
         }
 
+        atul_mapa = seletMapa;
         int linhas = scanner.nextInt();
         int colunas = scanner.nextInt();
 
@@ -104,55 +103,74 @@ public class Mapa {
 
         float largura = p.width / (float) matriz[0].length;
         float altura = p.height / (float) matriz.length;
-
+        spriteTotem = p.loadImage(String.format("./assets/Sprites/trem%d/Totem.png", atul_mapa));
+        spriteChao = p.loadImage(String.format("./assets/Sprites/trem%d/Chao.png", atul_mapa));
+        spriteParede = p.loadImage(String.format("./assets/Sprites/trem%d/Parede.png", atul_mapa));
+        spriteRemovedor = p.loadImage(String.format("./assets/Sprites/trem%d/Removedor.png", atul_mapa));
+        spriteEnfermeira = p.loadImage(String.format("./assets/Sprites/trem%d/Enfermeira.png", atul_mapa));
+        spriteAssento = p.loadImage(String.format("./assets/Sprites/trem%d/Assento.png", atul_mapa));
+        spriteGerador = p.loadImage(String.format("./assets/Sprites/trem%d/Gerador.png", atul_mapa));
+        spriteMedico = p.loadImage(String.format("./assets/Sprites/trem%d/Medico.png", atul_mapa));
+        spritePaciente = p.loadImage(String.format("./assets/Sprites/trem%d/Paciente.png", atul_mapa));
+        spritePacienteNoGerador = p.loadImage(String.format("./assets/Sprites/trem%d/Paciente_Gerador.png", atul_mapa));
+        spritePacienteSentado = p.loadImage(String.format("./assets/Sprites/trem%d/Paciente_Sentado.png", atul_mapa));
 
         for(int i = 0;i < matriz.length;i++){
             for(int j = 0;j < matriz[0].length;j++){
-
+                
                 switch (matriz[i][j]) {
                     case'T':
-                        //Totem (T):
-                        // PImage meuSprite2 = p.loadImage("../assets/Sprites/a1.png");
-                        //p.image(meuSprite2, (width/2) - tamanho_sprite/2, (height/2)- tamanho_sprite/2,tamanho_sprite,tamanho_sprite);
-                        //p.rect(j* largura, i * altura, largura, altura);
-                        break;
+                    //Totem (T):
+                    p.image(spriteTotem,j* largura, i * altura, largura, altura);
+                        
+                    break;
                     case '.':
-                        //Chão (.)
-                        PImage chao =p.loadImage("./assets/Sprites/Chao.png");
-                        p.image(chao,j* largura, i * altura, largura, altura);
-                        p.rect(largura, altura, i, j);
-                        break;
+                            //Chão (.)
+                        p.image(spriteChao,j* largura, i * altura, largura, altura);
+                        
+                    break;
                     case'#':
                         //Parede (#):
-                        PImage parede = p.loadImage("./assets/Sprites/Parede.png");
-                        p.image(parede,j* largura, i * altura, largura, altura);
-                        break;
+                        p.image(spriteParede,j* largura, i * altura, largura, altura);
+
+                    break;
                     case 'R':
                         //Removedor (R):
-                        PImage removedor = p.loadImage("./assets/Sprites/Removedor.png");
-                        p.image(removedor,j* largura, i * altura, largura, altura);
-                        break;
+                        p.image(spriteRemovedor,j* largura, i * altura, largura, altura);
+
+                    break;
                     case 'E':
                         //Enfermeira de Triagem (E):
-                        PImage enfermeira = p.loadImage("./assets/Sprites/Enfermeira.png");
-                        p.image(enfermeira,j* largura, i * altura, largura, altura);
-                        break;
+                        p.image(spriteEnfermeira,j* largura, i * altura, largura, altura);
+
+                    break;
                     case 'A':
                         //Assento (A):
-                        PImage assento = p.loadImage("./assets/Sprites/Assento.png");
-                        p.image(assento,j* largura, i * altura, largura, altura);                        
-                        break;                        
+                        p.image(spriteAssento,j* largura, i * altura, largura, altura);      
+
+                    break;                        
                     case 'G':
                         //Gerador (G):
-                        PImage gerador = p.loadImage("./assets/Sprites/Gerador.png");
-                        p.image(gerador,j* largura, i * altura, largura, altura);
-                        break;
+                        p.image(spriteGerador,j* largura, i * altura, largura, altura);
+
+                    break;
                     case'M':
                         //Médico (M):
-                        // PImage medico = p.loadImage("./assets/Sprites/Parede.png");
-                        // p.image(parede,j* largura, i * altura, largura, altura);
+                        p.image(spriteMedico,j* largura, i * altura, largura, altura);
 
-                        break;
+                    break;
+                    case'P':
+                        p.image(spritePaciente, j* largura, i * altura, largura, altura);
+
+                    break;
+                    case 'S':
+                        p.image(spritePacienteSentado, j* largura, i * altura, largura, altura);
+
+                    break;
+                    case'D':
+                        p.image(spritePacienteNoGerador, j* largura, i * altura, largura, altura);
+
+                    break;
                     default:
                         break;
                 }
