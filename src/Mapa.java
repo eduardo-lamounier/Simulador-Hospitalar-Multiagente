@@ -90,7 +90,7 @@ public class Mapa {
     public static boolean mapaCarregado() { return s_grid != null; }
 
     public Mapa(int seletMapa){
-        assert mapaCarregado() : "O mapa já foi inicializado!";
+        assert !mapaCarregado() : "O mapa já foi inicializado!";
         s_grid = carregarMapa(seletMapa);
     }
 
