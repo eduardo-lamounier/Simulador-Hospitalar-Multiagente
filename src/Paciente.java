@@ -73,6 +73,16 @@ public class Paciente {
     if(assentoAtual != null && assentoAtual.estado() == Assento.Estado.OCUPADO)
       levantar();
 
+
+    // Recalcula a onda apenas quando o objetivo mudou desde o último
+    // cálculo (evita refazer o BFS do Wavefront todo frame).
+    if(onda == null || !posicaoObjetivo.equals(objetivoDaOndaCalculada)) {
+      onda = WaveFront.calcularOnda(Mapa.gridAtual(), posicaoObjetivo.y, posicaoObjetivo.x);
+      objetivoDaOndaCalculada = posicaoObjetivo;
+    }
+
+    PositionDTO proximaPosicao =
+      WaveFront.proximoPasso(onda, Mapa.gridAtual(), posicao.y, posicao.x);
     // TODO: Caminhada em direção ao objetivo
 
     // TODO: Atualizar posição do paciente
@@ -83,6 +93,30 @@ public class Paciente {
       ); 
       removerObjetivo();
     }
+    // `proximoPasso` retorna null tanto quando chegamos exatamente no
+    // objetivo (ex.: assento, totem, removedor) quanto quando estamos
+    // encostados num objetivo que não pode ser pisado (enfermeira/médico)
+    // — em ambos os casos, do ponto de vista do paciente, ele "chegou".
+    if(proximaPosicao == null) {
+      // Se estávamos indo para um assento reservado e chegamos até ele,
+      // sentamos automaticamente.
+      if(assentoAtual != null && assentoAtual.estado() == Assento.Estado.RESERVADO)
+        sentar(assentoAtual);
+
+      observadores.forEach(
+        (var observador) -> { observador.objetivoPacienteAtingido(this); }
+      );
+      removerObjetivo();
+
+      onda = null;
+      objetivoDaOndaCalculada = null;
+
+      return posicao;
+    }
+
+    posicao = proximaPosicao;
+    return posicao;
+  }
     
     return posicao;
   }
@@ -135,10 +169,40 @@ public class Paciente {
     assento.ocupar();
   }
 
+  // Direções usadas para procurar uma célula livre adjacente ao assento,
+  // na mesma convenção usada no WaveFront (baixo, direita, cima, esquerda).
+  private static final int[][] DIRECOES_ADJACENTES = {
+    {1, 0}, {0, 1}, {-1, 0}, {0, -1}
+  };
+
+  // Procura, entre as 4 células vizinhas de 'origem', a primeira que seja
+  // transitável (chão, assento, totem, etc — não parede/enfermeira/médico).
+  // Se nenhuma for encontrada (paciente cercado), retorna a própria
+  // 'origem' como último recurso.
+  private PositionDTO primeiraPosicaoLivreAdjacente(PositionDTO origem) {
+    char[][] grid = Mapa.gridAtual();
+    int linhas = grid.length;
+    int colunas = grid[0].length;
+
+    for(int[] direcao : DIRECOES_ADJACENTES) {
+      int ni = origem.y + direcao[0];
+      int nj = origem.x + direcao[1];
+
+      if(ni < 0 || ni >= linhas || nj < 0 || nj >= colunas)
+        continue;
+
+      if(!WaveFront.passavel(grid, ni, nj))
+        continue;
+
+      return new PositionDTO(nj, ni);
+    }
+
+    return origem;
+  }
+
   public void levantar() {
+    posicao = primeiraPosicaoLivreAdjacente(assentoAtual.posicao());
     assentoAtual.deixarLivre();
-    // TODO: Paciente deve ir para a primeira posição livre que encontrar que
-    //       também seja adjacente ao assento
     assentoAtual = null;
   }
 
