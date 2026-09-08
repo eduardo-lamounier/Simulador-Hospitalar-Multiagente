@@ -22,11 +22,20 @@ public class Mapa {
 
     private static void carregarAssets(Sketch p) {
         assetsCarregados = true;
-        // TODO: Carregar cada sprite
+        spriteTotem = p.loadImage(String.format("./assets/Sprites/trem%d/Totem.png", atul_mapa));
+        spriteChao = p.loadImage(String.format("./assets/Sprites/trem%d/Chao.png", atul_mapa));
+        spriteParede = p.loadImage(String.format("./assets/Sprites/trem%d/Parede.png", atul_mapa));
+        spriteRemovedor = p.loadImage(String.format("./assets/Sprites/trem%d/Removedor.png", atul_mapa));
+        spriteEnfermeira = p.loadImage(String.format("./assets/Sprites/trem%d/Enfermeira.png", atul_mapa));
+        spriteAssento = p.loadImage(String.format("./assets/Sprites/trem%d/Assento.png", atul_mapa));
+        spriteGerador = p.loadImage(String.format("./assets/Sprites/trem%d/Gerador.png", atul_mapa));
+        spriteMedico = p.loadImage(String.format("./assets/Sprites/trem%d/Medico.png", atul_mapa));
+        spritePaciente = p.loadImage(String.format("./assets/Sprites/trem%d/Paciente.png", atul_mapa));
+        spritePacienteNoGerador = p.loadImage(String.format("./assets/Sprites/trem%d/Paciente_Gerador.png", atul_mapa));
+        spritePacienteSentado = p.loadImage(String.format("./assets/Sprites/trem%d/Paciente_Sentado.png", atul_mapa));
     }
 
     // Lê o arquivo do mapa especificado e retorna o grid desse mapa
-    // TODO: Implementar
     public static char[][] carregarMapa(int seletMapa) {
         Scanner scanner;
 
@@ -56,7 +65,6 @@ public class Mapa {
         scanner.close();
 
         return matriz;
-
     }
 
     // Isso só serve para teste
@@ -87,15 +95,7 @@ public class Mapa {
         s_grid[i_dest][j_dest] = 'P';
     }
 
-    public static boolean mapaCarregado() { return s_grid != null; }
-
-    public Mapa(int seletMapa){
-        assert !mapaCarregado() : "O mapa já foi inicializado!";
-        s_grid = carregarMapa(seletMapa);
-    }
-
-
-    
+    public static boolean mapaCarregado() { return s_grid != null; } 
     
     public static void desenharMapa(char matriz[][],Sketch p){
         if(!assetsCarregados)
@@ -103,18 +103,7 @@ public class Mapa {
 
         float largura = p.width / (float) matriz[0].length;
         float altura = p.height / (float) matriz.length;
-        spriteTotem = p.loadImage(String.format("./assets/Sprites/trem%d/Totem.png", atul_mapa));
-        spriteChao = p.loadImage(String.format("./assets/Sprites/trem%d/Chao.png", atul_mapa));
-        spriteParede = p.loadImage(String.format("./assets/Sprites/trem%d/Parede.png", atul_mapa));
-        spriteRemovedor = p.loadImage(String.format("./assets/Sprites/trem%d/Removedor.png", atul_mapa));
-        spriteEnfermeira = p.loadImage(String.format("./assets/Sprites/trem%d/Enfermeira.png", atul_mapa));
-        spriteAssento = p.loadImage(String.format("./assets/Sprites/trem%d/Assento.png", atul_mapa));
-        spriteGerador = p.loadImage(String.format("./assets/Sprites/trem%d/Gerador.png", atul_mapa));
-        spriteMedico = p.loadImage(String.format("./assets/Sprites/trem%d/Medico.png", atul_mapa));
-        spritePaciente = p.loadImage(String.format("./assets/Sprites/trem%d/Paciente.png", atul_mapa));
-        spritePacienteNoGerador = p.loadImage(String.format("./assets/Sprites/trem%d/Paciente_Gerador.png", atul_mapa));
-        spritePacienteSentado = p.loadImage(String.format("./assets/Sprites/trem%d/Paciente_Sentado.png", atul_mapa));
-
+        
         for(int i = 0;i < matriz.length;i++){
             for(int j = 0;j < matriz[0].length;j++){
                 
@@ -186,5 +175,9 @@ public class Mapa {
         desenharMapa(s_grid, sketch);
     }
     
+    public Mapa(int seletMapa){
+        assert !mapaCarregado() : "O mapa já foi inicializado!";
+        s_grid = carregarMapa(seletMapa);
+    }
 }
 
