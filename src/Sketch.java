@@ -1,7 +1,8 @@
-import processing.core.PApplet;
-
 import estruturas.Vector;
-import ui.*;
+import processing.core.PApplet;
+import ui.Menu;
+import ui.Pause;
+import ui.SelecaoDeMapa;
 
 public class Sketch extends PApplet {
   public static void main(String[] args) {
@@ -98,6 +99,17 @@ public class Sketch extends PApplet {
         assert Mapa.mapaCarregado() : "Mapa deve estar carregado na fase de"
                                       + " simulação!";
         Mapa.desenharMapaAtual(this);
+        // Atualiza o atendimento (enfermeiras/médicos terminando
+        // consultas e chamando o próximo paciente da fila).
+        Mapa.triagemMapaAtual().atualizar();
+        Mapa.consultasMapaAtual().atualizar();
+
+        Mapa.triagemMapaAtual().chamarProximoPaciente(this);
+        Mapa.consultasMapaAtual().chamarProximoPaciente(this);
+
+        // Move cada paciente um passo em direção ao seu objetivo atual,
+        // usando o Wavefront (Paciente.atualizarPosicao()).
+        pacientes.forEach((var paciente) -> { paciente.atualizarPosicao(); });
       break;
 
       default:
