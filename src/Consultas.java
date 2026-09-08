@@ -43,6 +43,10 @@ public class Consultas {
     public Medico(int x, int y, PApplet sketch) {
       super(x, y, sketch);
     }
+
+    public Medico(PositionDTO posicao, PApplet sketch) {
+      super(posicao, sketch);
+    }
   }
 
   private int buscarAssentoLivre() {

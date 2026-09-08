@@ -26,6 +26,10 @@ public abstract class Atendente implements ObservadorPaciente {
     this.posicao = new PositionDTO(x, y);
   }
 
+  public Atendente(PositionDTO posicao, PApplet sketch) {
+    this(posicao.x, posicao.y, sketch);
+  }
+
   // Gera o tempo que o atendimento vai demorar para um paciente.
   protected abstract double gerarTempoAtendimento();
 

@@ -67,6 +67,10 @@ public class Triagem {
     public Enfermeira(int x, int y, PApplet sketch) {
       super(x, y, sketch);
     }
+
+    public Enfermeira(PositionDTO posicao, PApplet sketch) {
+      super(posicao, sketch);
+    }
   }
 
   private Consultas consultas;
