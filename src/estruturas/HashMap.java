@@ -21,17 +21,17 @@ public class HashMap<K, V> {
 
   private static final int STARTING_CAPACITY = 16; // Internamente, é o TAMANHO
                                                    // (não capacidade) do vetor
-                                                   // 'data'
+                                                   // 'entries'
   private static final double HIGH_LOAD_FACTOR = 0.7;
   private static final double LOW_LOAD_FACTOR = 0.5;
 
-  private Vector<Entry> data;
+  private Vector<Entry> entries;
   private int used = 0;
   private int count = 0;
 
   private int hash(K key) {
     assert key != null;
-    int n = data.size();
+    int n = entries.size();
     return ((key.hashCode() % n) + n) % n;
   }
 
@@ -39,10 +39,10 @@ public class HashMap<K, V> {
     assert key != null;
     int begin = hash(key);
 
-    for(int i = 0; i < data.size(); i++) {
-      int idx = (begin + i) % data.size();
+    for(int i = 0; i < entries.size(); i++) {
+      int idx = (begin + i) % entries.size();
 
-      var entry = data.at(idx);
+      var entry = entries.at(idx);
       
       if(entry == null)
         return idx;
@@ -57,19 +57,19 @@ public class HashMap<K, V> {
   }
 
   private void rehash() {
-    Vector<Entry> temp = data;
+    Vector<Entry> temp = entries;
 
     int newSize = Math.max(
       STARTING_CAPACITY,
       (int)Math.ceil(count / LOW_LOAD_FACTOR)
     );
-    data = new Vector<>(newSize);
+    entries = new Vector<>(newSize);
     used = 0;
 
     temp.forEach((var i, var entry) -> {
       if (entry != null && !entry.removed) {
         int idx = findPositionForKey(entry.key);
-        data.setAt(idx, new Entry(entry.key, entry.value));
+        entries.setAt(idx, new Entry(entry.key, entry.value));
         used++;
       }
     });
@@ -81,7 +81,7 @@ public class HashMap<K, V> {
   public V get(K key) {
     assert key != null;
     int idx = findPositionForKey(key);
-    var entry = data.at(idx);
+    var entry = entries.at(idx);
 
     return entry != null ? entry.value : null;
   }
@@ -91,7 +91,7 @@ public class HashMap<K, V> {
   public boolean contains(K key) {
     int idx = findPositionForKey(key);
 
-    var entry = data.at(idx);
+    var entry = entries.at(idx);
     return entry != null && !entry.removed;
   }
 
@@ -102,20 +102,20 @@ public class HashMap<K, V> {
   // `true`.
   public boolean put(K key, V value) {
     assert key != null;
-    if((double)used / data.size() > HIGH_LOAD_FACTOR)
+    if((double)used / entries.size() > HIGH_LOAD_FACTOR)
       rehash();
    
     int idx = findPositionForKey(key);
 
-    if(data.at(idx) == null) {
+    if(entries.at(idx) == null) {
       count++;
       used++;
 
-      data.setAt(idx, new Entry(key, value));
+      entries.setAt(idx, new Entry(key, value));
       return true;
     }
 
-    data.at(idx).value = value;
+    entries.at(idx).value = value;
     return false;
   }
 
@@ -127,7 +127,7 @@ public class HashMap<K, V> {
     assert key != null;
     int idx = findPositionForKey(key);
 
-    var entry = data.at(idx);
+    var entry = entries.at(idx);
     if(entry == null || entry.removed)
       return false;
 
@@ -147,6 +147,6 @@ public class HashMap<K, V> {
   }
 
   public HashMap() {
-    data = new Vector<>(STARTING_CAPACITY);
+    entries = new Vector<>(STARTING_CAPACITY);
   }
 }
