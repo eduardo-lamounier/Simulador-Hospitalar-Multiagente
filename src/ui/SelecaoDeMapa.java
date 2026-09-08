@@ -50,7 +50,7 @@ public class SelecaoDeMapa {
                         .comCor(0xFFC4E1E6) // # C4E1E6
                         .comTexto("direita", 20, 0xFF020202) // #020202
                         .comAcao(() -> {
-                            selecaoMapa += 1;
+                            this.setSelecaoMapa(getSelecaoMapa() + 1);
                         });
             
         ir_esquerda = new Botao(sketch, 100, 300, 50, 50)
@@ -58,7 +58,7 @@ public class SelecaoDeMapa {
                         .comCor(0xFFC4E1E6) // #C4E1E6
                         .comTexto("esquerda", 20, 0xFF020202) // #020202
                         .comAcao(() -> {
-                            selecaoMapa -= 1;
+                            this.setSelecaoMapa(getSelecaoMapa() - 1);
                         }); 
                         
         renderizaMapa();
@@ -74,7 +74,10 @@ public class SelecaoDeMapa {
             assert spriteMapa != null : "Sprite do mapa não foi carregado corretamente!";
 
             mapas.insert(i, new Botao(p, width/2, height/2, tamanho_sprite, tamanho_sprite)
-                            .comImagem(spriteMapa));
+                            .comImagem(spriteMapa)
+                            .comAcao(() -> {
+                                this.getSelecaoMapa();
+                            }));
         }
     }
 
@@ -119,5 +122,11 @@ public class SelecaoDeMapa {
     
     public int getSelecaoMapa() {
         return selecaoMapa;
+    }
+
+    private void setSelecaoMapa(int selecaoMapa) {
+        assert selecaoMapa > 0 && selecaoMapa <= NUM_MAPAS : "O índice do mapa está" 
+                                                            + " fora dos limites";
+        this.selecaoMapa = selecaoMapa;
     }
 }
