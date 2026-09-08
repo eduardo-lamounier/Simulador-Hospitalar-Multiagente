@@ -104,6 +104,7 @@ public class Mapa {
     }
 
     public static char getCelula(int i, int j) { return s_grid[i][j]; }
+    public static char[][] gridAtual() { return s_grid; }
     
     public static void moverPaciente(int i_source, int j_source, int i_dest, int j_dest) {
         assert s_grid[i_source][j_source] == 'P' : "Só é possível mover pacientes";
