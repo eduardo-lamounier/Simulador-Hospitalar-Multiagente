@@ -124,6 +124,7 @@ public class Consultas {
     this.assentos = Vector.from(assentos);
     this.removedor = removedor;
 
+    filas = new HashMap<>();
     for(var cor : Triagem.CorManchester.values())
       filas.put(cor, new Queue<>());
   }
