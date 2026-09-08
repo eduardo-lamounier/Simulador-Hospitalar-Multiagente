@@ -39,6 +39,12 @@ public class Queue<T> {
   public void dequeue() {
     assert !empty() : "Tentou-se remover um elemento de uma lista vazia";
     begin++;
+
+    // Remove o "lixo" que sobra no início da fila após muitas remoções
+    if(begin > count()) {
+      data = data.sliced(begin, data.size());
+      begin = 0;
+    }
   }
 
   // Retorna a quantidade de elementos atualmente na fila
