@@ -64,7 +64,7 @@ public class Sketch extends PApplet {
         selecao.atualiza();
 
           if(selecao.getProximaEtapa()){
-            new Mapa(selecao.getSelecaoMapa());
+            new Mapa(this, selecao.getSelecaoMapa());
 
             estado_atual = Estado.SIMULACAO;
 
