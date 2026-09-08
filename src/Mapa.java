@@ -210,7 +210,7 @@ public class Mapa {
         Vector<PositionDTO> posicoesEnfermeiras = new Vector<>();
 
         for(int i = 0; i < m; i++) {
-            for(int j = 0; j < n; i++) {
+            for(int j = 0; j < n; j++) {
                 PositionDTO posicaoAtual = new PositionDTO(j, i);
                 switch(s_grid[i][j]) {
                     case 'G':
