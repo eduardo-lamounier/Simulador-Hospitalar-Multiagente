@@ -219,7 +219,7 @@ public class Vector<T> {
   // elementos nesse intervalo especifico.
   @SuppressWarnings("unchecked")
   public Vector<T> sliced(int left, int right) {
-    assert left >= 0 && right < size && left <= right : "Intervalo inválido!";
+    assert left >= 0 && right <= size && left <= right : "Intervalo inválido!";
 
     Vector<T> vec = new Vector<>();
     vec.reserve(right - left);
