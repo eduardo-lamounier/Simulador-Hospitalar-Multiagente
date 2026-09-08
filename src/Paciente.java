@@ -51,6 +51,21 @@ public class Paciente {
   
   private String senha;
 
+  // --- Movimentação (Wavefront) ---
+
+  // Controla a "velocidade" do paciente: a cada quantos chamados de
+  // atualizarPosicao() ele efetivamente anda uma célula no grid. Como
+  // Paciente não tem acesso ao relógio do sketch (millis()), usamos uma
+  // contagem de frames em vez de tempo real; ajuste esse valor para deixar
+  // a simulação mais rápida ou mais lenta.
+  private static final int FRAMES_POR_PASSO = 6;
+  private int framesDesdeUltimoPasso = 0;
+
+  // Cache do mapa de distâncias (onda) calculado para o objetivo atual.
+  // Recalculamos só quando o objetivo muda, em vez de todo frame.
+  private int[][] onda;
+  private PositionDTO objetivoDaOndaCalculada;
+
   public PositionDTO posicao() { return posicao; }
 
   public PositionDTO posicaoObjetivo() { return posicaoObjetivo; }
@@ -73,6 +88,12 @@ public class Paciente {
     if(assentoAtual != null && assentoAtual.estado() == Assento.Estado.OCUPADO)
       levantar();
 
+    // Só andamos uma célula a cada FRAMES_POR_PASSO chamadas, para o
+    // paciente não atravessar o mapa em um único frame.
+    framesDesdeUltimoPasso++;
+    if(framesDesdeUltimoPasso < FRAMES_POR_PASSO)
+      return posicao;
+    framesDesdeUltimoPasso = 0;
 
     // Recalcula a onda apenas quando o objetivo mudou desde o último
     // cálculo (evita refazer o BFS do Wavefront todo frame).
@@ -83,16 +104,7 @@ public class Paciente {
 
     PositionDTO proximaPosicao =
       WaveFront.proximoPasso(onda, Mapa.gridAtual(), posicao.y, posicao.x);
-    // TODO: Caminhada em direção ao objetivo
 
-    // TODO: Atualizar posição do paciente
-    
-    if(posicao == posicaoObjetivo) {
-      observadores.forEach(
-        (var observador) -> { observador.objetivoPacienteAtingido(this); }
-      ); 
-      removerObjetivo();
-    }
     // `proximoPasso` retorna null tanto quando chegamos exatamente no
     // objetivo (ex.: assento, totem, removedor) quanto quando estamos
     // encostados num objetivo que não pode ser pisado (enfermeira/médico)
@@ -115,9 +127,6 @@ public class Paciente {
     }
 
     posicao = proximaPosicao;
-    return posicao;
-  }
-    
     return posicao;
   }
 
@@ -246,4 +255,3 @@ public class Paciente {
     this(posicao.x, posicao.y);
   }
 }
-

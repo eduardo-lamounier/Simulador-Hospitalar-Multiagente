@@ -77,10 +77,24 @@ public class WaveFront {
   // distância até o destino — ou seja, o próximo passo do caminho mais
   // curto.
   //
-  // Retorna 'null' se a posição atual já for o destino (distância 0), se
-  // ela não tiver caminho até o destino (-1), ou se nenhum vizinho tiver
-  // distância menor que a atual (agente cercado).
-  public static PositionDTO proximoPasso(int[][] onda, int i, int j) {
+  // Recebe também o 'grid' para garantir que só sugerimos como próximo
+  // passo células realmente transitáveis (chão, assento, totem, gerador,
+  // removedor). Isso é importante porque 'calcularOnda' marca a célula de
+  // destino com distância 0 mesmo quando ela é uma enfermeira/médico (que
+  // não pode ser pisada) — sem esse filtro, o paciente tentaria "entrar"
+  // na célula do(a) atendente em vez de parar ao lado.
+  //
+  // Retorna 'null' em três casos, que devem ser tratados pelo chamador
+  // como "cheguei ao objetivo":
+  // - a posição atual já é o destino (distância 0);
+  // - a posição atual está encostada num destino impassável (ex.: ao lado
+  //   da enfermeira/médico), não havendo vizinho transitável mais próximo;
+  // - o agente está cercado, sem nenhum vizinho transitável com distância
+  //   menor (nesse caso não há de fato caminho, mas do ponto de vista do
+  //   agente o efeito prático é o mesmo: ele para onde está).
+  // Também retorna 'null' se a posição atual não tiver caminho até o
+  // destino (distância -1).
+  public static PositionDTO proximoPasso(int[][] onda, char[][] grid, int i, int j) {
     if (onda[i][j] == 0 || onda[i][j] == -1)
       return null;
 
@@ -100,6 +114,9 @@ public class WaveFront {
       int distanciaVizinho = onda[ni][nj];
 
       if (distanciaVizinho == -1)
+        continue;
+
+      if (!passavel(grid, ni, nj))
         continue;
 
       if (distanciaVizinho < menorDistancia) {

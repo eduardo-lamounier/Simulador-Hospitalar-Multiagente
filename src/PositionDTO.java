@@ -6,9 +6,8 @@ public class PositionDTO {
     this.x = x;
     this.y = y;
   }
-}
 
-// Duas posições são iguais se tiverem as mesmas coordenadas (comparar
+  // Duas posições são iguais se tiverem as mesmas coordenadas (comparar
   // por '==' compara referência, não valor, o que nunca funciona aqui).
   @Override
   public boolean equals(Object outro) {
