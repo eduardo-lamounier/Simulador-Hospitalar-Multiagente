@@ -50,7 +50,7 @@ public class Sketch extends PApplet {
   public void draw() {
     switch (estado_atual) {
       case MENU:
-        background(0xFF8DBCC7);
+        background(0xFF8DBCC7); // #8DBCC7
         menu.atualiza();
 
         if(menu.getProximaEtapa())
@@ -59,22 +59,27 @@ public class Sketch extends PApplet {
         break;
     
       case SELECAO:
-        background(0xFF8DBCC7);
+        background(0xFF8DBCC7); // #8DBCC7
+
+        selecao.atualiza();
+
           if(selecao.getProximaEtapa()){
             Mapa.carregarMapa(selecao.getSelecaoMapa());
+
             estado_atual = Estado.SIMULACAO;
+
+            selecao.setProximaEtapa(false);
           }
-        selecao.atualiza();
+
         break;
 
       case PAUSE:
-        background(0xFF8DBCC7);
+        background(0xFF8DBCC7); // #8DBCC7
         pause.atualiza();
 
         if(pause.getContinuar()) {
-          if(selecao.getProximaEtapa()){
-            estado_atual = Estado.SIMULACAO;
-          }
+          estado_atual = Estado.SIMULACAO;
+        
           pause.setContinuar(false);
 
           break;
