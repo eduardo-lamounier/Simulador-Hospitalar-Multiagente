@@ -78,6 +78,7 @@ public class SelecaoDeMapa {
                             .comImagem(spriteMapa)
                             .comAcao(() -> {
                                 this.getSelecaoMapa();
+                                this.setProximaEtapa(true);
                             }));
         }
     }
@@ -133,5 +134,9 @@ public class SelecaoDeMapa {
 
     public boolean getProximaEtapa() {
         return proxima_etapa;
+    }
+
+    public void setProximaEtapa(boolean proxima_etapa) {
+        this.proxima_etapa = proxima_etapa;
     }
 }
