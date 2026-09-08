@@ -12,6 +12,7 @@ public class SelecaoDeMapa {
     private PApplet p; // Instância da sketch principal
     private int width; // Largura do sketch 
     private int height; // Altura do sketch
+    private boolean proxima_etapa = false;
 
     // Botões:
     private Botao sair; // Botão para sair da simulação
@@ -59,7 +60,7 @@ public class SelecaoDeMapa {
                         .comTexto("esquerda", 20, 0xFF020202) // #020202
                         .comAcao(() -> {
                             this.setSelecaoMapa(getSelecaoMapa() - 1);
-                        }); 
+                        });               
                         
         renderizaMapa();
     }
@@ -128,5 +129,9 @@ public class SelecaoDeMapa {
         assert selecaoMapa > 0 && selecaoMapa <= NUM_MAPAS : "O índice do mapa está" 
                                                             + " fora dos limites";
         this.selecaoMapa = selecaoMapa;
+    }
+
+    public boolean getProximaEtapa() {
+        return proxima_etapa;
     }
 }

@@ -36,16 +36,16 @@ public class Sketch extends PApplet {
   public void settings() {
     size(800, 600);
   }
-
+  
   @Override
   public void setup() {
     estado_atual = Estado.MENU;
-
+    
     menu = new Menu(this);
     selecao = new SelecaoDeMapa(this);
     pause = new Pause(this);
   }
-
+  
   @Override
   public void draw() {
     switch (estado_atual) {
@@ -60,6 +60,10 @@ public class Sketch extends PApplet {
     
       case SELECAO:
         background(0xFF8DBCC7);
+          if(selecao.getProximaEtapa()){
+            Mapa.carregarMapa(selecao.getSelecaoMapa());
+            estado_atual = Estado.SIMULACAO;
+          }
         selecao.atualiza();
         break;
 
@@ -68,7 +72,9 @@ public class Sketch extends PApplet {
         pause.atualiza();
 
         if(pause.getContinuar()) {
-          estado_atual = Estado.SIMULACAO;
+          if(selecao.getProximaEtapa()){
+            estado_atual = Estado.SIMULACAO;
+          }
           pause.setContinuar(false);
 
           break;
@@ -87,7 +93,7 @@ public class Sketch extends PApplet {
         assert Mapa.mapaCarregado() : "Mapa deve estar carregado na fase de"
                                       + " simulação!";
         Mapa.desenharMapaAtual(this);
-        break;
+      break;
 
       default:
         throw new IllegalStateException("Estado atual inválido!"); 
@@ -111,4 +117,3 @@ public class Sketch extends PApplet {
       }
   }
 }
-
