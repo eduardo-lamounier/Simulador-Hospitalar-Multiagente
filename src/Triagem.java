@@ -212,8 +212,12 @@ public class Triagem {
       filaNormal.enqueue(paciente);
   }
 
-  public Triagem(Vector<Enfermeira> enfermeiras, Vector<Assento> assentos, Consultas consultas) {
-    this.enfermeiras = Vector.from(enfermeiras);
+  public void adicionarEnfermeira(Enfermeira enfermeira) {
+    enfermeiras.push(enfermeira);
+  }
+
+  public Triagem(Vector<Assento> assentos, Consultas consultas) {
+    this.enfermeiras = new Vector<>();
     this.assentos = Vector.from(assentos);
     this.consultas = consultas;
     filaNormal = new Queue<>();

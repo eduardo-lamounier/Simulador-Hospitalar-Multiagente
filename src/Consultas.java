@@ -115,8 +115,12 @@ public class Consultas {
     filas.get(cor).enqueue(paciente);
   }
 
-  public Consultas(Vector<Medico> medicos, Vector<Assento> assentos, Removedor removedor) {
-    this.medicos = Vector.from(medicos);
+  public void adicionarMedico(Medico medico) {
+    medicos.push(medico);
+  }
+
+  public Consultas(Vector<Assento> assentos, Removedor removedor) {
+    this.medicos = new Vector<>();
     this.assentos = Vector.from(assentos);
     this.removedor = removedor;
 
