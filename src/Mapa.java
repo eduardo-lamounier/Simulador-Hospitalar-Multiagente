@@ -3,9 +3,28 @@ import processing.core.PImage;
 import java.io.*;
 import java.util.Scanner;
 
+import estruturas.Vector;
+
 public class Mapa {
     private static char[][] s_grid;
     private static int atul_mapa;
+
+    private static Gerador s_gerador;
+    private static Totem s_totem;
+    private static Triagem s_triagem;
+    private static Consultas s_consultas;
+    private static Removedor s_removedor;
+
+    public static Gerador geradorMapaAtual() { return s_gerador; }
+
+    public static Totem totemMapaAtual() { return s_totem; }
+
+    public static Triagem triagemMapaAtual() { return s_triagem; }
+
+    public static Consultas consultasMapaAtual() { return s_consultas; }
+
+    
+    public static Removedor removedorMapaAtual() { return s_removedor; }    
 
     private static boolean assetsCarregados = false;
     private static PImage spriteChao;
@@ -175,9 +194,76 @@ public class Mapa {
         desenharMapa(s_grid, sketch);
     }
     
-    public Mapa(int seletMapa){
+    public Mapa(Sketch sketch, int seletMapa){
         assert !mapaCarregado() : "O mapa já foi inicializado!";
         s_grid = carregarMapa(seletMapa);
+
+        int m = s_grid.length;
+        int n = s_grid[0].length;
+
+        PositionDTO posicaoGerador = null;
+        PositionDTO posicaoRemovedor = null;
+        PositionDTO posicaoTotem = null;
+        Vector<PositionDTO> posicoesAssentos = new Vector<>();
+        Vector<PositionDTO> posicoesMedicos = new Vector<>();
+        Vector<PositionDTO> posicoesEnfermeiras = new Vector<>();
+
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; i++) {
+                PositionDTO posicaoAtual = new PositionDTO(j, i);
+                switch(s_grid[i][j]) {
+                    case 'G':
+                        posicaoGerador = posicaoAtual;
+                        break;
+                    case 'R':
+                        posicaoRemovedor = posicaoAtual;
+                        break;
+                    case 'T':
+                        posicaoTotem = posicaoAtual;
+                        break;
+                    case 'A':
+                        posicoesAssentos.push(posicaoAtual);
+                        break;
+                    case 'M':
+                        posicoesMedicos.push(posicaoAtual);
+                        break;
+                    case 'E':
+                        posicoesEnfermeiras.push(posicaoAtual);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        assert posicaoGerador != null;
+        assert posicaoRemovedor != null;
+        assert posicaoTotem != null;
+        assert posicoesAssentos.size() > 0;
+        assert posicoesMedicos.size() > 0;
+        assert posicoesEnfermeiras.size() > 0;
+        
+        Vector<Assento> assentos = new Vector<>();
+        assentos.reserve(posicoesAssentos.size());
+        posicoesAssentos.forEach((var posicao) -> {
+            assentos.push(new Assento(posicao));
+        });
+        
+        s_removedor = new Removedor(sketch, posicaoRemovedor);
+        s_consultas = new Consultas(assentos, s_removedor);
+        s_triagem = new Triagem(assentos, s_consultas);
+        s_totem = new Totem(s_triagem, posicaoTotem);
+        s_gerador = new Gerador(sketch, s_totem, posicaoGerador);
+
+        posicoesEnfermeiras.forEach((var posicao) -> {
+            Triagem.Enfermeira enfermeira = s_triagem.new Enfermeira(posicao, sketch);
+            s_triagem.adicionarEnfermeira(enfermeira);
+        });
+
+        posicoesMedicos.forEach((var posicao) -> {
+            Consultas.Medico medico = s_consultas.new Medico(posicao, sketch);
+            s_consultas.adicionarMedico(medico);
+        });
     }
 }
 
