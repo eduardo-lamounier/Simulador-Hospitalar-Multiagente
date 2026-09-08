@@ -117,15 +117,7 @@ public class SelecaoDeMapa {
 
         clique_atual = p.millis();
 
-        sair.clicado();
-
-        mapas.at(selecaoMapa).clicado();
-
-        if(selecaoMapa > 1)
-            ir_esquerda.clicado();
-
-        if(selecaoMapa < NUM_MAPAS)
-            ir_direita.clicado();
+        p.delay(cooldown);
     }
     
     public int getSelecaoMapa() {

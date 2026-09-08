@@ -90,10 +90,7 @@ public class Pause {
 
         clique_atual = p.millis();
 
-        continuarBT.clicado();
-        reiniciarBT.clicado();
-        voltarSelecaoBT.clicado();
-        sairBT.clicado();
+        p.delay(cooldown);
     }
 
     // Métodos controladores

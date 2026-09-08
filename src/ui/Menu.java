@@ -70,8 +70,7 @@ public class Menu{
 
         clique_atual = p.millis();
 
-        comecar.clicado();
-        sair.clicado();
+        p.delay(cooldown);
     }
 
     public boolean getProximaEtapa() {

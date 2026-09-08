@@ -41,6 +41,7 @@ public class Botao {
         // Método responsável pelas mecanicas de repetição do draw() como desenhar o botão 
 
         desenha();
+        clicado();
     }
 
     public void desenha() {
