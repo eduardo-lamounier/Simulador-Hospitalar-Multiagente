@@ -103,16 +103,41 @@ public class Mapa {
         } 
     }
 
-    public static char getCelula(int i, int j) { return s_grid[i][j]; }
+    public static char getCelula(int x, int y) { return s_grid[y][x]; }
+
+    public static char getCelula(PositionDTO posicao) { return s_grid[posicao.y][posicao.x]; }
+    
     public static char[][] gridAtual() { return s_grid; }
     
-    public static void moverPaciente(int i_source, int j_source, int i_dest, int j_dest) {
-        assert s_grid[i_source][j_source] == 'P' : "Só é possível mover pacientes";
-        assert s_grid[i_dest][j_dest] == '.' : "Só é possível mover um paciente"
+    public static void moverPaciente(int x_source, int y_source, int x_dest, int y_dest) {
+        assert s_grid[y_source][x_source] == 'P' : "Só é possível mover pacientes";
+        assert s_grid[y_dest][x_dest] == '.' : "Só é possível mover um paciente"
                                                + " para uma célula transitável";
 
-        s_grid[i_source][j_source] = '.';
-        s_grid[i_dest][j_dest] = 'P';
+        s_grid[y_source][x_source] = '.';
+        s_grid[y_dest][x_dest] = 'P';
+    }
+
+    public static void moverPaciente(PositionDTO source, PositionDTO dest) {
+        moverPaciente(source.x, source.y, dest.x, dest.y);
+    }
+
+    public static void posicionarPaciente(int x, int y) {
+        if(s_grid[y][x] == 'G') {
+            s_grid[y][x] = 'D';
+            return;
+        } 
+
+        if(s_grid[y][x] == '.') {
+            s_grid[y][x] = 'D';
+            return;
+        }
+
+        assert false : "Não deve chegar aqui";
+    }
+
+    public static void posicionarPaciente(PositionDTO posicao) {
+        posicionarPaciente(posicao.y, posicao.x);
     }
 
     public static boolean mapaCarregado() { return s_grid != null; } 
