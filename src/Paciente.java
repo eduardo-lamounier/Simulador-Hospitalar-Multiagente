@@ -172,7 +172,6 @@ public class Paciente {
   public Assento assentoAtual() {
     return assentoAtual;
   }
-
   public void irAoAssento(Assento assento) {
     assentoAtual = assento;
     assentoAtual.reservar();
@@ -181,7 +180,6 @@ public class Paciente {
 
   public void sentar(Assento assento) {
     assert assento != null;
-    PositionDTO novaPosicao = assentoAtual.posicao();
     assentoAtual = assento;
     assento.ocupar();
 
