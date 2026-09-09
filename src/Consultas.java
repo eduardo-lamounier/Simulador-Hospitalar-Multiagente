@@ -60,7 +60,10 @@ public class Consultas {
   public Assento assentoLivre() {
     int idx = buscarAssentoLivre();
 
-    assert idx != -1;
+    if(idx == -1) {
+      return null;
+    }
+
     return assentos.at(idx);
   }
 
