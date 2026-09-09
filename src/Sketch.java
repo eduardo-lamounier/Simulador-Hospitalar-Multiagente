@@ -22,6 +22,7 @@ public class Sketch extends PApplet {
     assert paciente != null;
 
     pacientes.push(paciente);
+    Mapa.posicionarPaciente(paciente.posicao());
   }
 
   public void removerPaciente(Paciente paciente) {
