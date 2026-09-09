@@ -14,21 +14,24 @@ public class Gerador {
   public PositionDTO posicao() { return posicao; }
 
   private void calcularTempoProximoSpawn() {
-    final float mediaSpawn = 5.0f;
+    final float mediaSpawn = 5000.0f;
     final float u = sketch.random(0, 1);
     tempoProximoSpawn = sketch.millis() -mediaSpawn * PApplet.log(1 - u);
     haTempoProximoSpawn = true;
   }
 
   public boolean deveAdicionarPaciente() {
-    if(haTempoProximoSpawn) {
-      boolean deveAdicionarPaciente = sketch.millis() >= tempoProximoSpawn;
-      haTempoProximoSpawn = false;
-      return deveAdicionarPaciente;
+    if(!haTempoProximoSpawn) {
+      calcularTempoProximoSpawn();
+      return false;
+    }
+
+    if(sketch.millis() < tempoProximoSpawn) {
+      return false;
     }
      
-    calcularTempoProximoSpawn();
-    return false;
+    haTempoProximoSpawn = false;
+    return true;
   }
 
   public void adicionarPaciente() {
