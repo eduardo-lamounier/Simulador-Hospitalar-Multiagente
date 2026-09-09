@@ -103,20 +103,20 @@ public class Mapa {
         } 
     }
 
-    public static char getCelula(int x, int y) { return s_grid[y][x]; }
+    public static char getCelula(int x, int y) { return s_grid[x][y]; }
 
     public static char getCelula(PositionDTO posicao) { return s_grid[posicao.y][posicao.x]; }
     
     public static char[][] gridAtual() { return s_grid; }
     
     public static void moverPaciente(int x_source, int y_source, int x_dest, int y_dest) {
-        assert s_grid[y_dest][x_dest] == '.' || s_grid[y_dest][x_dest] == 'A'
+        assert s_grid[x_dest][y_dest] == '.' || s_grid[x_dest][y_dest] == 'A'
                 : "Só é possível mover um paciente para uma célula transitável";
-        assert s_grid[y_source][x_source] == 'P' || s_grid[y_source][x_source] == 'D'
-                || s_grid[y_source][x_source] == 'S'
+        assert s_grid[x_source][y_source] == 'P' || s_grid[x_source][y_source] == 'D'
+                || s_grid[x_source][y_source] == 'S'
                 : "Só é possível mover pacientes";
 
-        s_grid[y_source][x_source] = switch (s_grid[y_source][x_source]) {
+        s_grid[x_source][y_source] = switch (s_grid[x_source][y_source]) {
             case 'D' -> 'G';
             case 'S' -> 'A';
             default  -> '.';
@@ -130,13 +130,13 @@ public class Mapa {
     }
 
     public static void posicionarPaciente(int x, int y) {
-        if(s_grid[y][x] == 'G') {
-            s_grid[y][x] = 'D';
+        if(s_grid[x][y] == 'G') {
+            s_grid[x][y] = 'D';
             return;
         } 
 
-        if(s_grid[y][x] == '.') {
-            s_grid[y][x] = 'D';
+        if(s_grid[x][y] == '.') {
+            s_grid[x][y] = 'D';
             return;
         }
 
@@ -148,9 +148,9 @@ public class Mapa {
     }
 
     public static void removerPaciente(int x, int y) {
-        assert s_grid[y][x] == 'P' || s_grid[y][x] == 'D';
+        assert s_grid[x][y] == 'P' || s_grid[x][y] == 'D';
 
-        s_grid[y][x] = switch (s_grid[y][x]) {
+        s_grid[x][y] = switch (s_grid[x][y]) {
             case 'D' -> 'G';
             case 'S' -> 'A';
             default  -> '.';

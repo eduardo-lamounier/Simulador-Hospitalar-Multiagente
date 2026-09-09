@@ -30,7 +30,7 @@ public class WaveFront {
   // enfermeira ou médico).
   public static boolean passavel(char[][] grid, int i, int j) {
     char celula = grid[i][j];
-    return celula != '#' && celula != 'E' && celula != 'M';
+    return celula != '#' && celula != 'E' && celula != 'M' && != 'T';
   }
 
   // Calcula o mapa de distâncias (onda) a partir da célula de destino
