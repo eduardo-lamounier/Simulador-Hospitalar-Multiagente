@@ -109,9 +109,14 @@ public class Paciente {
     // objetivo (ex.: assento, totem, removedor) quanto quando estamos
     // encostados num objetivo que não pode ser pisado (enfermeira/médico)
     // — em ambos os casos, do ponto de vista do paciente, ele "chegou".
-    if(proximaPosicao == null) {
+      if (proximaPosicao != null) {
+        posicao = proximaPosicao;
+    }
+
+    if(proximaPosicao == null || posicao.equals(posicaoObjetivo)) {
       // Se estávamos indo para um assento reservado e chegamos até ele,
       // sentamos automaticamente.
+      //
       if(assentoAtual != null && assentoAtual.estado() == Assento.Estado.RESERVADO)
         sentar(assentoAtual);
 
