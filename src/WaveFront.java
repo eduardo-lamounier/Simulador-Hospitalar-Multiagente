@@ -30,7 +30,7 @@ public class WaveFront {
   // enfermeira ou médico).
   public static boolean passavel(char[][] grid, int i, int j) {
     char celula = grid[i][j];
-    return celula != '#' && celula != 'E' && celula != 'M' && != 'T';
+    return celula != '#' && celula != 'E' && celula != 'M' && celula != 'T';
   }
 
   // Calcula o mapa de distâncias (onda) a partir da célula de destino
@@ -53,6 +53,11 @@ public class WaveFront {
       int i = atual[0];
       int j = atual[1];
 
+      boolean eOrigem = (i == destI && j == destJ);
+      if (!eOrigem && !passavel(grid, i, j)) {
+        continue;
+      }
+
       for (int d = 0; d < DIRECOES.length; d++) {
         int ni = i + DIRECOES[d][0];
         int nj = j + DIRECOES[d][1];
@@ -60,8 +65,6 @@ public class WaveFront {
         if (ni < 0 || ni >= linhas || nj < 0 || nj >= colunas)
           continue;
         if (onda[ni][nj] != -1) // já visitada
-          continue;
-        if (!passavel(grid, ni, nj))
           continue;
 
         onda[ni][nj] = onda[i][j] + 1;
@@ -104,6 +107,11 @@ public class WaveFront {
     PositionDTO melhor = null;
     int menorDistancia = onda[i][j];
 
+    boolean isOrigem = (i == destI && j == destJ);
+      if (!isOrigem && !passavel(grid, i, j)) {
+        continue;
+      }
+
     for (int[] direcao : DIRECOES) {
       int ni = i + direcao[0];
       int nj = j + direcao[1];
@@ -116,8 +124,7 @@ public class WaveFront {
       if (distanciaVizinho == -1)
         continue;
 
-      if (!passavel(grid, ni, nj))
-        continue;
+
 
       if (distanciaVizinho < menorDistancia) {
         menorDistancia = distanciaVizinho;
