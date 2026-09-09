@@ -18,7 +18,7 @@ public class WaveFront {
   public static boolean passavel(char[][] grid, int i, int j) {
     char celula = grid[i][j];
     return celula != '#' && celula != 'E' && celula != 'M' && celula != 'T'
-      && celula != 'P' && celula != 'D' && celula != 'G' && celula != 'R' && celula != 'S';
+      && celula != 'P' && celula != 'D' && celula != 'S';
   }
 
   public static int[][] calcularOnda(char[][] grid, int destI, int destJ) {
