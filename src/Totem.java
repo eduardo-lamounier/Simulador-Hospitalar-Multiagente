@@ -15,8 +15,6 @@ public class Totem implements ObservadorPaciente {
 
     String senha = prefixo + String.format("%04d", x);
     paciente.atribuirSenha(senha);
-
-    paciente.irAoAssento(triagem.assentoLivre());
   }
 
   public void objetivoPacienteAtingido(Paciente paciente) {
