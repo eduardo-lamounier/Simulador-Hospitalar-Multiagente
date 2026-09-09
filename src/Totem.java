@@ -35,3 +35,4 @@ public class Totem implements ObservadorPaciente {
     this(triagem, posicao.x, posicao.y);
   }
 }
+

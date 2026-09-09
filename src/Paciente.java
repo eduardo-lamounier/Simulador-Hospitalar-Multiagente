@@ -77,6 +77,7 @@ public class Paciente {
   public void novoObjetivo(PositionDTO posicaoObjetivo) {
     assert posicaoObjetivo != null : "A posição do novo objetivo não pode ser null!";
     this.posicaoObjetivo = posicaoObjetivo;
+    this.onda = null;
   }
 
   public void removerObjetivo() { posicaoObjetivo = null; }
@@ -132,9 +133,10 @@ public class Paciente {
       return posicao;
     }
 
-    Mapa.moverPaciente(posicao, proximaPosicao);
-
+   PositionDTO posicaoAntiga = posicao;
     posicao = proximaPosicao;
+    Mapa.moverPaciente(posicaoAntiga, proximaPosicao);
+
     return posicao;
   }
 
