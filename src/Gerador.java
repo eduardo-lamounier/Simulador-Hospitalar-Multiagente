@@ -48,6 +48,7 @@ public class Gerador {
     this.sketch = sketch;
     this.totem = totem;
     this.posicao = new PositionDTO(x, y);
+    this.maxPacientes = maxPacientes;
   }
 
   public Gerador(Sketch sketch, Totem totem, PositionDTO posicao, int maxPacientes) {
