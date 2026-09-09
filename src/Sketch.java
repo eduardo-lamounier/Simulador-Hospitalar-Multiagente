@@ -99,6 +99,11 @@ public class Sketch extends PApplet {
         assert Mapa.mapaCarregado() : "Mapa deve estar carregado na fase de"
                                       + " simulação!";
         Mapa.desenharMapaAtual(this);
+
+        if(Mapa.geradorMapaAtual().deveAdicionarPaciente()) {
+          Mapa.geradorMapaAtual().adicionarPaciente();
+        }
+
         // Atualiza o atendimento (enfermeiras/médicos terminando
         // consultas e chamando o próximo paciente da fila).
         Mapa.triagemMapaAtual().atualizar();
