@@ -31,8 +31,7 @@ public class WaveFront {
   public static boolean passavel(char[][] grid, int i, int j) {
     char celula = grid[i][j];
     return celula != '#' && celula != 'E' && celula != 'M' && celula != 'T'
-      && celula != 'P' && celula != 'D' && celula != 'G' && celula != 'R'
-      && celula != 'A' && celula != 'S';
+      && celula != 'P' && celula != 'D' && celula != 'G' && celula != 'R' && celula != 'S';
   }
 
   // Calcula o mapa de distâncias (onda) a partir da célula de destino
@@ -55,10 +54,8 @@ public class WaveFront {
       int i = atual[0];
       int j = atual[1];
 
-      boolean eOrigem = (i == destI && j == destJ);
-      if (!eOrigem && !passavel(grid, i, j)) {
-        continue;
-      }
+      if (!passavel(grid, ni, nj))
+      continue;
 
       for (int d = 0; d < DIRECOES.length; d++) {
         int ni = i + DIRECOES[d][0];
