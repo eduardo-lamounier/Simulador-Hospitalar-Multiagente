@@ -212,7 +212,10 @@ public class Paciente {
   }
 
   public void levantar() {
-    posicao = primeiraPosicaoLivreAdjacente(assentoAtual.posicao());
+    PositionDTO novaPosicao = primeiraPosicaoLivreAdjacente(assentoAtual.posicao());
+    Mapa.moverPaciente(assentoAtual.posicao(), novaPosicao);
+
+    posicao = novaPosicao;
     assentoAtual.deixarLivre();
     assentoAtual = null;
   }
