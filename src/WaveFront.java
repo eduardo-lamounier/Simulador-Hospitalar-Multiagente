@@ -107,11 +107,6 @@ public class WaveFront {
     PositionDTO melhor = null;
     int menorDistancia = onda[i][j];
 
-    boolean isOrigem = (i == destI && j == destJ);
-      if (!isOrigem && !passavel(grid, i, j)) {
-        continue;
-      }
-
     for (int[] direcao : DIRECOES) {
       int ni = i + direcao[0];
       int nj = j + direcao[1];
@@ -124,7 +119,8 @@ public class WaveFront {
       if (distanciaVizinho == -1)
         continue;
 
-
+      if (!passavel(grid, ni, nj))
+        continue;
 
       if (distanciaVizinho < menorDistancia) {
         menorDistancia = distanciaVizinho;
