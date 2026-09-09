@@ -28,6 +28,7 @@ public class Totem implements ObservadorPaciente {
   }
 
   public Totem(Triagem triagem, int x, int y) {
+    this.triagem = triagem;
     posicao = new PositionDTO(x, y);
   }
 
