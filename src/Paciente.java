@@ -126,6 +126,8 @@ public class Paciente {
       return posicao;
     }
 
+    Mapa.moverPaciente(posicao, proximaPosicao);
+
     posicao = proximaPosicao;
     return posicao;
   }
