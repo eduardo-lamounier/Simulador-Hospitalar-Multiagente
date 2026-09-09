@@ -33,6 +33,10 @@ public class Sketch extends PApplet {
     pacientes.remove(idx);
   }
 
+  public int quantidadePacientes() {
+    return pacientes.size();
+  }
+
   @Override
   public void settings() {
     size(800, 600);

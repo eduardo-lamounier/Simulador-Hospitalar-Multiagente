@@ -9,6 +9,8 @@ public class Gerador {
   private boolean haTempoProximoSpawn = false;
   private float tempoProximoSpawn = 0.0f;
   
+  private int maxPacientes;
+  
   public PositionDTO posicao() { return posicao; }
 
   private void calcularTempoProximoSpawn() {
@@ -30,6 +32,11 @@ public class Gerador {
   }
 
   public void adicionarPaciente() {
+    // Limita a quantidade de pacientes sendo gerados
+    if(sketch.quantidadePacientes() == maxPacientes) {
+      return;
+    }
+
     Paciente paciente = new Paciente(posicao);
     sketch.adicionarPaciente(paciente);
 
@@ -37,13 +44,13 @@ public class Gerador {
     paciente.adicionarObservador(totem);
   }
 
-  public Gerador(Sketch sketch, Totem totem, int x, int y) {
+  public Gerador(Sketch sketch, Totem totem, int x, int y, int maxPacientes) {
     this.sketch = sketch;
     this.totem = totem;
     this.posicao = new PositionDTO(x, y);
   }
 
-  public Gerador(Sketch sketch, Totem totem, PositionDTO posicao) {
-    this(sketch, totem, posicao.x, posicao.y);
+  public Gerador(Sketch sketch, Totem totem, PositionDTO posicao, int maxPacientes) {
+    this(sketch, totem, posicao.x, posicao.y, maxPacientes);
   }
 }

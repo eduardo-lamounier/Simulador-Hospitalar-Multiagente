@@ -251,12 +251,16 @@ public class Mapa {
         posicoesAssentos.forEach((var posicao) -> {
             assentos.push(new Assento(posicao));
         });
+
+        // Garante que não terá pacientes assentos faltando em algum momento
+        // da simulação:
+        final int maxPacientes = assentos.size();
         
         s_removedor = new Removedor(sketch, posicaoRemovedor);
         s_consultas = new Consultas(assentos, s_removedor);
         s_triagem = new Triagem(assentos, s_consultas);
         s_totem = new Totem(s_triagem, posicaoTotem);
-        s_gerador = new Gerador(sketch, s_totem, posicaoGerador);
+        s_gerador = new Gerador(sketch, s_totem, posicaoGerador, maxPacientes);
 
         posicoesEnfermeiras.forEach((var posicao) -> {
             Triagem.Enfermeira enfermeira = s_triagem.new Enfermeira(posicao, sketch);
