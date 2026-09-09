@@ -110,12 +110,19 @@ public class Mapa {
     public static char[][] gridAtual() { return s_grid; }
     
     public static void moverPaciente(int x_source, int y_source, int x_dest, int y_dest) {
-        assert s_grid[y_source][x_source] == 'P' : "Só é possível mover pacientes";
-        assert s_grid[y_dest][x_dest] == '.' : "Só é possível mover um paciente"
-                                               + " para uma célula transitável";
+        assert s_grid[y_dest][x_dest] == '.' || s_grid[y_dest][x_dest] == 'A'
+                : "Só é possível mover um paciente para uma célula transitável";
+        assert s_grid[y_source][x_source] == 'P' || s_grid[y_source][x_source] == 'D'
+                || s_grid[y_source][x_source] == 'S'
+                : "Só é possível mover pacientes";
 
-        s_grid[y_source][x_source] = '.';
-        s_grid[y_dest][x_dest] = 'P';
+        s_grid[y_source][x_source] = switch (s_grid[y_source][x_source]) {
+            case 'D' -> 'G';
+            case 'S' -> 'A';
+            default  -> '.';
+        };
+
+        s_grid[y_dest][x_dest] = s_grid[y_dest][x_dest] == 'A' ? 'S' : 'P';
     }
 
     public static void moverPaciente(PositionDTO source, PositionDTO dest) {
