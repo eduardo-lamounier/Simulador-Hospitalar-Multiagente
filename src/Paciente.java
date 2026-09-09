@@ -179,12 +179,12 @@ public class Paciente {
 
   public void sentar(Assento assento) {
     assert assento != null;
-    posicao = assentoAtual.posicao();
+    PositionDTO novaPosicao = assentoAtual.posicao();
     assentoAtual = assento;
     assento.ocupar();
 
-    char[][] grid = Mapa.gridAtual();
-    grid[posicao.y][posicao.x] = 'S';
+    Mapa.moverPaciente(posicao, novaPosicao);
+    posicao = novaPosicao;
   }
 
   // Direções usadas para procurar uma célula livre adjacente ao assento,
