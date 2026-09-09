@@ -137,7 +137,7 @@ public class Mapa {
     }
 
     public static void posicionarPaciente(PositionDTO posicao) {
-        posicionarPaciente(posicao.y, posicao.x);
+        posicionarPaciente(posicao.x, posicao.y);
     }
 
     public static boolean mapaCarregado() { return s_grid != null; } 
