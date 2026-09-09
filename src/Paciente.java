@@ -124,9 +124,6 @@ public class Paciente {
         (var observador) -> { observador.objetivoPacienteAtingido(this); }
       );
 
-      onda = null;
-      objetivoDaOndaCalculada = null;
-
       return posicao;
     }
 
