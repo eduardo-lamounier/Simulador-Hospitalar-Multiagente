@@ -36,6 +36,11 @@ public class Gerador {
     if(sketch.quantidadePacientes() == maxPacientes) {
       return;
     }
+    
+    // Verifica se já não tem um paciente no gerador e que não saiu ainda:
+    if(Mapa.getCelula(posicao) == 'D') {
+      return;
+    }
 
     Paciente paciente = new Paciente(posicao);
     sketch.adicionarPaciente(paciente);
@@ -48,6 +53,7 @@ public class Gerador {
     this.sketch = sketch;
     this.totem = totem;
     this.posicao = new PositionDTO(x, y);
+    this.maxPacientes = maxPacientes;
   }
 
   public Gerador(Sketch sketch, Totem totem, PositionDTO posicao, int maxPacientes) {
