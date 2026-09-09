@@ -60,6 +60,9 @@ public class Triagem {
       paciente.setCorManchester(cor); 
 
       Assento assento = consultas.assentoLivre();
+
+      assert assento != null;
+
       paciente.irAoAssento(assento);
       consultas.adicionarPacienteAFila(paciente);
     } 

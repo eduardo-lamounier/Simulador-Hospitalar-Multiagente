@@ -103,6 +103,9 @@ public class Mapa {
         } 
     }
 
+    // O grid é indexado como s_grid[y][x] (linha, coluna) — é assim que
+    // carregarMapa() preenche a matriz. Os métodos abaixo usam essa
+    // convenção de forma consistente.
     public static char getCelula(int x, int y) { return s_grid[y][x]; }
 
     public static char getCelula(PositionDTO posicao) { return s_grid[posicao.y][posicao.x]; }
@@ -319,4 +322,3 @@ public class Mapa {
         });
     }
 }
-

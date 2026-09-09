@@ -109,19 +109,25 @@ public class Paciente {
     // objetivo (ex.: assento, totem, removedor) quanto quando estamos
     // encostados num objetivo que não pode ser pisado (enfermeira/médico)
     // — em ambos os casos, do ponto de vista do paciente, ele "chegou".
-    if(proximaPosicao == null) {
+      if (proximaPosicao != null) {
+        posicao = proximaPosicao;
+    }
+
+    if(proximaPosicao == null || posicao.equals(posicaoObjetivo)) {
       // Se estávamos indo para um assento reservado e chegamos até ele,
       // sentamos automaticamente.
+      //
       if(assentoAtual != null && assentoAtual.estado() == Assento.Estado.RESERVADO)
         sentar(assentoAtual);
+
+      onda = null;
+    objetivoDaOndaCalculada = null;
+    PositionDTO objetivoConcluido = posicaoObjetivo;
+    posicaoObjetivo = null;
 
       observadores.forEach(
         (var observador) -> { observador.objetivoPacienteAtingido(this); }
       );
-      removerObjetivo();
-
-      onda = null;
-      objetivoDaOndaCalculada = null;
 
       return posicao;
     }
@@ -166,7 +172,6 @@ public class Paciente {
   public Assento assentoAtual() {
     return assentoAtual;
   }
-
   public void irAoAssento(Assento assento) {
     assentoAtual = assento;
     assentoAtual.reservar();
@@ -175,7 +180,6 @@ public class Paciente {
 
   public void sentar(Assento assento) {
     assert assento != null;
-    posicao = assentoAtual.posicao();
     assentoAtual = assento;
     assento.ocupar();
   }

@@ -1,16 +1,3 @@
-/**
- * Implementação do algoritmo de Wavefront (propagação de onda / BFS a partir
- * do destino), usado para guiar a movimentação dos pacientes pelo grid do
- * hospital.
- *
- * Ideia geral: a partir de uma célula de destino, o algoritmo "inunda" o
- * grid célula por célula, camada por camada (como uma onda se espalhando),
- * numerando cada célula alcançada com a sua distância (em passos) até o
- * destino. Depois, para mover um agente, basta ele olhar as células
- * vizinhas e andar sempre para a de menor número — isso garante o caminho
- * mais curto, sem precisar refazer a busca a cada passo (o mapa de
- * distâncias já foi calculado uma única vez por objetivo).
- */
 import java.util.Arrays;
 
 import estruturas.Queue;
@@ -26,16 +13,14 @@ public class WaveFront {
 
   private WaveFront() {}
 
-  // Verifica se a célula (i, j) do grid é transponível (não é parede,
-  // enfermeira ou médico).
+  // Apenas chão e assentos são transitáveis.
+  // Paredes (#), Enfermeiras (E), Médicos (M), Totens (T), etc. NÃO são passáveis.
   public static boolean passavel(char[][] grid, int i, int j) {
     char celula = grid[i][j];
-    return celula != '#' && celula != 'E' && celula != 'M';
+    return celula != '#' && celula != 'E' && celula != 'M' && celula != 'T'
+      && celula != 'P' && celula != 'D' && celula != 'G' && celula != 'R' && celula != 'S';
   }
 
-  // Calcula o mapa de distâncias (onda) a partir da célula de destino
-  // (destI, destJ) até cada célula alcançável do grid
-  // Células não alcançáveis (ou bloqueadas) ficam com valor -1.
   public static int[][] calcularOnda(char[][] grid, int destI, int destJ) {
     int linhas = grid.length;
     int colunas = grid[0].length;
@@ -59,9 +44,14 @@ public class WaveFront {
 
         if (ni < 0 || ni >= linhas || nj < 0 || nj >= colunas)
           continue;
+
         if (onda[ni][nj] != -1) // já visitada
           continue;
-        if (!passavel(grid, ni, nj))
+
+        // Permite expandir a onda a partir da origem (mesmo se for 'E' ou 'M'),
+        // mas bloqueia outras células intransitáveis pelo caminho.
+        boolean eOrigem = (ni == destI && nj == destJ);
+        if (!eOrigem && !passavel(grid, ni, nj))
           continue;
 
         onda[ni][nj] = onda[i][j] + 1;
@@ -72,28 +62,6 @@ public class WaveFront {
     return onda;
   }
 
-  // A partir da posição atual (i, j) e do mapa de distâncias 'onda' (já
-  // calculado com calcularOnda), retorna a posição vizinha de menor
-  // distância até o destino — ou seja, o próximo passo do caminho mais
-  // curto.
-  //
-  // Recebe também o 'grid' para garantir que só sugerimos como próximo
-  // passo células realmente transitáveis (chão, assento, totem, gerador,
-  // removedor). Isso é importante porque 'calcularOnda' marca a célula de
-  // destino com distância 0 mesmo quando ela é uma enfermeira/médico (que
-  // não pode ser pisada) — sem esse filtro, o paciente tentaria "entrar"
-  // na célula do(a) atendente em vez de parar ao lado.
-  //
-  // Retorna 'null' em três casos, que devem ser tratados pelo chamador
-  // como "cheguei ao objetivo":
-  // - a posição atual já é o destino (distância 0);
-  // - a posição atual está encostada num destino impassável (ex.: ao lado
-  //   da enfermeira/médico), não havendo vizinho transitável mais próximo;
-  // - o agente está cercado, sem nenhum vizinho transitável com distância
-  //   menor (nesse caso não há de fato caminho, mas do ponto de vista do
-  //   agente o efeito prático é o mesmo: ele para onde está).
-  // Também retorna 'null' se a posição atual não tiver caminho até o
-  // destino (distância -1).
   public static PositionDTO proximoPasso(int[][] onda, char[][] grid, int i, int j) {
     if (onda[i][j] == 0 || onda[i][j] == -1)
       return null;
