@@ -10,6 +10,7 @@ public class Removedor implements ObservadorPaciente {
 
   // Removerá o paciente da simulação quando ele chegar no removedor
   public void objetivoPacienteAtingido(Paciente paciente) {
+    paciente.removerObservador(this);
     removerPaciente(paciente);
   }
 
