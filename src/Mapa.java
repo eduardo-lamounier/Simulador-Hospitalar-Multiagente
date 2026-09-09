@@ -41,17 +41,17 @@ public class Mapa {
 
     private static void carregarAssets(Sketch p) {
         assetsCarregados = true;
-        spriteTotem = p.loadImage(String.format("./assets/Sprites/trem%d/Totem.png", atul_mapa));
-        spriteChao = p.loadImage(String.format("./assets/Sprites/trem%d/Chao.png", atul_mapa));
-        spriteParede = p.loadImage(String.format("./assets/Sprites/trem%d/Parede.png", atul_mapa));
-        spriteRemovedor = p.loadImage(String.format("./assets/Sprites/trem%d/Removedor.png", atul_mapa));
-        spriteEnfermeira = p.loadImage(String.format("./assets/Sprites/trem%d/Enfermeira.png", atul_mapa));
-        spriteAssento = p.loadImage(String.format("./assets/Sprites/trem%d/Assento.png", atul_mapa));
-        spriteGerador = p.loadImage(String.format("./assets/Sprites/trem%d/Gerador.png", atul_mapa));
-        spriteMedico = p.loadImage(String.format("./assets/Sprites/trem%d/Medico.png", atul_mapa));
-        spritePaciente = p.loadImage(String.format("./assets/Sprites/trem%d/Paciente.png", atul_mapa));
-        spritePacienteNoGerador = p.loadImage(String.format("./assets/Sprites/trem%d/Paciente_Gerador.png", atul_mapa));
-        spritePacienteSentado = p.loadImage(String.format("./assets/Sprites/trem%d/Paciente_Sentado.png", atul_mapa));
+        spriteTotem = p.loadImage(String.format("./assets/Sprites/SpritesMapa%d/Totem.png", atul_mapa));
+        spriteChao = p.loadImage(String.format("./assets/Sprites/SpritesMapa%d/Chao.png", atul_mapa));
+        spriteParede = p.loadImage(String.format("./assets/Sprites/SpritesMapa%d/Parede.png", atul_mapa));
+        spriteRemovedor = p.loadImage(String.format("./assets/Sprites/SpritesMapa%d/Removedor.png", atul_mapa));
+        spriteEnfermeira = p.loadImage(String.format("./assets/Sprites/SpritesMapa%d/Enfermeira.png", atul_mapa));
+        spriteAssento = p.loadImage(String.format("./assets/Sprites/SpritesMapa%d/Assento.png", atul_mapa));
+        spriteGerador = p.loadImage(String.format("./assets/Sprites/SpritesMapa%d/Gerador.png", atul_mapa));
+        spriteMedico = p.loadImage(String.format("./assets/Sprites/SpritesMapa%d/Medico.png", atul_mapa));
+        spritePaciente = p.loadImage(String.format("./assets/Sprites/SpritesMapa%d/Paciente.png", atul_mapa));
+        spritePacienteNoGerador = p.loadImage(String.format("./assets/Sprites/SpritesMapa%d/Paciente_Gerador.png", atul_mapa));
+        spritePacienteSentado = p.loadImage(String.format("./assets/Sprites/SpritesMapa%d/Paciente_Sentado.png", atul_mapa));
     }
 
     // Lê o arquivo do mapa especificado e retorna o grid desse mapa
@@ -132,54 +132,54 @@ public class Mapa {
                 switch (matriz[i][j]) {
                     case'T':
                     //Totem (T):
-                    p.image(spriteTotem,j* (largura+(float)3), i * (altura+(float)3), largura + 3, altura + 3);
+                    p.image(spriteTotem,j* (largura+(float)2), i * (altura+(float)2), largura + 2, altura + 2);
                         
                     break;
                     case '.':
                             //Chão (.)
-                        p.image(spriteChao,j* (largura+(float)3), i * (altura+(float)3), largura + 3, altura + 3);
+                        p.image(spriteChao,j* (largura+(float)2), i * (altura+(float)2), largura + 2, altura + 2);
                         
                     break;
                     case'#':
                         //Parede (#):
-                        p.image(spriteParede,j* (largura+(float)3), i * (altura+(float)3), largura + 3, altura + 3);
+                        p.image(spriteParede,j* (largura+(float)2), i * (altura+(float)2), largura + 2, altura + 2);
 
                     break;
                     case 'R':
                         //Removedor (R):
-                        p.image(spriteRemovedor,j* (largura+(float)3), i * (altura+(float)3), largura + 3, altura + 3);
+                        p.image(spriteRemovedor,j* (largura+(float)2), i * (altura+(float)2), largura + 2, altura + 2);
 
                     break;
                     case 'E':
                         //Enfermeira de Triagem (E):
-                        p.image(spriteEnfermeira,j* (largura+(float)3), i * (altura+(float)3), largura + 3, altura + 3);
+                        p.image(spriteEnfermeira,j* (largura+(float)2), i * (altura+(float)2), largura + 2, altura + 2);
 
                     break;
                     case 'A':
                         //Assento (A):
-                        p.image(spriteAssento,j* (largura+(float)3), i * (altura+(float)3), largura + 3, altura + 3);      
+                        p.image(spriteAssento,j* (largura+(float)2), i * (altura+(float)2), largura + 2, altura + 2);      
 
                     break;                        
                     case 'G':
                         //Gerador (G):
-                        p.image(spriteGerador,j* (largura+(float)3), i * (altura+(float)3), largura + 3, altura + 3);
+                        p.image(spriteGerador,j* (largura+(float)2), i * (altura+(float)2), largura + 2, altura + 2);
 
                     break;
                     case'M':
                         //Médico (M):
-                        p.image(spriteMedico,j* (largura+(float)3), i * (altura+(float)3), largura + 3, altura + 3);
+                        p.image(spriteMedico,j* (largura+(float)2), i * (altura+(float)2), largura + 2, altura + 2);
 
                     break;
                     case'P':
-                        p.image(spritePaciente, j* (largura+(float)3), i * (altura+(float)3), largura + 3, altura + 3);
+                        p.image(spritePaciente, j* (largura+(float)2), i * (altura+(float)2), largura + 2, altura + 2);
 
                     break;
                     case 'S':
-                        p.image(spritePacienteSentado, j* (largura+(float)3), i * (altura+(float)3), largura + 3, altura + 3);
+                        p.image(spritePacienteSentado, j* (largura+(float)2), i * (altura+(float)2), largura + 2, altura + 2);
 
                     break;
                     case'D':
-                        p.image(spritePacienteNoGerador, j* (largura+(float)3), i * (altura+(float)3), largura + 3, altura + 3);
+                        p.image(spritePacienteNoGerador, j* (largura+(float)2), i * (altura+(float)2), largura + 2, altura + 2);
 
                     break;
                     default:
