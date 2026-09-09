@@ -126,58 +126,60 @@ public class Mapa {
         
         for(int i = 0;i < matriz.length;i++){
             for(int j = 0;j < matriz[0].length;j++){
+
+
                 
                 switch (matriz[i][j]) {
                     case'T':
                     //Totem (T):
-                    p.image(spriteTotem,j* largura, i * altura, largura, altura);
+                    p.image(spriteTotem,j* (largura+(float)3), i * (altura+(float)3), largura + 3, altura + 3);
                         
                     break;
                     case '.':
                             //Chão (.)
-                        p.image(spriteChao,j* largura, i * altura, largura, altura);
+                        p.image(spriteChao,j* (largura+(float)3), i * (altura+(float)3), largura + 3, altura + 3);
                         
                     break;
                     case'#':
                         //Parede (#):
-                        p.image(spriteParede,j* largura, i * altura, largura, altura);
+                        p.image(spriteParede,j* (largura+(float)3), i * (altura+(float)3), largura + 3, altura + 3);
 
                     break;
                     case 'R':
                         //Removedor (R):
-                        p.image(spriteRemovedor,j* largura, i * altura, largura, altura);
+                        p.image(spriteRemovedor,j* (largura+(float)3), i * (altura+(float)3), largura + 3, altura + 3);
 
                     break;
                     case 'E':
                         //Enfermeira de Triagem (E):
-                        p.image(spriteEnfermeira,j* largura, i * altura, largura, altura);
+                        p.image(spriteEnfermeira,j* (largura+(float)3), i * (altura+(float)3), largura + 3, altura + 3);
 
                     break;
                     case 'A':
                         //Assento (A):
-                        p.image(spriteAssento,j* largura, i * altura, largura, altura);      
+                        p.image(spriteAssento,j* (largura+(float)3), i * (altura+(float)3), largura + 3, altura + 3);      
 
                     break;                        
                     case 'G':
                         //Gerador (G):
-                        p.image(spriteGerador,j* largura, i * altura, largura, altura);
+                        p.image(spriteGerador,j* (largura+(float)3), i * (altura+(float)3), largura + 3, altura + 3);
 
                     break;
                     case'M':
                         //Médico (M):
-                        p.image(spriteMedico,j* largura, i * altura, largura, altura);
+                        p.image(spriteMedico,j* (largura+(float)3), i * (altura+(float)3), largura + 3, altura + 3);
 
                     break;
                     case'P':
-                        p.image(spritePaciente, j* largura, i * altura, largura, altura);
+                        p.image(spritePaciente, j* (largura+(float)3), i * (altura+(float)3), largura + 3, altura + 3);
 
                     break;
                     case 'S':
-                        p.image(spritePacienteSentado, j* largura, i * altura, largura, altura);
+                        p.image(spritePacienteSentado, j* (largura+(float)3), i * (altura+(float)3), largura + 3, altura + 3);
 
                     break;
                     case'D':
-                        p.image(spritePacienteNoGerador, j* largura, i * altura, largura, altura);
+                        p.image(spritePacienteNoGerador, j* (largura+(float)3), i * (altura+(float)3), largura + 3, altura + 3);
 
                     break;
                     default:
