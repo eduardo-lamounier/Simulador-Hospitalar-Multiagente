@@ -177,6 +177,9 @@ public class Paciente {
     posicao = assentoAtual.posicao();
     assentoAtual = assento;
     assento.ocupar();
+
+    char[][] grid = Mapa.gridAtual();
+    grid[posicao.y][posicao.x] = 'S';
   }
 
   // Direções usadas para procurar uma célula livre adjacente ao assento,
