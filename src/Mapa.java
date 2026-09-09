@@ -140,6 +140,20 @@ public class Mapa {
         posicionarPaciente(posicao.x, posicao.y);
     }
 
+    public static void removerPaciente(int x, int y) {
+        assert s_grid[y][x] == 'P' || s_grid[y][x] == 'D';
+
+        s_grid[y][x] = switch (s_grid[y][x]) {
+            case 'D' -> 'G';
+            case 'S' -> 'A';
+            default  -> '.';
+        };
+    }
+
+    public static void removerPaciente(PositionDTO posicao) {
+        removerPaciente(posicao.x, posicao.y);
+    }
+
     public static boolean mapaCarregado() { return s_grid != null; } 
     
     public static void desenharMapa(char matriz[][],Sketch p){

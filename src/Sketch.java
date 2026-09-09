@@ -32,6 +32,7 @@ public class Sketch extends PApplet {
 
     assert idx != -1;
     pacientes.remove(idx);
+    Mapa.removerPaciente(paciente.posicao());
   }
 
   public int quantidadePacientes() {
