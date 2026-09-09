@@ -182,9 +182,6 @@ public class Paciente {
     assert assento != null;
     assentoAtual = assento;
     assento.ocupar();
-
-    Mapa.moverPaciente(posicao, novaPosicao);
-    posicao = novaPosicao;
   }
 
   // Direções usadas para procurar uma célula livre adjacente ao assento,
