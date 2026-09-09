@@ -115,6 +115,11 @@ public class Paciente {
       if(assentoAtual != null && assentoAtual.estado() == Assento.Estado.RESERVADO)
         sentar(assentoAtual);
 
+      onda = null;
+    objetivoDaOndaCalculada = null;
+    PositionDTO objetivoConcluido = posicaoObjetivo;
+    posicaoObjetivo = null;
+
       observadores.forEach(
         (var observador) -> { observador.objetivoPacienteAtingido(this); }
       );
