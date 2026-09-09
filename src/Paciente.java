@@ -118,7 +118,6 @@ public class Paciente {
       observadores.forEach(
         (var observador) -> { observador.objetivoPacienteAtingido(this); }
       );
-      removerObjetivo();
 
       onda = null;
       objetivoDaOndaCalculada = null;
