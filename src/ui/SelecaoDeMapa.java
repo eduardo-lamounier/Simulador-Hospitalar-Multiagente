@@ -24,17 +24,10 @@ public class SelecaoDeMapa {
     private PImage spriteMapa; // Responsável por armazenar a imagem do mapa mostrado
     private Vector<Botao> mapas = new Vector<>(); // Vetor de botões para seleção de mapas
 
-    // Temporização:
-    private int cooldown = 200; // 200 milissegundos
-    private int clique_atual; // Em milissengundos
-
     public SelecaoDeMapa(PApplet sketch) {
         this.p = sketch; // Mesma skecth da classe Skecth
         width = sketch.width;
         height = sketch.height;
-        
-        // Atributos de temporização:
-        clique_atual = p.millis();
 
         // Botões sendo montados:
         sair = new Botao(sketch, 100, 100, 50, 50)
@@ -85,7 +78,6 @@ public class SelecaoDeMapa {
 
     // Método responsável pelas mecanicas de repetição do draw() como desenhar a seleção de mapa
     public void atualiza() {
-        checaClique();
         desenha();
     }
 
@@ -112,12 +104,14 @@ public class SelecaoDeMapa {
     }
     
     public void checaClique() {
-        if(p.millis() - clique_atual <= cooldown)
-            return;
+        sair.clicado();
+        mapas.at(selecaoMapa - 1).clicado();
 
-        clique_atual = p.millis();
+        if(selecaoMapa > 1)
+            ir_esquerda.clicado();
 
-        p.delay(cooldown);
+        if(selecaoMapa < NUM_MAPAS)
+            ir_direita.clicado();
     }
     
     public int getSelecaoMapa() {

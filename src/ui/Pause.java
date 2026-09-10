@@ -19,10 +19,6 @@ public class Pause {
     private boolean irSelecao = false;
     private boolean reiniciar = false;
     private boolean continuar = false;
-
-    // Temporização:
-    private int cooldown = 200; // 200 milissegundos
-    private int clique_atual; // Em milissengundos
     
 /* ----------- Métodos ------------ */
     // Construtor
@@ -62,7 +58,6 @@ public class Pause {
 
     public void atualiza() {
         desenha();
-        checaClique();
     }
 
     public void desenha() {
@@ -85,12 +80,10 @@ public class Pause {
     // Método responsável por checar se algum botão foi clicado,
     // ignora os cliques que acontecem em um intervalo menor que o cooldown
     public void checaClique() {
-        if(p.millis() - clique_atual <= cooldown)
-            return;
-
-        clique_atual = p.millis();
-
-        p.delay(cooldown);
+        continuarBT.clicado();
+        reiniciarBT.clicado();
+        voltarSelecaoBT.clicado();
+        sairBT.clicado();
     }
 
     // Métodos controladores

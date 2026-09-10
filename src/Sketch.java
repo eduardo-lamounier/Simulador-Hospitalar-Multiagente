@@ -17,6 +17,10 @@ public class Sketch extends PApplet {
   private Pause pause;
 
   private Vector<Paciente> pacientes = new Vector<>();
+
+  // Temporização:
+  private int tempoUltimoClique; // Em milissegundos
+  private int cooldown = 500; // Em milissegundos
   
   public void adicionarPaciente(Paciente paciente) {
     assert paciente != null;
@@ -51,6 +55,8 @@ public class Sketch extends PApplet {
     menu = new Menu(this);
     selecao = new SelecaoDeMapa(this);
     pause = new Pause(this);
+
+    tempoUltimoClique = millis();
   }
   
   @Override
@@ -70,12 +76,12 @@ public class Sketch extends PApplet {
 
         selecao.atualiza();
 
-          if(selecao.getProximaEtapa()){
+          if(selecao.getProximaEtapa()) {
+            selecao.setProximaEtapa(false);
+
             new Mapa(this, selecao.getSelecaoMapa());
 
             estado_atual = Estado.SIMULACAO;
-
-            selecao.setProximaEtapa(false);
           }
 
         break;
@@ -130,18 +136,49 @@ public class Sketch extends PApplet {
 
   @Override
   public void keyPressed() {
-      switch (this.key) {
-        case 'p':
-          if(estado_atual == Estado.PAUSE) {
-            estado_atual = Estado.SELECAO;
-            return;
-          }
+    switch (this.key) {
+      case 'p':
+        if(estado_atual == Estado.PAUSE) {
+          estado_atual = Estado.SELECAO;
+          return;
+        }
 
-          estado_atual = Estado.PAUSE;
-          break;
-      
-        default:
-          break;
-      }
+        estado_atual = Estado.PAUSE;
+        break;
+    
+      default:
+        break;
+    }
+  }
+
+  public void mousePressed() {
+    checaClique();
+  }
+
+  public void checaClique() {
+    if(millis() - tempoUltimoClique <= cooldown)
+      return;
+
+    tempoUltimoClique = millis() + cooldown;
+
+    switch (estado_atual) {
+      case MENU:
+        menu.checaClique();
+        break;
+
+      case SELECAO:
+        selecao.checaClique();
+        break;
+
+      case PAUSE:
+        pause.checaClique();
+        break;
+
+      case SIMULACAO:
+        break;
+
+      default:
+        throw new IllegalStateException("Estado atual inválido!"); 
+    }
   }
 }

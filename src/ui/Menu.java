@@ -15,17 +15,10 @@ public class Menu{
     // Menu:
     private boolean proxima_etapa = false;
 
-    // Temporização:
-    private int cooldown = 200; // 200 milissegundos
-    private int clique_atual; // Em milissengundos
-
     public Menu(PApplet sketch) {
         this.p = sketch; // Mesma skecth da classe Skecth
         width = sketch.width;
         height = sketch.height;
-        
-        // Atributos de temporização:
-        clique_atual = p.millis();
 
         // Botões sendo montados:
         comecar = new Botao(sketch, width/2, 5 * height/12, 3 * width/5, height/  4)
@@ -46,7 +39,6 @@ public class Menu{
 
     public void atualiza() {
         // Método responsável pelas mecanicas de repetição do draw() como desenhar o menu 
-        checaClique();
         desenha();
     }
 
@@ -65,12 +57,8 @@ public class Menu{
     }
     
     public void checaClique() {
-        if(p.millis() - clique_atual <= cooldown)
-            return;
-
-        clique_atual = p.millis();
-
-        p.delay(cooldown);
+        comecar.clicado();
+        sair.clicado();
     }
 
     public boolean getProximaEtapa() {
