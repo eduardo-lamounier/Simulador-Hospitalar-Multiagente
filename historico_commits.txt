@@ -1,0 +1,223 @@
+INTEGRANTES E USUÁRIOS DO GITHUB
+
+Eduardo Lamounier - eduardo-lamounier
+Heitor Freitas - Zerocentos
+Adrian da Silva - a2025954101-coder
+Perí Machado - a2025950998-eng
+
+HISTÓRICO DE COMMITS
+[Conteúdo gerado pelo git log --oneline]
+
+
+1abd1dc Merge branch 'main' of github.com:eduardo-lamounier/Simulador-Hospitalar-Multiagente into main
+75bc5a6 Adiciona o core.jar
+32026f1 Corrigi teleporte 2
+1a8765f corrigi teleporte
+2b2c45d Merge branch 'main' of github.com:eduardo-lamounier/Simulador-Hospitalar-Multiagente
+e0f4f1d Resolve a proxima posição
+8291f67 Corrige temporização no gerador
+e644ddd Resolve limpagem de onda
+d8465bf Merge branch 'main' of github.com:eduardo-lamounier/Simulador-Hospitalar-Multiagente
+7285cce Corrigi passavel
+045b5a7 Remove assento em posição ruim no mapa 1
+82359e9 Adiciona assert para nenhum assento livre
+4623363 Corrige pacientes sentando em assentos
+0bfdbe4 Corrigi a atualização de objetivo pós chegar a um objetivo
+5a1e29d resolve os ifs de transposição e o sequenciamento para função proximo passo
+7946f99 Atualiza a célula de assento em Paciente.sentar(...)
+029f378 Corrige células transitáveis no wavefront
+b605cf5 Merge branch 'main' of github.com:eduardo-lamounier/Simulador-Hospitalar-Multiagente
+6005bdd Corrigi a remoção de objetivo
+42420ff resolve duplicação de mapa e asserts
+7ef742e Corrige duplicação no código do arquivo src/Mapa.java
+9c796f9 Merge branch 'main' of github.com:eduardo-lamounier/Simulador-Hospitalar-Multiagente
+443fa4d Resolve o mapa e seu asserts para identificar o mover paciente
+3f56ac6 Remove observador de paciente depois de objetivo ser atingido
+bd55ee0 corrigi wavefront
+bf18f6e corrigi wavefront
+5827546 Resolve o bug do totem e da inverção de cardinalidade de mapa
+ee3de99 Merge branch 'main' of github.com:eduardo-lamounier/Simulador-Hospitalar-Multiagente
+edf15db Corrige movimentação do paciente pelo grid para células de assento
+6277728 Remove paciente do mapa em Sketch.removerPaciente(...)
+dcea596 Atualiza lógica de iteração do paciente com assentos
+ea69443 Define apenas uma responsabilidade em Totem.gerarSenhaPaciente(...)
+ba0fd00 altere png mapa 3
+a650009 altere png mapa 3
+aef2772 Corrige posições erradas em 'Mapa.posicionarPaciente(...)'
+f379286 Verifica se um paciente ainda está na posição do gerador
+55e52ee Posiciona paciente no grid quando gerado
+9d464f3 Adiciona movimentação do paciente pelo grid
+a61de90 Adiciona métodos de utilidade na classe Mapa
+b9d551b Corrige verificação de quantidade máxima de pacientes
+d35edb3 Adiciona limite na geração de pacientes
+c4896c6 Corrige método 'assentoLivre(...)' na triagem e consultas
+039c8c9 Remove arquivo de compilação do versionamento
+4e2eee0 Setta a triagem no construtor de Totem
+ef25f0d altere names de arquivos de Sprites,altere Mapa3.txt
+9cda34c remove bordas brancas do mapa
+6a1ab7b remove bordas brancas do mapa
+da2ec20 wip: Adiciona temporização na geração de pacientes
+e1a1db7 Adiciona ao sketch o sequenciamento de passos
+6a08ab1 Inicializa o hashmap de filas em Consultas
+0e45e9f Corrige erro na inicialização do mapa
+afe6fa8 Corrigi o bug do grid atual não localizado
+5c5c90e Organizada no código e adição da movimentação por frames
+a9c217a Adiciona a função levantar, integra o wavefront com paciente e corrigi wavefront
+c4ec66b Otimiza remoção de elementos em Queue
+202c626 Corrige bug no assert de 'Vector.sliced(...)'
+85642e9 Muda o nome da hash table interna de HashMap
+f564997 Corrige inicialização do mapa
+b8f674b Inicializa dados das fases da simulação de acordo com o mapa escolhido
+68cf266 Define adição de enfermeiras e médicos apenas para após instanciação de Triagem e Consultas
+2ac274b Adiciona PositionDTO como posição válida no construtor de atendentes
+d8e0b0d Refatora classe Mapa
+c616e96 fix(Sketch): Muda método que incializa o mapa
+c3044f9 refactor: Refatora o checaClique()
+21029d9 style: Apenas deixando o código mais clean
+9317916 fix: Conserta erro de clique na tela de seleção
+3950a51 feat: Adiciona método setProximaEtapa
+20e8c08 merge: Corrige erro de Merge
+19f4cfd refactor: Botões de SelecaoDeMapa chamam métodos
+87cdcef Corrige verificação de mapa carregado em Mapa
+084ff9a Merge branch 'main' of github.com:eduardo-lamounier/Simulador-Hospitalar-Multiagente
+b028806 adiciona mais sprites e mapas
+17aa98a Implementa lógica da triagem e consulta na jornada do paciente
+25b6018 Melhora sprite da parede
+6b01d89 Corrige sprite do médico
+7743bf5 Implementa renderiza mapa e adiciona sprite de novo mapa
+198a6f6 fix: Resolve clique no pause
+1dbc61b feat: Adiciona funcionalidade dos botões no Pause
+0a4c53d feat: Implementa alteração de estado no pause
+a489003 feat: Adiciona renderização de imagens dos mapas
+4cef4e3 fix: Muda o modo de como a imagem é colocada
+3276016 test(assets): Adiciona imagem para teste
+f37383f cleanup: Melhora lógica de renderização de imagens
+ad7422c Troca nome antigo por um atual
+7508f70 Renomeia imagens para facilitar seu entendimento
+292999b cleanup: Remove import inusado e renomeia atributo
+aac0fcb Muda 'Map' para 'HashMap' para não confundir com 'Mapa'
+6877fb5 Renomeia Map.java para HashMap.java
+b1336b8 Otimiza métodos 'resize', 'sliced' e 'forEach' em 'Vector'
+33f5c51 wip: Define método para carregar os sprites do mapa
+29e4bd7 Atualiza tamanho dos sprites
+4afddae Atualiza sprites das células do mapa
+d6ccb4a Corrige o wavefront
+beebf17 Corrige bug do wavefront e adiciona o proximo passo, isso é integra o wavefront com o PositionDTO
+f4d3f0c Adiciona consulta médica, similar à triagem
+365ba67 Merge branch 'main' of github.com:eduardo-lamounier/Simulador-Hospitalar-Multiagente
+e9a20c3 Adiciona classe para representar o gerador
+ba877bd Adiciona classe para representar o totem
+badfc32 Adiciona classe para representar removedor
+7556099 Adiciona atribuição de senha a Paciente
+229a149 Adiciona vetor de pacientes e métodos para adição/remoção
+e2dec22 Adiciona método para buscar assento livre na triagem
+5f2fd30 Introduzi o código de Wave front individualmente ainda sem se comunicar com o restante do código
+a7a24df Adição da classe WaveFront com seu método de calcular a onda baseada em um grid próprio, uma coordenada de destino e as excessões instransponíveis.
+9672dd7 wip: Adiciona sistema de assentos no paciente
+fd315d7 Permite chamada do próximo paciente na triagem sempre
+3bd3693 Atualiza busca por assento na triagem após adição do estado de reserva
+e507665 Adiciona método para inverter a ordem de um Vector
+2ae2005 Atualiza Paciente depois de mudança em Vector.forEach(...)
+9594adb Atualiza classe Assento e adiciona estado de reserva
+2231a23 Simplifica hashing na implementação de Map
+a5f1308 wip: Adiciona classe 'Consultas', similar a 'Triagem'
+0662461 Atualiza clase 'Triagem' após mudança em Vector.forEach(...)
+7b9ea15 Faz implementação de um HashMap
+3cfafb9 Resume as importações em src/estruturas/Vector.java
+5034a3f Adiciona método de "slicing" na classe Vector
+7d2b52b Permite que a operação'forEach' em Vector interrompa a iteração
+d49439c Adiciona classe para representar um assento do mapa
+5c64026 Adiciona novas funcionalidades à classe Vector
+8348f91 Revert ":bug: fix: Resolve problema de importação"
+247d1b2 feat: Implementa passagem de etapa Menu -> Selecao
+d41e733 fix: Resolve problema de merge no arquivo Skecth
+24650f0 feat: Implementa detecção de pressionar uma tecla
+3f64811 feat: Implementa atualiza e desenha da tela Pause
+300a3ca :sparkles: feat: Adiciona a classe Selecao de Mapa
+58e52cc fix: Conserta erro de merge
+9249f60 :bug: fix: Resolve problema de importação
+b2f411f style: Melhora organização do código do botão
+619fd78 Corrige conflito em Menu.java
+e3382ae adiciona sistema de seleção de mapas
+d481866 foi feito a implementação do mapa e a selecão.
+1b4dfee Implementa temporização de clique nos botões
+23bfc0a Melhora o efeito hover dos botões
+ebcd2c4 Corrige formato de sprite incorreto
+2d37d0d Adiciona sprites para células do grid
+c84a942 Muda configuração de desenho dos retângulos
+62ef8c2 Abstrai lógica de atendimento em classe abstrata Atendente
+a8775dc Remove código fonte duplicado fora da pasta 'src'
+4867921 Desenha o mapa atual quando no estado de simulação
+9115b6c Atualiza método de desenho do mapa para receber a matriz
+db63f20 Esse commit adiciona a classe WaveFront, formando o grid do algoritimo e aidicionando sua verificação de condições de grid como transponível ou não, aliado ao sistema de visitas a células.
+03fb9e0 Esse commit introduiz a ideia geral do WaveFront para contextualizar sua sistemática
+277b4db corrige a função desenhaGrid e add novos mapas
+d9be927 Adicionei a função que desenha o grid do mapa,mas está dando um problema porque não estou sabendo mexer no Sketch.
+0a2a35a Adiciona atualização do estado das enfermeiras na triagem
+de00686 Implementa observação de paciente para enfermeiras
+2c615eb Define lógica de observadores de um paciente
+6e45883 Adiciona lógica de objetivos ao Paciente
+fe85c98 Adiciona funcionalidade de remoção de elementos à Vector
+c8c515f Implementa função de carregamento do grid
+b29480e assets: Adiciona modelo de mapa
+82e3978 Refatora classe LeitorDeMapa para classe Mapa
+4329c38 Renomeia arquivo LeitorDeMapa.java para Mapa.java
+11f3105 Declara função de leitura dos mapas
+c430514 Coloca arquivos de mapas dentro de uma pasta assets/
+4e53e80 wip: adiciona função de leitura do mapa
+e439f3b Merge branch 'main' of https://github.com/eduardo-lamounier/Simulador-Hospitalar-Multiagente
+5f2e394 Refactor: Exclui classe Build do Botao
+f516172 Adiciona o nome de todo o grupo à licença
+2337706 Adiciona licença MIT para o projeto
+06c88e6 Adiciona lógica de atendimento por enfermeiras na triagem
+ba0de9c docs: Adiciona enunciado do trabalho
+728b08c Adiciona funcionalidades para classe Vector
+ba86a4e Adiciona descrição do projeto ao README
+c3a7695 ✨ feat: Implementa função de etapa no Menu
+674e122 Merge branch 'main' of https://github.com/eduardo-lamounier/Simulador-Hospitalar-Multiagente
+f92b84e build: Adiciona Build na classe Botao
+6487e11 fornece permissão  de execuução para run.sh
+3a53887 Remove classe List depois de conversa com professor
+1435ff9 Simplifica geração da árvore de decisão na triagem
+180a5eb Adiciona atendimento de paciente na triagem
+43a4d3f Adiciona atendimento preferencial e cor do protocolo a Paciente
+1995d6c Remove Workflow do Github
+520f602 Atualiza JDK do Workflow da versão 11 para 17
+d59536a Adiciona Workflow Maven para build do projeto
+2206c94 ✨ feat: Coloca imagem ou texto no Botão
+a33b12b Corrige typo de "skecth" em 'Botao' e 'Menu'
+c257e92 fix: Corrige import da UI em Sketch.java
+cde4e5f Centraliza lógica da interface em um pacote 'ui'
+366c5c4 Adiciona inicialização das características clínicas de Pacientes
+5365322 feat: Implementa Protocolo de Manchester na triagem
+690b485 ✨ feat: Adiciona botao de saida e de selecao
+670e366 Merge branch 'main' of https://github.com/eduardo-lamounier/Simulador-Hospitalar-Multiagente
+e4b8dd3 ✨ feat: Adiciona funcionalidades para Botao
+d00d5e0 Corrige possível bug de referência em Vector
+77cfbe4 Muda o nome do pacote de estruturas para minúsculo
+7a6ea9d Implementa classe Botao
+7ebbe22 wip: Adiciona classe Paciente
+5619166 wip: Adiciona uma lista encadeada
+df68d73 Agrupa implementações de estruturas em pasta única
+ad0631f Implementa sistema de estados
+472c20c Adiciona classe Pause
+e7d02ac Adiciona classe Menu
+8c17316 Adiciona método 'reserve' na implementação da fila
+3a29677 Adição do arquivo de comandos para windows
+2252a10 Adiciona uma classe para posições do grid
+7decce3 Adiciona pasta target/ ao gitignore
+41862a1 docs: Descrição para classe Queue
+6db1c16 docs: Adiciona documentação para a classe Queue
+e8efaee docs: Adiciona documentação para a classe Vector
+552508d fix: Corrige assertions do vetor
+f97e7b7 Adiciona assertions no script de run
+28af663 Implementa uma fila
+2175817 Adiciona mais funcionalidades para vetores
+3420b90 Implementa um array dinâmico
+f4a736e Adiciona bin/ ao .gitignore
+ef1e62c Adiciona gitignore
+8b2b1b4 fix: pom.xml com caracteres invalidos
+1b7c982 Adiciona um script bash para rodar
+c51cfe3 Adiciona código base
+b9bef6e Adiciona pom.xml
+edfc61d Cria um README
